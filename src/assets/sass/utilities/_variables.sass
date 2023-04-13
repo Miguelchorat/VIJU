@@ -1,0 +1,63 @@
+//Importación de las fuentes de google
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap')
+
+//Contiene las distintas variables que se usaran en los distintos estilos
+
+/* -------------- COLORES -------------- */
+$color_primario: #9600DB
+$color_primario-hover: #5b0185
+$color_claro: #FFFFFF
+$color_oscuro_primario: #151515
+$color_oscuro_secundario: #202020
+$color_oscuro_terciario: #3B3B3B
+$color_placeholder: #acacac
+$color_warning: #f4141c
+
+/* -------------- FUENTES -------------- */
+$fuente_primaria: 'Roboto Condensed', sans-serif
+$fuente_secundaria: 'Roboto', sans-serif
+
+/* -------------- TAMAÑOS -------------- */
+$XXXL: 7rem
+$XXL: 3.5rem
+$XL: 3rem
+$L: 2.5rem
+$M: 2rem
+$S: 1.5rem
+$XS: 1rem
+$XXS: 0.8rem
+
+/* -------------- OTROS -------------- */
+$opacidad: 60%
+
+/* -------------- EFECTOS -------------- */
+
+@keyframes fade-up
+    0%
+        opacity: 0
+        transform: translateY(100px)
+
+    100%
+        opacity: 1
+        transform: translateY(0)
+
+@keyframes fade-right
+    0%
+        opacity: 0
+        transform: translateX(100px)
+
+    100%
+        opacity: 1
+        transform: translateX(0)
+
+@keyframes fade
+    0%
+        opacity: 0
+
+    100%
+        opacity: $opacidad
+
+@-webkit-keyframes rotateY 
+  to 
+     transform: rotateY(180deg)

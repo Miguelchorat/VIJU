@@ -1,0 +1,211 @@
+.header
+    width: 100%
+    min-height: $XXXL
+    display: flex
+    flex-direction: row    
+    align-items: center
+    padding-right: $L
+    border-bottom: 2px solid $color_oscuro_secundario
+    position: sticky
+    background-color: $color_oscuro_primario
+    top: 0
+    left: 0
+    z-index: 9
+
+    &__identity
+        display: flex
+        flex-direction: row
+        align-items: center
+        gap: $XXS
+        padding-left: $L        
+        min-width: 250px
+
+        &__logo
+            height: $XL
+            width: $XL
+
+        &__name
+            font-size: $S
+            font-family: $fuente_primaria
+            font-weight: 900
+            letter-spacing: $XXS            
+            color: $color_claro
+
+    &__browser        
+        height: $L       
+        min-height: $L        
+        display: flex                
+        align-self: center
+        gap: $XS
+        position: relative
+        padding: 0 $M
+        flex-grow: 1
+
+        &__icon
+            position: absolute
+            top: 0
+            left: $M
+            height: 100%
+            max-width: $L
+            min-width: $M
+            display: flex
+            border-radius: 0 $S $S 0
+            justify-content: end
+            color: $color_placeholder
+
+        &__input
+            border-radius: $S
+            height: 100%
+            width: 100%
+            max-width: 1396px
+            font-size: $XS
+            color: $color_claro
+            padding-left: $L
+            border: none
+            outline: none
+            background-color: $color_oscuro_terciario
+
+            &:focus
+                background-color: $color_claro
+                color: $color_oscuro_primario
+
+            &::placeholder
+                color: $color_placeholder
+
+        &:hover
+
+            .header__browser
+                
+                &__input
+                    background-color: $color_claro
+                    color: $color_oscuro_primario
+
+                &__icon
+                    color: $color_oscuro_primario
+
+    &__nav
+        height: 100%
+        width: 100%
+        max-width: 250px
+        display: flex
+        flex-direction: row
+        align-content: center
+
+        &__list
+            height: 100%
+            width: 100%
+            display: flex
+            flex-direction: row
+            color: $color_claro
+            list-style: none
+
+            &__item
+                height: 100%
+                width: 100%
+                display: flex
+                align-items: center
+                justify-content: center
+
+                &__link
+                    font-size: $XS
+                    text-align: center
+                    color: $color_claro
+                    font-family: $fuente_secundaria
+                    position: relative
+
+                    &::before
+                        content: ''
+                        position: absolute
+                        bottom: -2px
+                        left: 0
+                        width: 100%
+                        height: 2px
+                        background: $color_claro
+                        z-index: 1
+                        transform: scaleX(0)
+                        transform-origin: left
+                        transition: transform 0.3s ease-in-out
+
+                    &:hover::before
+                        transform: scaleX(1)
+
+    &__account
+        height: $XXL
+        width: 100%
+        max-width: 200px
+        display: flex
+        flex-direction: row
+        color: $color_claro
+        font-family: $fuente_primaria
+        font-size: $S
+        align-items: center
+        justify-content: center
+        gap: $XXS
+
+        &:hover
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(255, 255, 255, 0.08) 0px 0px 0px 1px
+
+    &__menu
+        position: absolute
+        top: $XXXL
+        right: $L
+        background-color: $color_oscuro_secundario
+        border-radius: 2px
+        box-shadow: rgba(255, 255, 255, 0.08) 0px 0px 0px 1px
+        height: 25%
+        width: 100%
+        max-width: 200px
+        min-height: 120px
+        display: flex
+        flex-direction: row
+        z-index: 99
+
+        &__list
+            height: 100%
+            width: 100%
+            display: flex
+            flex-direction: column
+            justify-content: space-around
+            list-style: none
+            padding: $XXS
+
+            &__item > a
+                height: 100%
+                width: 100%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-family: $fuente_secundaria
+                font-size: $XS
+                cursor: pointer
+                color: $color_claro
+
+                &:hover
+                    color: $color_primario
+        
+        &__square
+            position: absolute
+            top: 0          
+            left: 0
+            right: 0
+            margin: auto
+            transform: rotate(45deg)
+            width: $XXL
+            height: $XXL
+            background-color: $color_oscuro_secundario
+            z-index: -1
+
+.popup__bg
+    position: fixed
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100vw
+    background-color: $color_oscuro_terciario
+    opacity: $opacidad
+    display: none
+    z-index: 99
+    animation: fade none .8s
+
+    &__active
+        display: flex

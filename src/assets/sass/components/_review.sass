@@ -1,0 +1,123 @@
+.main         
+
+    &__title
+        color: $color_claro    
+        font-size: $XXL
+        font-family: $fuente_primaria
+
+    &__empty
+        display: flex
+        flex-direction: column
+        max-width: 1800px
+        padding: $XXL
+        justify-content: center
+        align-items: center
+        gap: $XL
+
+        &__image
+            height: auto
+            width: $XXXL
+        &__title
+            font-family: $fuente_primaria
+            font-size: $M
+            color: $color_claro
+
+    &__reviews
+        display: grid
+        grid-template-columns: repeat(4,1fr)
+        gap: $XL
+        max-width: 1800px
+
+        &__review
+            position: relative
+            display: flex
+            flex-direction: column
+            background-color: $color_oscuro_secundario
+            max-height: 300px
+            max-width: 420px
+            border-radius: $XXS
+            overflow: hidden
+            animation: fade-up none 1.4s
+
+            &__img
+                width: 100%
+                height: 45%
+                object-fit: cover
+                object-position: top
+                -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))                
+
+            &__videogame
+                position: absolute
+                top: 15%
+                left: 0
+                right: 0
+                width: 100%
+                margin: auto      
+                display: none    
+                text-align: center
+                justify-content: center
+                font-family: $fuente_primaria
+                font-weight: bold
+                font-size: $M
+                color: $color_claro
+                opacity: 80%
+
+            &__title
+                font-family: $fuente_primaria
+                font-size: $S
+                color: $color_claro
+                padding: $XXS 0 0 $XS
+
+            &__description
+                font-family: $fuente_secundaria
+                font-size: $XS
+                color: $color_claro
+                padding: $XS $XS 0 $XS
+                flex-grow: 1
+
+            &__info
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: flex-end
+
+                &__user
+                    color: $color_placeholder
+                    padding: $XS
+                    font-family: $fuente_secundaria
+                    font-size: $XS
+                    align-self: flex-end
+
+                &__score
+                    text-align: end
+                    color: $color_primario
+                    font-family: $fuente_secundaria
+                    font-size: $S
+                    font-weight: bold
+                    padding: $XXS
+
+                    &__red
+                        color: red
+                    &__yellow
+                        color: yellow
+                    &__green
+                        color: green
+
+            &:hover                
+                transform: scale(1.05)
+
+                .main__reviews__review__img                    
+                    opacity: 40%
+                
+                .main__reviews__review__videogame
+                    display: flex 
+        
+        @media (max-width: 1500px)
+            grid-template-columns: repeat(3,1fr)
+
+        @media (max-width: 1250px)
+            grid-template-columns: repeat(2,1fr)
+
+        @media (max-width: 900px)
+            grid-template-columns: repeat(1,1fr)
+        

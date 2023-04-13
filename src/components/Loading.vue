@@ -1,0 +1,53 @@
+<script>
+
+/**
+
+Componente de cargado de la página
+@vue-data {number} numDots - Número de puntos en el efecto de carga
+@vue-computed {void} loadingText - Repite el punto tantas veces como diga la variable
+@vue-event {void} setInterval - Cambia el valor de la variable {numDots} de 0 a 3 en el lapso de 1.2s
+*/
+export default {
+  data() {
+    return {
+      numDots: 0
+    }
+  },
+  created() {
+    setInterval(() => {
+      if (this.numDots < 3) {
+        this.numDots++
+      } else {
+        this.numDots = 0
+      }
+    }, 1250)
+  },
+  computed: {
+    loadingText() {
+      return `${'.'.repeat(this.numDots)}`
+    }
+  }
+}
+</script>
+
+<template>
+  <div class="loading">
+    <svg class="loading__logo" width="100%" height="100%" viewBox="0 0 500 500" version="1.1"
+      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+      xmlns:serif="http://www.serif.com/"
+      style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+      <g transform="matrix(1,0,0,1,-550.026,-156.551)">
+        <g>
+          <path
+            d="M985.388,238.867C1025.55,283.23 1050.03,342.055 1050.03,406.551C1050.03,544.53 938.005,656.551 800.026,656.551C735.53,656.551 676.706,632.075 632.343,591.912L774.632,449.622C782.077,454.024 790.759,456.551 800.026,456.551C827.622,456.551 850.026,434.147 850.026,406.551C850.026,397.283 847.499,388.601 843.098,381.157L985.388,238.867ZM614.665,574.235C574.502,529.872 550.026,471.047 550.026,406.551C550.026,268.572 662.047,156.551 800.026,156.551C864.522,156.551 923.347,181.027 967.71,221.189L825.42,363.479C817.976,359.078 809.294,356.551 800.026,356.551C772.43,356.551 750.026,378.955 750.026,406.551C750.026,415.818 752.553,424.5 756.955,431.945L614.665,574.235Z"
+            style="fill:rgb(150,0,219);" />
+          <path d="M967.71,221.189L1032.1,156.551L800.026,156.551" style="fill:rgb(150,0,219);" />
+          <g transform="matrix(-1,0,0,-1,1600.05,813.102)">
+            <path d="M967.71,221.189L1032.1,156.551L800.026,156.551" style="fill:rgb(150,0,219);" />
+          </g>
+        </g>
+      </g>
+  </svg>
+  <p class="loading__text">Se está conectando con el servidor<span class="loading__text__dots">{{ loadingText }}</span>
+  </p>
+</div></template>

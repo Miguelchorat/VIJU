@@ -1,0 +1,193 @@
+.main
+
+    &__background
+        position: fixed
+        top: 0
+        right: 0
+        height: 100%
+        width: 75%
+        -webkit-mask-image: -webkit-gradient(linear, right top, left top, from(rgba(0,0,0,0.8)), to(rgba(0,0,0,0)))
+
+        &__img
+            position: fixed
+            top: 0
+            right: 0
+            height: 100%
+            width: 100%
+            object-fit: cover
+            object-position: center
+
+        &__opacity
+            height: 100%
+            width: 100%
+            position: fixed
+            top: 0
+            left: 0
+            background-color: rgba(0, 0, 0, 0.7)
+            z-index: 0
+
+    &__form
+        width: 65%
+        display: flex
+        flex-direction: column
+        gap: $XS
+        z-index: 1
+        min-width: 720px
+
+        &__field
+            position: relative
+
+            &__input
+                height: 100%
+                width: 100%
+                max-height: $L
+                min-height: $M
+                font-size: $XS
+                font-family: $fuente_secundaria
+                color: $color_claro
+                padding-left: $XS
+                border: none
+                outline: none
+                background-color: $color_oscuro_terciario
+                border-radius: 25x
+
+                &__warning
+                    border-right: 4px solid $color_warning
+
+            &__select
+                height: 100%
+                width: 100%
+                max-height: $L
+                min-height: $M
+                font-size: $XS
+                color: $color_claro
+                font-family: $fuente_secundaria
+                padding-left: $XS
+                border: none
+                outline: none
+                background-color: $color_oscuro_terciario
+
+                &__warning
+                    border-right: 4px solid $color_warning
+
+            &__textarea
+                height: 100%
+                width: 100%
+                min-height: 450px
+                font-family: $fuente_secundaria
+                font-size: $XS
+                color: $color_claro                
+                padding: 0 $XS
+                padding-top: $XS
+                border: none
+                outline: none
+                background-color: $color_oscuro_terciario
+                resize: none
+
+                &__warning
+                    border: 1px solid $color_warning
+
+            &__error
+                position: absolute
+                top: 150%
+                bottom: 0
+                left: 0
+                height: 35px
+                width: 250px
+                background-color: $color_warning
+                color: $color_claro
+                font-family: $fuente_secundaria
+                font-size: $XXS
+                display: none
+                align-items: center
+                padding: 0 8px
+                border-radius: 4px
+                z-index: 10
+
+                &__textarea
+                    position: absolute
+                    top: 20%
+                    bottom: 0
+                    left: 102%
+                    height: 35px
+                    width: 250px
+                    background-color: $color_warning
+                    color: $color_claro
+                    font-family: $fuente_secundaria
+                    font-size: $XXS
+                    display: none
+                    align-items: center
+                    padding: 0 8px
+                    border-radius: 4px
+                    z-index: 10
+
+                    &__active
+                        display: flex
+
+                &__active
+                    display: flex
+
+            &__square
+                position: absolute
+                top: 135%
+                left: 20px
+                margin: auto
+                transform: rotate(45deg)
+                width: $XXS
+                height: $XXS
+                margin-right: 4px
+                background-color: $color_warning
+                z-index: 9
+                display: none
+
+                &__textarea
+                    position: absolute
+                    top: 22%                    
+                    left: 101%
+                    margin: auto
+                    transform: rotate(45deg)
+                    width: $XXS
+                    height: $XXS
+                    margin-left: 4px
+                    background-color: $color_warning
+                    z-index: 9
+                    display: none
+
+                    &__active
+                        display: flex
+
+                &__active
+                    display: flex
+
+        &__button
+            width: 20%
+            height: $M
+            min-height: $M
+            min-width: 300px
+            max-width: 325px
+            background-color: $color_primario
+            font-family: $fuente_primaria
+            font-size: $XS
+            color: $color_claro
+            align-self: flex-end
+            border: none
+            outline: none
+            cursor: pointer
+
+            &:hover
+                background-color: $color_primario-hover
+
+        &__group
+            display: grid
+            grid-template-columns: 6fr 1fr 4fr
+            justify-content: space-between
+            gap: $XS
+
+            input
+                width: 100%
+                flex-grow: 1
+                flex-shrink: 1
+
+            select
+                width: 100%
+                flex-shrink: 0

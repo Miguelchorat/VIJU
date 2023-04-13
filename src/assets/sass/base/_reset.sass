@@ -1,0 +1,40 @@
+// Desactivar configuraciones que traigan por defecto el css
+*
+    padding: 0px
+    margin: 0px
+    box-sizing: border-box
+    text-decoration: none
+
+//Configuración inicial de la página web
+html, body, #app
+    height: 100%
+    width: 100%
+    display: flex
+    flex-direction: column
+    overflow-x: hidden
+    position: relative
+    background-color: $color_oscuro_primario    
+
+//Sobreescribir el css por defecto de los iconos de google
+.material-symbols-outlined
+    display: flex !important
+    align-items: center
+    justify-content: center
+    font-size: $XS !important
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button 
+    -webkit-appearance: none
+    margin: 0
+    
+.main     
+    width: 100%
+    display: flex
+    flex-direction: column
+    gap: $S
+    padding: $L
+
+.container-page
+    width: calc(100% - 250px)
+    display: flex
+    flex-direction: row
+    margin-left: 250px

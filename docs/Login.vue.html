@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Login.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Login.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;script>
+/**
+ * Objeto del componente Vue que maneja la autenticación de un usuario en la aplicación.
+ * @typedef {Object} AuthComponent
+ * @property {Array} props.menu - Lista de elementos de menú de la aplicación.
+ * @property {Object} props.account - Información de la cuenta del usuario.
+ * @property {boolean} props.session - Estado de inicio de sesión del usuario.
+ * @property {number} props.userId - ID de usuario.
+ * @property {string} data.email - Correo electrónico de usuario para iniciar sesión.
+ * @property {string} data.password - Contraseña del usuario para iniciar sesión.
+ * @property {string} data.errorEmail - Mensaje de error del campo de correo electrónico.
+ * @property {string} data.errorPassword - Mensaje de error del campo de contraseña.
+ * @property {string} data.errorSession - Mensaje de error del inicio de sesión.
+ * @property {boolean} data.visibility - Estado de la visibilidad de la contraseña.
+ * @property {boolean} data.focusEmail - Estado del campo de correo electrónico con foco.
+ * @property {boolean} data.focusPassword - Estado del campo de contraseña con foco.
+ * @property {string} data.API_LOGIN - URL de la API de inicio de sesión.
+ * @property {RegExp} data.emailValidation - Expresión regular de validación de correo electrónico.
+ * @property {RegExp} data.passwordValidation - Expresión regular de validación de contraseña.
+ * @property {function} methods.listenRemember - Función que maneja el evento de cambio de la opción "recordar contraseña".
+ * @property {function} methods.listenVisibility - Función que maneja el evento de cambio de la visibilidad de la contraseña.
+ * @property {function} methods.loginAccount - Función asíncrona que inicia sesión en la aplicación con los datos proporcionados.
+ * @property {function} methods.checkFields - Función que comprueba los campos de correo electrónico y contraseña antes de iniciar sesión.
+ */
+import axios from 'axios'
+
+export default {
+    props: ['menu', 'account', 'session', 'userId'],
+
+    data() {
+        return {
+            email: '',
+            password: '',
+            errorEmail: '',
+            errorPassword: '',
+            errorSession: '',
+            visibility: false,
+            focusEmail: false,
+            focusPassword: false,
+            API_LOGIN: "https://viju-server.onrender.com/api/v1/auth/users/",
+            emailValidation: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            passwordValidation: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/
+        }
+    },
+    methods: {
+        listenRemember() {
+            this.remember = !this.remember
+        },
+        listenVisibility() {
+            this.visibility = !this.visibility
+        },
+        async loginAccount() {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(this.password);
+            const digest = await crypto.subtle.digest('SHA-1', data);
+            const hash = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+
+            await axios.post(this.API_LOGIN, {
+                email: this.email,
+                password: hash
+            }, { withCredentials: true })
+            .then(response => {
+                this.$emit('changeSession', true)  
+                this.$emit('changeUserId', response.data)                     
+                this.$emit('checkUser')                                
+                this.$emit('listenAccount')
+                this.$emit('listenMenu', 0)                
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.errorSession = 'El correo o contraseña no es correcta'
+                }
+            })
+        },
+        checkFields() {
+            let check = 0
+            this.errorEmail = ''
+            this.errorPassword = ''
+            this.errorSesion = ''
+
+            if (this.emailValidation.test(this.email)) {
+                check++
+            } else {
+                this.errorEmail = 'El correo no es válido'
+            }
+
+            if (this.passwordValidation.test(this.password)) {
+                check++
+            } else {
+                this.errorPassword = 'La contraseña no es válida. Debe contener al menos 8 caracteres y un número.'
+            }
+
+            if (check == 2) {
+                this.loginAccount()
+            }
+        }
+    }
+}
+&lt;/script>
+&lt;template>
+    &lt;form class="session" @submit.prevent="checkFields">
+        &lt;a class="session__close material-symbols-outlined" href="#" @click="() => $emit('listenMenu')">close&lt;/a>
+        &lt;h2 class="session__title">INICIAR SESIÓN&lt;/h2>
+        &lt;div class="session__field">
+            &lt;input class="session__field__input" :class="{ session__field__input__warning: errorEmail || errorSession }" type="email"
+                placeholder="Correo" aria-label="email" :value="email" @input="event => email = event.target.value"
+                @focus="focusEmail = true" @blur="focusEmail = false" />
+            &lt;span class="session__field__square" :class="{ session__field__square__active: errorEmail &amp;&amp; focusEmail }" />
+            &lt;p class="session__field__error" :class="{ session__field__error__active: errorEmail &amp;&amp; focusEmail }">{{
+                errorEmail
+            }}&lt;/p>
+            &lt;span class="session__field__square" :class="{ session__field__square__active: errorSession &amp;&amp; focusEmail }" />
+            &lt;p class="session__field__error" :class="{ session__field__error__active: errorSession &amp;&amp; focusEmail }">{{
+                errorSession
+            }}&lt;/p>
+        &lt;/div>
+        &lt;div class="session__field">
+            &lt;input class="session__field__input" :class="{ session__field__input__warning: errorPassword }"
+                :value="password" @input="event => password = event.target.value" placeholder="Contraseña"
+                :type="visibility ? 'text' : 'password'" aria-label="password" maxlength="20" 
+                @focus="focusPassword = true" @blur="focusPassword = false"/>
+            &lt;span class="session__field__icon material-symbols-outlined" @click="listenVisibility">{{
+                visibility ?
+                'visibility_off' : 'visibility'
+            }}&lt;/span>
+            &lt;span class="session__field__square"
+                :class="{ session__field__square__active: errorPassword &amp;&amp; focusPassword }" />
+            &lt;p class="session__field__error" :class="{ session__field__error__active: errorPassword &amp;&amp; focusPassword }">
+                {{ errorPassword }}&lt;/p>
+        &lt;/div>
+        &lt;input class="session__button" type="submit" value="INICIAR SESIÓN">
+        &lt;div class="session__signin">
+            &lt;label class="session__signin__label">¿No tienes cuenta?&lt;/label>
+            &lt;a href="#" class="session__signin__link" @click="() => $emit('listenMenu', 2)">Create una&lt;/a>
+        &lt;/div>
+    &lt;/form>
+&lt;/template></code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Header.html">Header</a></li><li><a href="module-Loading.html">Loading</a></li></ul><h3>Global</h3><ul><li><a href="global.html#updateAccount">updateAccount</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 20 2023 15:56:05 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

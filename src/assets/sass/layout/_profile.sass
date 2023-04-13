@@ -1,0 +1,50 @@
+.main
+    
+    &__header
+        height: 25%
+        width: 100%
+        position: relative
+        display: flex
+        flex-direction: row
+        align-items: center
+        margin-bottom: $S
+        color: $color_oscuro_primario        
+
+        &__title
+            width: 100%
+            font-family: $fuente_primaria
+            font-size: $XXL
+            color: $color_claro
+            text-align: center
+            z-index: 1  
+    
+    &__profile
+        display: flex
+        flex-direction: column
+        gap: $XXS     
+        margin: 0 20%
+    
+        &__title
+            font-family: $fuente_primaria
+            color: $color_claro
+            font-size: $S
+
+        &__text
+            font-family: $fuente_secundaria
+            color: $color_claro
+            font-size: $XS
+
+        &__button
+            width: 100%
+            margin-top: $XXS
+            max-width: 450px
+            min-width: 260px
+            align-self: center
+            padding: 0.5rem
+            background-color: $color_primario
+            color: $color_claro
+            font-family: $fuente_primaria
+            font-size: $XS
+            text-align: center
+            border: none
+            cursor: pointer

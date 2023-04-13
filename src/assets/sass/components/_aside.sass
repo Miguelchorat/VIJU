@@ -1,0 +1,56 @@
+.aside        
+    padding: $L 0 $L $L
+    width: 250px
+    height: 100vh    
+    border-right: 2px solid $color_oscuro_secundario
+    flex: 1
+    position: fixed
+    background-color: $color_oscuro_primario
+    top: 1
+    left: 0
+    z-index: 9
+    
+    &__nav
+        height: 100%
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-content: center
+        gap: $XS
+
+        &__title
+            font-family: $fuente_primaria
+            font-size: $XS
+            color: $color_placeholder
+
+        &__list
+            height: 100%
+            width: 100%
+            display: flex
+            flex-direction: column
+            gap: $XS
+            color: $color_claro
+            list-style: none
+
+            &__item
+                align-items: center
+                cursor: pointer
+                
+                &__link
+                    display: flex
+                    flex-direction: row
+                    gap: $XXS
+                    position: relative
+                    color: $color_claro
+                    font-size: $S
+                    font-family: $fuente_primaria    
+
+                    &__active
+                        color: $color_primario            
+                
+                &__icon
+                    font-size: $S !important
+
+                &:hover
+                    opacity: $opacidad
+                    padding-left: $XXS

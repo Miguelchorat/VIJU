@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import {API} from '../util'
 /**
  * Componente para actualizar la información del usuario
  * @vue-prop {boolean} menu - Objeto que representa el menú
@@ -42,7 +43,7 @@ export default {
             focusDate: false,
             visibility: false,
             visibilityRepeat: false,
-            API_UPDATE_USER: "http://localhost:3001/api/v1/auth/users/id=",
+            API_UPDATE_USER: API + "/api/v1/auth/users/id=",
             emailValidation: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             passwordValidation: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/,
             usernameValidation: /^[a-zA-Z]{3,18}$/,

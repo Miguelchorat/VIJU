@@ -13,28 +13,29 @@ html, body, #app
     flex-direction: column
     overflow-x: hidden
     position: relative
-    background-color: $color_oscuro_primario    
+    background-color: $color_oscuro_primario
 
 //Sobreescribir el css por defecto de los iconos de google
 .material-symbols-outlined
-    display: flex !important
+    display: flex
     align-items: center
     justify-content: center
-    font-size: $XS !important
+    font-size: $XS
 
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button 
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
     -webkit-appearance: none
     margin: 0
-    
-.main     
-    width: 100%
+
+#app
+    display: grid
+    grid-template-columns: 1fr 1000fr
+    grid-template-rows: auto 1fr
+    grid-template-areas: "aside header" "aside main"
+
+.main
+    width: 100% 
     display: flex
     flex-direction: column
     gap: $S
     padding: $L
-
-.container-page
-    width: calc(100% - 250px)
-    display: flex
-    flex-direction: row
-    margin-left: 250px
+    grid-area: main

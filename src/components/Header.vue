@@ -29,52 +29,41 @@ export default {
     },
     data() {
         return {
-            submenu: false,            
+            submenu: false,
         }
     },
     methods: {
         listenSubmenu() {
             this.submenu = !this.submenu
-        },    
+        },
     }
 }
 </script>
 
 <template>
-    <header class="header">
-        <RouterLink to="/" class="header__identity">
-            <img class="header__identity__logo" src="../assets/img/logo.svg" alt="Imagen del logo">
-            <p class="header__identity__name">VIJU</p>
-        </RouterLink>
-        <div class="header__browser">
-            <span class="header__browser__icon material-symbols-outlined">search</span>
-            <input class="header__browser__input" placeholder="Buscar..."
-                @input="(e) => $emit('listenInput', e.target.value)" :value="search" />
-        </div>
-        <nav class="header__nav" v-if="!account">
-            <ul class="header__nav__list">
-                <li class="header__nav__list__item">
-                    <a type="button" class="header__nav__list__item__link" href="#"
-                        @click="() => $emit('listenMenu', 1)">INICIAR SESIÓN</a>
-                </li>
-                <li class="header__nav__list__item"><a type="button" class="header__nav__list__item__link" href="#"
-                        @click="() => $emit('listenMenu', 2)">REGISTRARSE</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="header__account" v-else @click="listenSubmenu">
-            <p class="header__account__name">@{{ user }}</p>
-            <nav class="header__menu" v-if="submenu" v-click-away="listenSubmenu">
-                <ul class="header__menu__list">
-                    <li class="header__menu__list__item">
-                        <RouterLink to="/perfil">PERFIL</RouterLink>
-                    </li>
-                    <li class="header__menu__list__item">
-                        <RouterLink to="/crear-review">CREAR REVIEW</RouterLink>
-                    </li>
-                    <li class="header__menu__list__item" @click="() => $emit('closeSession')"><a>CERRAR SESIÓN</a></li>
-                </ul>
-                <span class="header__menu__square" />
-            </nav>
-        </a>
+    <header class="header">        
+        <!-- <div class="header__browser">
+                <span class="header__browser__icon material-symbols-outlined">search</span>
+                <input class="header__browser__input" placeholder="Buscar..."
+                    @input="(e) => $emit('listenInput', e.target.value)" :value="search" />
+            </div> -->
+
+        <a type="button" class="header__session" href="#" @click="() => $emit('listenMenu', 1)">INICIAR SESIÓN</a>
+
+        <!-- <a href="#" class="header__account" v-else @click="listenSubmenu">
+                <p class="header__account__name">@{{ user }}</p>
+                <nav class="header__menu" v-if="submenu" v-click-away="listenSubmenu">
+                    <ul class="header__menu__list">
+                        <li class="header__menu__list__item">
+                            <RouterLink to="/perfil">PERFIL</RouterLink>
+                        </li>
+                        <li class="header__menu__list__item">
+                            <RouterLink to="/crear-review">CREAR REVIEW</RouterLink>
+                        </li>
+                        <li class="header__menu__list__item" @click="() => $emit('closeSession')"><a>CERRAR SESIÓN</a></li>
+                    </ul>
+                    <span class="header__menu__square" />
+                </nav>
+            </a> -->
     </header>
 </template>

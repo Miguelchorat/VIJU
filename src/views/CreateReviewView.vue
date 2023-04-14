@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import {API} from '../util'
 
 /**
  * Componente para crear una reseña.
@@ -39,8 +40,8 @@ export default {
             focusScore: false,
             focusVideogame: false,
             games: null,
-            API_GAMES: "http://localhost:3001/api/v1/games",
-            API_CREATE_REVIEW: "http://localhost:3001/api/v1/auth/reviews",
+            API_GAMES: API + "/api/v1/games",
+            API_CREATE_REVIEW: API + "/api/v1/auth/reviews",
             scoreValidation: /^(?:[0-5](?:\.[0-9])?|\.[0-9])$/,
         }
     },

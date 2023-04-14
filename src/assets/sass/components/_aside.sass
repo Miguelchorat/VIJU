@@ -1,56 +1,148 @@
-.aside        
-    padding: $L 0 $L $L
+.aside
     width: 250px
-    height: 100vh    
+    height: 100vh
     border-right: 2px solid $color_oscuro_secundario
-    flex: 1
-    position: fixed
     background-color: $color_oscuro_primario
-    top: 1
-    left: 0
     z-index: 9
-    
+    transition: 0.5s
+    grid-area: aside
+    position: sticky
+    top: 0
+
+    &__header
+        width: 100%
+        min-height: $XL
+        border-bottom: 2px solid $color_oscuro_secundario
+        display: flex
+        align-items: center
+
+        &__identity
+            display: flex
+            flex-direction: row
+            align-items: center
+            gap: $XXS
+            padding-left: $XXS
+
+            &__logo
+                height: $M
+                width: $M
+
+            &__name
+                font-size: $S
+                font-family: $fuente_primaria
+                font-weight: 900
+                letter-spacing: $XXXS
+                color: $color_claro
+
     &__nav
         height: 100%
         width: 100%
         display: flex
         flex-direction: column
         align-content: center
-        gap: $XS
-
-        &__title
-            font-family: $fuente_primaria
-            font-size: $XS
-            color: $color_placeholder
 
         &__list
             height: 100%
             width: 100%
             display: flex
             flex-direction: column
-            gap: $XS
             color: $color_claro
             list-style: none
 
             &__item
-                align-items: center
                 cursor: pointer
-                
+
                 &__link
                     display: flex
                     flex-direction: row
                     gap: $XXS
-                    position: relative
+                    padding: $XXS 0
+                    padding-left: $XXS
                     color: $color_claro
-                    font-size: $S
-                    font-family: $fuente_primaria    
+
+                    &__icon
+                        font-size: $M
+
+                    &__title
+                        font-size: 1.2rem
+                        font-family: $fuente_primaria
+                        white-space: nowrap
+
+                    &:hover
+                        border-right: 3px solid $color_claro
+                        background-color: rgba(255, 255, 255, 0.1)
 
                     &__active
-                        color: $color_primario            
-                
-                &__icon
-                    font-size: $S !important
+                        color: $color_primario
+                        border-right: 3px solid $color_primario
+                        background-color: rgba(255, 255, 255, 0.1)
 
-                &:hover
-                    opacity: $opacidad
-                    padding-left: $XXS
+                        &:hover
+                            border-right: 3px solid $color_primario
+                            background-color: rgba(255, 255, 255, 0.1)
+
+                    &--hide
+                        width: 100%
+                        position: absolute
+                        bottom: 0
+
+                        .aside__nav__list__item__link__icon
+                            transform: rotate(180deg)
+                            transition: 0.6s
+
+    @media (max-width: 1000px)
+        width: 60px
+
+        .aside__header
+
+            &__identity
+
+                &__name
+                    display: none
+        .aside__nav
+
+            &__list
+
+                &__item
+
+                    &__link
+
+                        &__title
+                            display: none
+
+                        &--hide
+                            display: none
+                            .aside__nav__list__item__link__icon
+                                animation: rotate 0.6s
+                                transform: rotate(0deg)
+
+.aside__hidden
+    width: 60px
+
+    .aside__header
+
+        &__identity
+
+            &__name
+                display: none
+    .aside__nav
+
+        &__list
+
+            &__item
+
+                &__link
+
+                    &__title
+                        display: none
+
+                    &--hide
+                        .aside__nav__list__item__link__icon
+                            animation: rotate 0.6s
+                            transform: rotate(0deg)
+    
+@keyframes rotate
+    from
+        transform: rotate(180deg)
+    to
+        transform: rotate(0)

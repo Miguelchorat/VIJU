@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import {API} from '../util'
 /**
  * Componente para mostrar una reseña individual.
  *
@@ -22,8 +23,8 @@ export default {
       submenu: false,
       showSubmenu: false,
       pathUpdate: "/perfil/actualizar-review/",
-      API_REVIEW: "http://localhost:3001/api/v1/reviews/" + this.$route.params.id,
-      API_DELETE: "http://localhost:3001/api/v1/auth/reviews/" + this.$route.params.id
+      API_REVIEW: API + "/api/v1/reviews/" + this.$route.params.id,
+      API_DELETE: API + "/api/v1/auth/reviews/" + this.$route.params.id
     }
   },
   mounted() {

@@ -1,6 +1,7 @@
 <script>
 
 import axios from 'axios'
+import {API} from '../util'
 /**
  * Componente que representa el formulario de inicio de sesión de un usuario.
  * @vue-prop {Boolean} menu - Indica si el menú de la aplicación está activo o no.
@@ -37,7 +38,7 @@ export default {
             visibility: false,
             focusEmail: false,
             focusPassword: false,
-            API_LOGIN: "http://localhost:3001/api/v1/auth/users/",
+            API_LOGIN: API + "/api/v1/auth/users/",
             emailValidation: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             passwordValidation: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/
         }

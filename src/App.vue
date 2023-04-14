@@ -6,6 +6,8 @@ import Login from './components/Login.vue'
 import Signin from './components/Signin.vue'
 import Loading from './components/Loading.vue'
 import axios from 'axios'
+import {API} from './util'
+
 </script>
 
 <script>
@@ -43,10 +45,10 @@ export default {
       user: "",
       userId: localStorage.getItem('userId') ?? 0,
       session: localStorage.getItem('session') ?? false,
-      API_CHECK: "http://localhost:3001/api/v1/",
-      API_LOGIN: "http://localhost:3001/api/v1/auth/",
-      API_CLOSE: "http://localhost:3001/api/v1/auth/users/session=",
-      API_USER: "http://localhost:3001/api/v1/users/id=",
+      API_CHECK: API + "/api/v1/",
+      API_LOGIN: API + "/api/v1/auth/",
+      API_CLOSE: API + "/api/v1/auth/users/session=",
+      API_USER: API +  "/api/v1/users/id=",
     }
   },
   mounted() {
@@ -127,10 +129,8 @@ export default {
 <template>
   <Header v-if="loading" @listenInput="listenInput" :search.sync="search" @listenMenu="listenMenu" :menu="menu"
     :account="account" @closeSession="closeSession" :user.sync="user"/>
-  <div v-if="loading" class="container-page">
-    <Aside />
-    <RouterView :search="search" :userId.sync="userId" />
-  </div>
+  <Aside v-if="loading"/>
+  <RouterView v-if="loading" :search="search" :userId.sync="userId" />
   <Loading v-else />
   <Login @listenMenu="listenMenu" :userId.sync="userId" :menu="menu" :session="session" :account="account"
     @listenAccount="listenAccount" @changeSession="changeSession" @changeUserId="changeUserId" v-if="menu == 1"

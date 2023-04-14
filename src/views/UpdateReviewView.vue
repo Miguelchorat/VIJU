@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import {API} from '../util'
 
 /**
  * Componente para editar una reseña de videojuego.
@@ -41,9 +42,9 @@ export default {
             focusScore: false,
             focusVideogame: false,
             games: null,
-            API_GAMES: "http://localhost:3001/api/v1/games",
-            API_REVIEW: "http://localhost:3001/api/v1/reviews/" + this.$route.params.id,
-            API_UPDATE_REVIEW: "http://localhost:3001/api/v1/auth/reviews/" + this.$route.params.id,
+            API_GAMES: API + "/api/v1/games",
+            API_REVIEW: API + "/api/v1/reviews/" + this.$route.params.id,
+            API_UPDATE_REVIEW: API + "/api/v1/auth/reviews/" + this.$route.params.id,
             scoreValidation: /^(?:[0-5](?:\.[0-9])?|\.[0-9])$/,
         }
     },

@@ -1,6 +1,7 @@
 <script>
 
 import axios from 'axios'
+import {API} from '../util'
 /**
 
 Componente para el registro de usuarios
@@ -58,7 +59,7 @@ export default {
             focusDate: false,
             visibility: false,
             visibilityRepeat: false,
-            API_REGISTER: "http://localhost:3001/api/v1/users/",
+            API_REGISTER: API + "/api/v1/users/",
             emailValidation: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             passwordValidation: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/,
             usernameValidation: /^[a-zA-Z\d]{3,18}$/,

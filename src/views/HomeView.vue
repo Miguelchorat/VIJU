@@ -1,5 +1,6 @@
 <script setup>
 import Review from '../components/Review.vue'
+import {API} from '../util'
 </script>
 
 <script>
@@ -22,8 +23,8 @@ export default {
       MAX_LENGHT: 85,
       results: null,
       path: '/review/',
-      API: "http://localhost:3001/api/v1/reviews",
-      API_SEARCH: "http://localhost:3001/api/v1/reviews/search=" + this.search
+      API: API + "/api/v1/reviews",
+      API_SEARCH: "/api/v1/reviews/search=" + this.search
     }
   },
   mounted() {
@@ -31,7 +32,7 @@ export default {
   },
   watch: {
     search: function () {
-      this.API_SEARCH = "http://localhost:3001/api/v1/reviews/search=" + this.search
+      this.API_SEARCH = "/api/v1/reviews/search=" + this.search
       this.callAPI()
     }
   },

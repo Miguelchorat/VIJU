@@ -1,5 +1,6 @@
 <script setup>
 import UpdateAccount from '../components/UpdateAccount.vue'
+import {API} from '../util'
 </script>
 
 <script>
@@ -21,7 +22,7 @@ export default {
     return {      
       user:  null ?? {username: "",email: '', date: '1970-01-01'},
       menu: false,      
-      API_USER: "http://localhost:3001/api/v1/users/id="+localStorage.getItem("userId"),
+      API_USER: API + "/api/v1/users/id="+localStorage.getItem("userId"),
     }
   },
   created() {

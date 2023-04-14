@@ -1,5 +1,6 @@
 <script setup>
 import Review from '../components/Review.vue'
+import {API} from '../util'
 </script>
 
 <script>
@@ -23,8 +24,8 @@ export default {
       MAX_LENGHT: 85,
       results: null,
       path: '/perfil/review/',
-      API: "http://localhost:3001/api/v1/auth/reviews/search=-all/id=" + localStorage.getItem('userId'),
-      API_SEARCH: "http://localhost:3001/api/v1/auth/reviews/search=" + this.search + "/id=" + localStorage.getItem('userId')
+      API_ALL: API + "/api/v1/auth/reviews/search=-all/id=" + localStorage.getItem('userId'),
+      API_SEARCH: API + "/api/v1/auth/reviews/search=" + this.search + "/id=" + localStorage.getItem('userId')
     }
   },
   mounted() {
@@ -32,13 +33,13 @@ export default {
   },
   watch: {
     search: function () {
-      this.API_SEARCH = "http://localhost:3001/api/v1/auth/reviews/search=" + this.search + "/id=" + localStorage.getItem('userId')
+      this.API_SEARCH = API + "/api/v1/auth/reviews/search=" + this.search + "/id=" + localStorage.getItem('userId')
       this.callAPI()
     }
   },
   methods: {
     async callAPI() {
-      const endpoint = this.search !== "" ? this.API_SEARCH : this.API
+      const endpoint = this.search !== "" ? this.API_SEARCH : this.API_ALL
       const response = await fetch(endpoint, { credentials: 'include' })
       const data = await response.json()
       this.results = data

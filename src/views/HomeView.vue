@@ -1,6 +1,6 @@
 <script setup>
 import Review from '../components/Review.vue'
-import {API} from '../util'
+import { API } from '../util'
 </script>
 
 <script>
@@ -39,7 +39,7 @@ export default {
   methods: {
     async callAPI() {
       const endpoint = this.search !== "" ? this.API_SEARCH : this.API
-      const response = await fetch(endpoint,{credentials: 'include'})
+      const response = await fetch(endpoint, { credentials: 'include' })
       const data = await response.json()
       this.results = data
     }
@@ -48,12 +48,20 @@ export default {
 </script>
 
 <template>
-  <main class="main">
-    <h1 class="main__title">NUEVAS RESEÑAS</h1>
+  <main class="main main--reviews">
+    <h1 class="main__title">Ultimos añadidos</h1>
+    <div class="main__filter">
+      <div class="main__filter__browser">
+        <span class="main__filter__browser__icon material-symbols-outlined">search</span>
+        <input class="main__filter__browser__input" placeholder="Buscar..." :value="search" />
+      </div>
+      <a href="#" class="main__filter__videogame">Videojuego <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span></a>
+      <a href="#" class="main__filter__score">Puntuación <span class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
+    </div>
     <section class="main__reviews" v-if="results !== null && results.length !== 0">
       <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.image' :videogame="res.name"
         :description='res.message.substring(0, MAX_LENGHT) + " ..."' :user='res.username' :score='res.score'
-        @click="() => $emit('selectReview', res.id)" :path="path"/>
+        @click="() => $emit('selectReview', res.id)" :path="path" />
     </section>
     <section v-else class="main__empty">
       <img src="/src/assets/img/broken.png" alt="CD ROTO" class="main__empty__image">

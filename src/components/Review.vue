@@ -21,16 +21,17 @@ export default {
 
 <template>
     <RouterLink href="#" class="main__reviews__review" :to="path+id">
+        <div class="main__reviews__review__account">
+            <p class="main__reviews__review__account__info">Publicado por <span class="main__reviews__review__account__info__user">{{ user }}</span></p>
+            <p class="main__reviews__review__account__date">Hace 13 horas</p>
+        </div>
         <img class="main__reviews__review__img" :src="image" alt="" />
         <h2 class="main__reviews__review__videogame">{{ videogame }}</h2>
         <h2 class="main__reviews__review__title">{{ title }}</h2>
-        <p class="main__reviews__review__description">{{ description }}</p>
         <div class="main__reviews__review__info">
-            <p class="main__reviews__review__info__user">@{{ user }}</p>
-            <p class="main__reviews__review__info__score"
-                :class="score < 2.5 ? 'main__reviews__review__info__score__red' : (score >= 2.5 && score < 3.5) ? 'main__reviews__review__info__score__yellow' : 'main__reviews__review__info__score__green'">
-                {{ score }}
-            </p>
+            <a class="main__reviews__review__info__like" href="#"><span class="main__reviews__review__info__like__icon material-symbols-outlined">thumb_up</span>20</a>
+            <a class="main__reviews__review__info__favorite" href="#"><span class="main__reviews__review__info__favorite__icon material-symbols-outlined">favorite</span>303</a>
+            <p class="main__reviews__review__info__score">{{ score }}<span class="main__reviews__review__info__score__icon material-symbols-outlined">grade</span></p>
         </div>
     </RouterLink>
 </template>

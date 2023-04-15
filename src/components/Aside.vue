@@ -11,12 +11,13 @@ Componente menu lateral de la página
 export default {
     data() {
         return {
-            isHidden: false
+            isHidden: localStorage.getItem('isHidden') === 'true'
         }
     },
     methods: {
         toggleHidden() {
             this.isHidden = !this.isHidden;
+            localStorage.setItem('isHidden', this.isHidden);
         }
     }
 }

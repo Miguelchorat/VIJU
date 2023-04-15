@@ -1,0 +1,104 @@
+.main__filter
+    display: flex
+    flex-direction: row
+    gap: $XS
+    margin-bottom: $XS
+
+    &__browser
+        height: $M
+        max-height: $M
+        width: 380px
+        display: flex
+        align-self: left
+        position: relative  
+
+        &__icon
+            position: absolute
+            top: 0
+            left: $XXXS
+            height: 100%
+            max-width: $L
+            min-width: $M
+            display: flex
+            border-radius: 0 $S $S 0
+            justify-content: center
+            color: $color_placeholder
+
+        &__input
+            border-radius: $XXXS
+            height: 100%
+            width: 100%
+            font-size: $XS
+            color: $color_claro
+            padding-left: $L
+            padding-right: $XXXS
+            border: none
+            outline: none
+            background-color: $color_oscuro_terciario
+
+            &:focus
+                background-color: $color_claro
+                color: $color_oscuro_primario
+
+            &::placeholder
+                color: $color_placeholder
+
+        &:hover
+            
+            .main__browser
+
+                &__input
+                    background-color: $color_claro
+                    color: $color_oscuro_primario
+
+                &__icon
+                    color: $color_oscuro_primario
+
+    &__videogame
+        height: $M
+        max-height: $M
+        width: 150px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        align-self: left
+        position: relative    
+        color: $color_claro
+        background-color: $color_primario
+        padding: 0 $XXS 0 $XS
+        border: 1px dashed $color_oscuro_secundario
+        border-radius: $XXXS
+        font-size: $XS
+        font-family: $fuente_secundaria
+        transition: 0.3s
+
+        &:hover
+            background-color: $color_primario_hover
+
+        &__icon
+            align-self: center
+            justify-self: end
+    
+    &__score
+        height: $M
+        max-height: $M
+        width: 150px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        align-self: left
+        position: relative    
+        color: $color_claro
+        background-color: $color_primario
+        padding: 0 $XXS 0 $XS
+        border: 1px dashed $color_oscuro_secundario
+        border-radius: $XXXS
+        font-size: $XS
+        font-family: $fuente_secundaria
+        transition: 0.3s
+        
+        &:hover
+            background-color: $color_primario_hover
+
+        &__icon
+            align-self: center

@@ -14,65 +14,17 @@
     z-index: 9
     grid-area: header
 
-    &__browser        
-        height: $L       
-        min-height: $L        
-        display: flex                
-        align-self: center
-        gap: $XS
-        position: relative
-        padding: 0 $M
-        flex-grow: 1
-
-        &__icon
-            position: absolute
-            top: 0
-            left: $M
-            height: 100%
-            max-width: $L
-            min-width: $M
-            display: flex
-            border-radius: 0 $S $S 0
-            justify-content: end
-            color: $color_placeholder
-
-        &__input
-            border-radius: $S
-            height: 100%
-            width: 100%
-            max-width: 1396px
-            font-size: $XS
-            color: $color_claro
-            padding-left: $L
-            border: none
-            outline: none
-            background-color: $color_oscuro_terciario
-
-            &:focus
-                background-color: $color_claro
-                color: $color_oscuro_primario
-
-            &::placeholder
-                color: $color_placeholder
-
-        &:hover
-
-            .header__browser
-                
-                &__input
-                    background-color: $color_claro
-                    color: $color_oscuro_primario
-
-                &__icon
-                    color: $color_oscuro_primario
-
     &__session
         color: $color_claro
         background-color: $color_primario
-        padding: $XXXS $XXXS
-        border-radius: 4px
+        padding: $XXXS $S
+        border-radius: $XXL
         font-family: $fuente_secundaria
         font-size: $XXS
+        transition: 0.2s
+
+        &:hover
+            background-color: $color_primario-hover
 
     &__account
         height: $XXL

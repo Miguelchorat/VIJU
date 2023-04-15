@@ -4,7 +4,7 @@
     border-right: 2px solid $color_oscuro_secundario
     background-color: $color_oscuro_primario
     z-index: 9
-    transition: 0.5s
+    transition: 0.3s
     grid-area: aside
     position: sticky
     top: 0
@@ -93,13 +93,47 @@
     @media (max-width: 1000px)
         width: 60px
 
-        .aside__header
+        .aside
 
+            &__header
+                &__identity
+
+                    &__name
+                        display: none
+            &__nav
+
+                &__list
+
+                    &__item
+
+                        &__link
+
+                            &:hover
+                                width: 250px
+                                background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient($color_oscuro_primario, $color-oscuro_primario)
+                                background-position: top, bottom
+                                background-repeat: no-repeat
+
+                                .aside__nav__list__item__link__title
+                                    display: flex
+
+                            &__title
+                                display: none
+
+                            &--hide
+                                display: none
+
+.aside__hidden
+    width: 60px
+
+    .aside
+
+        &__header
             &__identity
 
                 &__name
                     display: none
-        .aside__nav
+        &__nav
 
             &__list
 
@@ -107,40 +141,34 @@
 
                     &__link
 
+                        &:hover
+                            width: 250px
+                            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient($color_oscuro_primario, $color-oscuro_primario)
+                            
+
+                            .aside__nav__list__item__link__title
+                                display: flex
+
                         &__title
-                            display: none
+                            display: none      
 
-                        &--hide
-                            display: none
-                            .aside__nav__list__item__link__icon
-                                animation: rotate 0.6s
-                                transform: rotate(0deg)
+                        &--hide                             
+                            
+                            &:hover
+                                width: 60px
 
-.aside__hidden
-    width: 60px
+                                .aside__nav__list__item__link
+                                    
+                                    &__title
+                                        display: none
+                                                                            
+                            .aside__nav__list__item__link
 
-    .aside__header
+                                &__icon                                    
+                                    animation: rotate 0.6s
+                                    transform: rotate(0)
+                                        
 
-        &__identity
-
-            &__name
-                display: none
-    .aside__nav
-
-        &__list
-
-            &__item
-
-                &__link
-
-                    &__title
-                        display: none
-
-                    &--hide
-                        .aside__nav__list__item__link__icon
-                            animation: rotate 0.6s
-                            transform: rotate(0deg)
-    
 @keyframes rotate
     from
         transform: rotate(180deg)

@@ -48,7 +48,7 @@ export default {
                     @input="(e) => $emit('listenInput', e.target.value)" :value="search" />
             </div> -->
 
-        <a type="button" class="header__session" href="#" @click="() => $emit('listenMenu', 1)">INICIAR SESIÓN</a>
+        <a type="button" class="header__session" href="#" @click="() => $emit('listenMenu', 1)">SIGN IN</a>
 
         <!-- <a href="#" class="header__account" v-else @click="listenSubmenu">
                 <p class="header__account__name">@{{ user }}</p>

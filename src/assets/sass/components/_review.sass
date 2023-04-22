@@ -64,9 +64,9 @@
                     font-family: $fuente_secundaria
                     font-size: $XXS
 
-                    &__user                    
+                    &__user
                         font-weight: 700
-                        
+
                         &:hover
                             border-bottom: 1px solid $color_claro
 
@@ -113,7 +113,7 @@
             &__info
                 display: grid
                 grid-template-columns: 1fr 1fr 8fr
-                gap: $XXXS                
+                gap: $XXXS
                 justify-content: space-between
                 align-items: flex-end
 
@@ -134,11 +134,12 @@
                     &__icon
                         font-size: $XS
                     
+                    &__selected
+                        color: $color_primario
+
                     &:hover
                         background-color: rgba(15, 15, 15, 0.4)
-
-                        .main__reviews__review__info__like__icon
-                            color: $color_primario
+                        color: $color_primario
 
                 &__favorite
                     color: $color_placeholder
@@ -155,12 +156,13 @@
 
                     &__icon
                         font-size: $XS
-                    
+
+                    &__selected
+                        color: $color_primario
+
                     &:hover
                         background-color: rgba(15, 15, 15, 0.4)
-
-                        .main__reviews__review__info__favorite__icon
-                            color: $color_primario
+                        color: $color_primario
 
                 &__score
                     color: $color_claro
@@ -195,3 +197,20 @@
 
         @media (max-width: 900px)
             grid-template-columns: repeat(1,1fr)
+
+.goUp
+    display: inline-flex
+    opacity: 0
+    transform: translate3d(0, -10px, 0)
+    transition: 0.1s ease-in-out
+
+.waitDown
+    display: inline-flex
+    opacity: 0
+    transform: translate3d(0, 10px, 0)
+
+.initial
+    display: inline-flex
+    opacity: 1
+    transform: translate3d(0, 0px, 0)
+    transition: 0.1s ease-in-out

@@ -8,6 +8,8 @@
     grid-area: aside
     position: sticky
     top: 0
+    display: flex
+    flex-direction: column
 
     &__header
         width: 100%
@@ -40,6 +42,7 @@
         display: flex
         flex-direction: column
         align-content: center
+        position: relative
 
         &__list
             height: 100%
@@ -47,7 +50,7 @@
             display: flex
             flex-direction: column
             color: $color_claro
-            list-style: none
+            list-style: none            
 
             &__item
                 cursor: pointer

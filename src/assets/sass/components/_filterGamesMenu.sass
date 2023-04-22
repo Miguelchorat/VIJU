@@ -1,0 +1,133 @@
+.filter
+    position: absolute
+    top: calc($XL)
+    left: 0
+    background-color: $color_oscuro_secundario
+    height: calc( $XXXL * 4 )
+    width: calc( $XXXL * 3 )
+    border-radius: $XXXS
+    border: 2px solid $color_oscuro_terciario
+    padding: $XXS
+    z-index: 2
+    overflow: scroll
+    overflow-x: hidden
+
+    &__square
+        display: flex
+        width: $XXS
+        height: $XXS
+        background-color: $color_oscuro_secundario
+        border: 2px solid $color_oscuro_terciario
+        position: absolute
+        top: calc( $L + $XXXS/3)
+        left: $S
+        transform: rotate(45deg)
+        z-index: 3
+
+    &__browser
+        height: $M
+        max-height: $M
+        width: 100%
+        display: flex
+        align-self: left
+        position: relative  
+        margin-bottom: $XXXS
+
+        &__icon
+            position: absolute
+            top: 0
+            left: 0
+            height: 100%
+            max-width: $L
+            min-width: $M
+            display: flex
+            border-radius: 0 $S $S 0
+            justify-content: center
+            color: $color_placeholder
+
+        &__input
+            border-radius: $XXXS
+            height: 100%
+            width: 100%
+            font-size: $XS
+            color: $color_claro
+            padding-left: $M
+            padding-right: $XXXS
+            border: none
+            outline: none
+            background-color: $color_oscuro_secundario
+
+            &::placeholder
+                color: $color_placeholder
+
+        &:hover
+            
+            .main__browser
+
+                &__input
+                    background-color: $color_claro
+                    color: $color_oscuro_primario
+
+                &__icon
+                    color: $color_oscuro_primario
+
+    &__list
+        list-style-type: none
+        display: flex
+        flex-direction: column
+        gap: $XXXS
+
+        &__item
+            height: $XXL
+            width: 100%
+            overflow: hidden
+            position: relative
+            border-radius: $XXXS
+            display: flex
+            align-items: center
+
+            &__img
+                width: 100%
+                position: absolute
+                top: 0
+                left: 0
+                object-fit: cover
+                z-index: -1
+                opacity: 20%
+
+            &__text
+                font-family: $fuente_primaria
+                font-size: $XS
+                color: $color_claro
+                padding-left: $XS
+                letter-spacing: 2px
+                text-shadow: 2px 2px $color_oscuro_primario
+
+            &__active
+
+                .filter__list__item
+
+                    &__img
+                        opacity: 70%
+
+                    &__text
+                        text-shadow: 4px 4px 6px #333333, -4px -4px 6px #151515
+
+            &:hover
+                background-color: rgba(15, 15, 15, 0.2)
+
+    &::-webkit-scrollbar
+        -webkit-appearance: none
+
+    &::-webkit-scrollbar:vertical
+        width: $XXXS
+
+    &::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button
+        display: none
+
+    &::-webkit-scrollbar-thumb
+        background-color: $color_primario
+        border-radius: $XXL
+
+    &::-webkit-scrollbar-track
+        border-radius: 10px

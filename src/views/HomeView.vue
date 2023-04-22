@@ -1,5 +1,7 @@
 <script setup>
 import Review from '../components/Review.vue'
+import Browser from '../components/Browser.vue'
+import FilterGamesMenu from '../components/FilterGamesMenu.vue'
 import { API } from '../util'
 </script>
 
@@ -20,8 +22,8 @@ export default {
   props: ["review", "search"],
   data() {
     return {
-      MAX_LENGHT: 85,
       results: null,
+      menuVideogames: false,
       path: '/review/',
       API: API + "/api/v1/reviews",
       API_SEARCH: "/api/v1/reviews/search=" + this.search
@@ -42,6 +44,9 @@ export default {
       const response = await fetch(endpoint, { credentials: 'include' })
       const data = await response.json()
       this.results = data
+    },
+    listenMenuVideogame(){
+      this.menuVideogames = !this.menuVideogames
     }
   }
 }
@@ -51,16 +56,18 @@ export default {
   <main class="main main--reviews">
     <h1 class="main__title">Ultimos añadidos</h1>
     <div class="main__filter">
-      <div class="main__filter__browser">
-        <span class="main__filter__browser__icon material-symbols-outlined">search</span>
-        <input class="main__filter__browser__input" placeholder="Buscar..." :value="search" />
-      </div>
-      <a href="#" class="main__filter__videogame">Videojuego <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span></a>
-      <a href="#" class="main__filter__score">Puntuación <span class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
-    </div>
+      <Browser />
+      <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
+        Videojuego 
+        <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>
+        <FilterGamesMenu v-if="menuVideogames" @click.stop v-click-away="listenMenuVideogame"/>
+      </a>      
+      <a href="#" class="main__filter__score">Puntuación <span
+          class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
+    </div>    
     <section class="main__reviews" v-if="results !== null && results.length !== 0">
       <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.image' :videogame="res.name"
-        :description='res.message.substring(0, MAX_LENGHT) + " ..."' :user='res.username' :score='res.score'
+        :user='res.username' :score='res.score'
         @click="() => $emit('selectReview', res.id)" :path="path" />
     </section>
     <section v-else class="main__empty">

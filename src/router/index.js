@@ -4,7 +4,9 @@ import ProfileView from '../views/ProfileView.vue'
 import ProfileReviewView from '../views/ProfileReviewView.vue'
 import ReviewView from '../views/ReviewView.vue'
 import CreateReviewView from '../views/CreateReviewView.vue'
+import SessionView from '../views/SessionView.vue'
 import UpdateReviewView from '../views/UpdateReviewView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +50,16 @@ const router = createRouter({
       path: '/review/:id',
       name: 'review',
       component: ReviewView
+    },
+    {
+      path: '/sesion',
+      name: 'session',
+      component: SessionView
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: NotFoundView
     }
   ]
 })

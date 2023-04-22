@@ -1,9 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { useRoute } from 'vue-router';
 import Header from './components/Header.vue'
 import Aside from './components/Aside.vue'
 import Login from './components/Login.vue'
-import Signin from './components/Signin.vue'
 import Loading from './components/Loading.vue'
 import axios from 'axios'
 import {API} from './util'
@@ -127,15 +127,13 @@ export default {
 </script>
 
 <template>
-  <Header v-if="loading" @listenInput="listenInput" :search.sync="search" @listenMenu="listenMenu" :menu="menu"
+  <Header v-if="loading" v-show="$route.path !== '/sesion'" @listenInput="listenInput" :search.sync="search" @listenMenu="listenMenu" :menu="menu"
     :account="account" @closeSession="closeSession" :user.sync="user"/>
-  <Aside v-if="loading"/>
+  <Aside v-if="loading" v-show="$route.path !== '/sesion'"/>
   <RouterView v-if="loading" :search="search" :userId.sync="userId" />
   <Loading v-else />
   <Login @listenMenu="listenMenu" :userId.sync="userId" :menu="menu" :session="session" :account="account"
     @listenAccount="listenAccount" @changeSession="changeSession" @changeUserId="changeUserId" v-if="menu == 1"
-    :user.sync="user" @checkUser.sync="checkUser" />
-  <Signin @listenMenu="listenMenu" :menu="menu" v-if="menu == 2"/>
-  <div class="popup__bg" :class="{ popup__bg__active: menu }" @click="listenMenu(0)"></div>
+    :user.sync="user" @checkUser.sync="checkUser" />  
 </template>
 

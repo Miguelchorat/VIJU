@@ -14,24 +14,73 @@ Componente que representa una tarjeta para mostrar información de una reseña.
 @vue-prop {string} path - La ruta a la que se redirigirá al hacer clic en la tarjeta.
 */
 export default {
-    props: ["id","title", "videogame", "image", "description", "user", "score","path"],
-
+    props: ["id", "title", "videogame", "image", "description", "user", "score", "path"],
+    data() {
+        return {
+            likes: 85,
+            favorites: 303,
+            animationLikes: 'initial',
+            animationFavorites: 'initial',
+            isSelectedLikes: 'material-symbols-sharp',
+            isSelectedFavorites: 'material-symbols-sharp'
+        }
+    },
+    methods: {
+        handleLikes() {
+            if (this.isSelectedLikes == 'material-symbols-sharp') {
+                this.likes += 1;
+                this.isSelectedLikes = 'material-symbols-outlined  main__reviews__review__info__like__selected';
+                setTimeout(() => (this.animationLikes = 'goUp'), 0);
+            } else {                
+                setTimeout(() => (this.animationLikes = 'goUp'), 0);
+                setTimeout(() => {
+                    this.likes -= 1;
+                    this.isSelectedLikes = 'material-symbols-sharp';
+                }, 100);
+            }
+            setTimeout(() => (this.animationLikes = 'waitDown'), 75);
+            setTimeout(() => (this.animationLikes = 'initial'), 200);
+        },
+        handleFavorites() {
+            if (this.isSelectedFavorites == 'material-symbols-sharp') {
+                this.favorites += 1;
+                this.isSelectedFavorites = 'material-symbols-outlined  main__reviews__review__info__favorite__selected';
+                setTimeout(() => (this.animationFavorites = 'goUp'), 0);
+            } else {                
+                setTimeout(() => (this.animationFavorites = 'goUp'), 0);
+                setTimeout(() => {
+                    this.favorites -= 1;
+                    this.isSelectedFavorites = 'material-symbols-sharp';
+                }, 100);
+            }
+            setTimeout(() => (this.animationFavorites = 'waitDown'), 75);
+            setTimeout(() => (this.animationFavorites = 'initial'), 200);
+        }
+    }
 }
 </script>
 
 <template>
-    <RouterLink href="#" class="main__reviews__review" :to="path+id">
+    <RouterLink href="#" class="main__reviews__review" :to="path + id">
         <div class="main__reviews__review__account">
-            <p class="main__reviews__review__account__info">Publicado por <span class="main__reviews__review__account__info__user">{{ user }}</span></p>
+            <p class="main__reviews__review__account__info">Publicado por <a
+                    class="main__reviews__review__account__info__user" @click.stop>{{ user }}</a></p>
             <p class="main__reviews__review__account__date">Hace 13 horas</p>
         </div>
         <img class="main__reviews__review__img" :src="image" alt="" />
         <h2 class="main__reviews__review__videogame">{{ videogame }}</h2>
         <h2 class="main__reviews__review__title">{{ title }}</h2>
         <div class="main__reviews__review__info">
-            <a class="main__reviews__review__info__like" href="#"><span class="main__reviews__review__info__like__icon material-symbols-outlined">thumb_up</span>20</a>
-            <a class="main__reviews__review__info__favorite" href="#"><span class="main__reviews__review__info__favorite__icon material-symbols-outlined">favorite</span>303</a>
-            <p class="main__reviews__review__info__score">{{ score }}<span class="main__reviews__review__info__score__icon material-symbols-outlined">grade</span></p>
+            <a class="main__reviews__review__info__like" :class="isSelectedLikes" href="#" @click.stop @click="handleLikes">
+                <span class="main__reviews__review__info__like__icon" :class="isSelectedLikes">thumb_up</span>
+                <span class="main__reviews__review__info__like__text" :class="animationLikes">{{ likes }}</span>
+            </a>
+            <a class="main__reviews__review__info__favorite" :class="isSelectedFavorites" href="#" @click.stop @click="handleFavorites">
+                <span class="main__reviews__review__info__favorite__icon" :class="isSelectedFavorites">favorite</span>
+                <span class="main__reviews__review__info__favorite__text" :class="animationFavorites">{{ favorites }}</span>
+            </a>
+            <p class="main__reviews__review__info__score">{{ score }}<span
+                    class="main__reviews__review__info__score__icon material-symbols-outlined">grade</span></p>
         </div>
     </RouterLink>
 </template>

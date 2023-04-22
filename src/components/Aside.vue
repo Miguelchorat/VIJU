@@ -41,7 +41,7 @@ export default {
                     </RouterLink>
                 </li>
                 <li class="aside__nav__list__item">
-                    <RouterLink class="aside__nav__list__item__link" to="/perfil"
+                    <RouterLink class="aside__nav__list__item__link" to="/crear-review"
                         active-class="aside__nav__list__item__link__active">
                         <span class="aside__nav__list__item__link__icon material-symbols-outlined">today</span>
                         <p class="aside__nav__list__item__link__title">Último día</p>

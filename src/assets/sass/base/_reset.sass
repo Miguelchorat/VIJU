@@ -29,13 +29,15 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 #app
     display: grid
     grid-template-columns: 1fr 1000fr
-    grid-template-rows: auto 1fr
+    grid-template-rows: 1fr 1000fr
     grid-template-areas: "aside header" "aside main"
 
 .main
+    height: 100%
     width: 100% 
     display: flex
     flex-direction: column
     padding: $XS $L
     grid-area: main
     justify-self: center
+    padding-top: calc($XL + $XS)

@@ -2,6 +2,7 @@
 import Review from '../components/Review.vue'
 import Browser from '../components/Browser.vue'
 import FilterGamesMenu from '../components/FilterGamesMenu.vue'
+import FilterScoreMenu from '../components/FilterScoreMenu.vue'
 import { API } from '../util'
 </script>
 
@@ -24,6 +25,7 @@ export default {
     return {
       results: null,
       menuVideogames: false,
+      menuScore: false,
       path: '/review/',
       API: API + "/api/v1/reviews",
       API_SEARCH: "/api/v1/reviews/search=" + this.search
@@ -47,6 +49,9 @@ export default {
     },
     listenMenuVideogame(){
       this.menuVideogames = !this.menuVideogames
+    },
+    listenMenuScore(){
+      this.menuScore = !this.menuScore
     }
   }
 }
@@ -57,13 +62,15 @@ export default {
     <h1 class="main__title">Ultimos añadidos</h1>
     <div class="main__filter">
       <Browser />
-      <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
+      <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">        
         Videojuego 
-        <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>
-        <FilterGamesMenu v-if="menuVideogames" @click.stop v-click-away="listenMenuVideogame"/>
+        <FilterGamesMenu v-if="menuVideogames"  v-click-away="listenMenuVideogame"/>
+        <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>        
       </a>      
-      <a href="#" class="main__filter__score">Puntuación <span
-          class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
+      <a href="#" class="main__filter__score" @click="listenMenuScore">
+        Puntuación 
+        <FilterScoreMenu v-if="menuScore"  v-click-away="listenMenuScore"/>
+        <span class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
     </div>    
     <section class="main__reviews" v-if="results !== null && results.length !== 0">
       <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.image' :videogame="res.name"

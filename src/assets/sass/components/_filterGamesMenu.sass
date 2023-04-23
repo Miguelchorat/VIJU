@@ -7,10 +7,12 @@
     width: calc( $XXXL * 3 )
     border-radius: $XXXS
     border: 2px solid $color_oscuro_terciario
-    padding: $XXS
+    padding: $XXXS
     z-index: 2
-    overflow: scroll
-    overflow-x: hidden
+
+    &--score
+        height: $XL
+        width: calc( $XXXL * 2 )
 
     &__square
         display: flex
@@ -32,6 +34,7 @@
         align-self: left
         position: relative  
         margin-bottom: $XXXS
+        padding: 0 $XXS
 
         &__icon
             position: absolute
@@ -44,6 +47,7 @@
             border-radius: 0 $S $S 0
             justify-content: center
             color: $color_placeholder
+            font-size: $XXS
 
         &__input
             border-radius: $XXXS
@@ -51,7 +55,7 @@
             width: 100%
             font-size: $XS
             color: $color_claro
-            padding-left: $M
+            padding-left: $XS
             padding-right: $XXXS
             border: none
             outline: none
@@ -72,13 +76,17 @@
                     color: $color_oscuro_primario
 
     &__list
+        height: 90%
         list-style-type: none
         display: flex
         flex-direction: column
-        gap: $XXXS
+        gap: $XXXS        
+        overflow: auto
+        overflow-x: hidden
+        padding: 0 $XXS 0 $XXXS
 
         &__item
-            height: $XXL
+            min-height: $XXL
             width: 100%
             overflow: hidden
             position: relative
@@ -116,18 +124,18 @@
             &:hover
                 background-color: rgba(15, 15, 15, 0.2)
 
-    &::-webkit-scrollbar
-        -webkit-appearance: none
+        &::-webkit-scrollbar
+            -webkit-appearance: none
 
-    &::-webkit-scrollbar:vertical
-        width: $XXXS
+        &::-webkit-scrollbar:vertical
+            width: $XXXS
 
-    &::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button
-        display: none
+        &::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button
+            display: none
 
-    &::-webkit-scrollbar-thumb
-        background-color: $color_primario
-        border-radius: $XXL
+        &::-webkit-scrollbar-thumb
+            background-color: $color_primario
+            border-radius: $XXL
 
-    &::-webkit-scrollbar-track
-        border-radius: 10px
+        &::-webkit-scrollbar-track
+            border-radius: 10px

@@ -21,6 +21,6 @@ export default {
 <template>
     <div class="filter__browser">
         <span class="filter__browser__icon material-symbols-outlined">search</span>
-        <input class="filter__browser__input" type="text" placeholder="Buscar juego..." ref="searchInput" :value="search" @click.stop />
+        <input class="filter__browser__input" type="number" placeholder="Puntuación..." ref="searchInput" :value="search" @click.stop />
     </div>
 </template>

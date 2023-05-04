@@ -1,41 +1,56 @@
 .main
 
-    &__background
-        position: fixed
-        top: 0
-        right: 0
-        height: 100%
-        width: 75%
-        -webkit-mask-image: -webkit-gradient(linear, right top, left top, from(rgba(0,0,0,0.8)), to(rgba(0,0,0,0)))
-
-        &__img
-            position: fixed
-            top: 0
-            right: 0
-            height: 100%
-            width: 100%
-            object-fit: cover
-            object-position: center
-
-        &__opacity
-            height: 100%
-            width: 100%
-            position: fixed
-            top: 0
-            left: 0
-            background-color: rgba(0, 0, 0, 0.7)
-            z-index: 0
-
     &__form
-        width: 65%
+        width: 90%
+        max-width: 1000px
         display: flex
         flex-direction: column
         gap: $XS
         z-index: 1
-        min-width: 720px
+        background-color: $color_oscuro_secundario
+        padding: $XS
+        border-radius: 0 0 4px 4px
+
+        &__group
+            display: flex
+            flex-direction: row
+            gap: $XXXS
 
         &__field
             position: relative
+            display: flex
+            flex-direction: row
+            background-color: $color_oscuro_terciario            
+            border-radius: 4px   
+            flex-grow: 1                                 
+
+            &--textarea
+                flex-direction: column
+
+            &__header
+                display: flex
+                flex-direction: row
+                gap: $XXXS
+                background-color: #272729
+                color: $color_claro
+                font-size: $XXS
+                padding: 8px
+                font-family: $fuente_secundaria
+                border-radius: 4px 4px 0 0
+                padding-left: $XS
+                opacity: 70%
+
+                &__help
+                    color: $color_claro
+                    font-size: $XXS
+                    align-self: center
+
+            &__count
+                color: $color_placeholder
+                font-family: $fuente_secundaria
+                font-size: $XXS
+                align-self: center
+                padding-right: $XXS
 
             &__input
                 height: 100%
@@ -49,7 +64,7 @@
                 border: none
                 outline: none
                 background-color: $color_oscuro_terciario
-                border-radius: 25x
+                border-radius: 4px    
 
                 &__warning
                     border-right: 4px solid $color_warning
@@ -83,111 +98,86 @@
                 outline: none
                 background-color: $color_oscuro_terciario
                 resize: none
+                border-radius: 4px                                
+        &__info
+            width: 100%
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: space-between
 
-                &__warning
-                    border: 1px solid $color_warning
+            &__group
+                height: 100%
+                display: flex
+                flex-direction: row
+                gap: $XXS
 
-            &__error
-                position: absolute
-                top: 150%
-                bottom: 0
-                left: 0
-                height: 35px
-                width: 250px
-                background-color: $color_warning
-                color: $color_claro
-                font-family: $fuente_secundaria
-                font-size: $XXS
-                display: none
-                align-items: center
-                padding: 0 8px
-                border-radius: 4px
-                z-index: 10
-
-                &__textarea
-                    position: absolute
-                    top: 20%
-                    bottom: 0
-                    left: 102%
-                    height: 35px
-                    width: 250px
-                    background-color: $color_warning
+                &__label
+                    height: 100%
+                    display: flex
+                    flex-direction: row                    
+                    align-items: center
+                    justify-content: space-between
+                    gap: $XXS
                     color: $color_claro
                     font-family: $fuente_secundaria
                     font-size: $XXS
-                    display: none
-                    align-items: center
-                    padding: 0 8px
-                    border-radius: 4px
-                    z-index: 10
+                    background-color: $color_primario-hover
+                    padding: $XXXS
+                    padding-left: $XXS 
+                    border-radius: 50px                      
+                    cursor: pointer
 
-                    &__active
-                        display: flex
+                    &:hover
+                        transition: 0.6s
+                        opacity: 80%
 
-                &__active
-                    display: flex
+                    &__icon
+                        opacity: 90%                                      
 
-            &__square
-                position: absolute
-                top: 135%
-                left: 20px
-                margin: auto
-                transform: rotate(45deg)
-                width: $XXS
-                height: $XXS
-                margin-right: 4px
-                background-color: $color_warning
-                z-index: 9
-                display: none
+            &__button
+                width: 10%
+                height: $M
+                min-height: $M
+                min-width: 50px            
+                background-color: $color_primario
+                font-family: $fuente_primaria
+                font-size: $XS
+                color: $color_claro
+                align-self: end
+                border: none
+                outline: none
+                cursor: pointer
+                border-radius: 4px
 
-                &__textarea
-                    position: absolute
-                    top: 22%                    
-                    left: 101%
-                    margin: auto
-                    transform: rotate(45deg)
-                    width: $XXS
-                    height: $XXS
-                    margin-left: 4px
-                    background-color: $color_warning
-                    z-index: 9
-                    display: none
+                &:hover
+                    background-color: $color_primario-hover
 
-                    &__active
-                        display: flex
+    &__nav
+        height: $XL
+        width: 90%
+        max-width: 1000px
+        display: flex
+        flex-direction: row
+        z-index: 1
+        background-color: $color_oscuro_secundario
+        border-radius: 4px 4px 0 0
+        border-bottom: 1px solid $color_oscuro_terciario
 
-                &__active
-                    display: flex
-
-        &__button
+        &__link
             width: 20%
-            height: $M
-            min-height: $M
-            min-width: 300px
-            max-width: 325px
-            background-color: $color_primario
+            max-width: 200px
+            display: flex
+            flex-direction: row
+            gap: $XXS
+            color: $color_claro
+            justify-content: center
+            align-items: center
             font-family: $fuente_primaria
             font-size: $XS
-            color: $color_claro
-            align-self: flex-end
-            border: none
-            outline: none
-            cursor: pointer
+            border-bottom: 2px solid $color_claro
+            border-right: 1px solid $color_oscuro_terciario
+            border-radius: none
 
-            &:hover
-                background-color: $color_primario-hover
-
-        &__group
-            display: grid
-            grid-template-columns: 6fr 1fr 4fr
-            justify-content: space-between
-            gap: $XS
-
-            input
-                width: 100%
-                flex-grow: 1
-                flex-shrink: 1
-
-            select
-                width: 100%
-                flex-shrink: 0
+            &__icon
+                font-size: $S

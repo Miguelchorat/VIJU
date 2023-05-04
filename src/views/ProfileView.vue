@@ -43,22 +43,46 @@ export default {
 </script>
 
 <template>
-  <main class="main main--header">
-    <header class="main__header main__header--review">
-      <h2 class="main__header__title">MI CUENTA</h2>    
-      <div class="main__header__background">
-        <img className="main__header__background__img" src="/src/assets/img/background-2.jpeg" />
-        <div className="main__header__background__opacity" />
-      </div>  
+  <main class="main">
+    <header class="main__header">  
+      <section class="main__header__background">
+        <img className="main__header__background__img" src="/src/assets/img/background-2.jpg" />
+      </section>  
+      <section class="main__header__user">
+        <p class="main__header__user__info">11 <span class="main__header__user__info__label">Reseñas</span></p> /
+        <p class="main__header__user__info">233 <span class="main__header__user__info__label">Me gustas</span></p> /
+        <p class="main__header__user__info">4 <span class="main__header__user__info__label">Favoritos</span></p>
+      </section>
     </header>
-    <section class="main__profile">
-      <h3 class="main__profile__title">NOMBRE DE USUARIO</h3>
-      <p class="main__profile__text">{{ user.username }}</p>
-      <h3 class="main__profile__title">CORREO</h3>
-      <p class="main__profile__text">{{user.email}}</p>
-      <h3 class="main__profile__title">FECHA DE NACIMIENTO</h3>
-      <p class="main__profile__text">{{user.date.split('-').reverse().join('-')}}</p>
-      <input type='button' class="main__profile__button" value="MODIFICAR" @click="listenMenu" />
+    <!-- PLACEHOLDER -->
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section>
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section>
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section>
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section>
+
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section><section class="main__data">
+      Datos para rellenar y haya scroll
+    </section>
+    <section class="main__data">
+      Datos para rellenar y haya scroll
+    </section><section class="main__data">
+      Datos para rellenar y haya scroll
+    </section><section class="main__data">
+      Datos para rellenar y haya scroll
+    </section><section class="main__data">
+      Datos para rellenar y haya scroll
+    </section><section class="main__data">
+      Datos para rellenar y haya scroll
     </section>
   </main>
 

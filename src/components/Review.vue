@@ -79,8 +79,9 @@ export default {
                 <span class="main__reviews__review__info__favorite__icon" :class="isSelectedFavorites">favorite</span>
                 <span class="main__reviews__review__info__favorite__text" :class="animationFavorites">{{ favorites }}</span>
             </a>
-            <p class="main__reviews__review__info__score">{{ score }}<span
-                    class="main__reviews__review__info__score__icon material-symbols-outlined">grade</span></p>
+            <p class="main__reviews__review__info__score">{{ score }}
+                <span class="main__reviews__review__info__score__icon material-symbols-outlined">grade</span>
+            </p>
         </div>
     </RouterLink>
 </template>

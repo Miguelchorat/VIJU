@@ -30,11 +30,12 @@
                 width: $M
 
             &__name
-                font-size: $S
+                font-size: $XS
                 font-family: $fuente_primaria
                 font-weight: 900
-                letter-spacing: $XXXS
+                letter-spacing: calc( $XXXS / 2)
                 color: $color_claro
+                align-self: center
 
     &__nav
         height: 100%
@@ -69,6 +70,7 @@
                     &__title
                         font-size: 1.2rem
                         font-family: $fuente_primaria
+                        align-self: center
                         white-space: nowrap
 
                     &:hover

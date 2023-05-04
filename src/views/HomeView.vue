@@ -47,10 +47,10 @@ export default {
       const data = await response.json()
       this.results = data
     },
-    listenMenuVideogame(){
+    listenMenuVideogame() {
       this.menuVideogames = !this.menuVideogames
     },
-    listenMenuScore(){
+    listenMenuScore() {
       this.menuScore = !this.menuScore
     }
   }
@@ -58,28 +58,30 @@ export default {
 </script>
 
 <template>
-  <main class="main main--reviews">
-    <h1 class="main__title">Ultimos añadidos</h1>
-    <div class="main__filter">
-      <Browser />
-      <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">        
-        Videojuego 
-        <FilterGamesMenu v-if="menuVideogames"  v-click-away="listenMenuVideogame"/>
-        <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>        
-      </a>      
-      <a href="#" class="main__filter__score" @click="listenMenuScore">
-        Puntuación 
-        <FilterScoreMenu v-if="menuScore"  v-click-away="listenMenuScore"/>
-        <span class="main__filter__score__icon material-symbols-outlined">expand_more</span></a>
-    </div>    
-    <section class="main__reviews" v-if="results !== null && results.length !== 0">
-      <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.image' :videogame="res.name"
-        :user='res.username' :score='res.score'
-        @click="() => $emit('selectReview', res.id)" :path="path" />
-    </section>
-    <section v-else class="main__empty">
-      <img src="/src/assets/img/broken.png" alt="CD ROTO" class="main__empty__image">
-      <h2 className="main__empty__title">No se ha encontrado ningun resultado.</h2>
-    </section>
+  <main class="main">
+    <div class="container">
+      <h1 class="main__title">Ultimos añadidos</h1>
+      <div class="main__filter">
+        <Browser />
+        <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
+          Videojuego
+          <FilterGamesMenu v-if="menuVideogames" v-click-away="listenMenuVideogame" />
+          <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>
+        </a>
+        <a href="#" class="main__filter__score" @click="listenMenuScore">
+          Puntuación
+          <FilterScoreMenu v-if="menuScore" v-click-away="listenMenuScore" />
+          <span class="main__filter__score__icon material-symbols-outlined">expand_more</span>
+        </a>
+      </div>
+      <section class="main__reviews" v-if="results !== null && results.length !== 0">
+        <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.image' :videogame="res.name"
+          :user='res.username' :score='res.score' @click="() => $emit('selectReview', res.id)" :path="path" />
+      </section>
+      <section v-else class="main__empty">
+        <img src="/src/assets/img/broken.png" alt="CD ROTO" class="main__empty__image">
+        <h2 className="main__empty__title">No se ha encontrado ningun resultado.</h2>
+      </section>
+    </div>
   </main>
 </template>

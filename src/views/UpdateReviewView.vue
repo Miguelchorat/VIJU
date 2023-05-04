@@ -125,10 +125,6 @@ export default {
 <template>
     <main class="main">
         <h1 class="main__title">MODIFICAR RESEÑA</h1>
-        <div class="main__background">
-            <img className="main__background__img" src="/src/assets/img/background.jpeg" />
-            <div className="main__background__opacity" />
-        </div>
         <form class="main__form" @submit.prevent="checkFields">
             <div class="main__form__group">
                 <div class="main__form__field">

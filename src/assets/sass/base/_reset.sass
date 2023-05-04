@@ -3,6 +3,8 @@
     padding: 0px
     margin: 0px
     box-sizing: border-box
+
+a
     text-decoration: none
 
 //Configuración inicial de la página web
@@ -14,6 +16,7 @@ html, body, #app
     overflow-x: hidden
     position: relative
     background-color: $color_oscuro_primario
+    overflow: hidden
 
 //Sobreescribir el css por defecto de los iconos de google
 .material-symbols-outlined
@@ -33,11 +36,18 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     grid-template-areas: "aside header" "aside main"
 
 .main
-    height: 100%
     width: 100% 
     display: flex
     flex-direction: column
-    padding: $XS $L
     grid-area: main
     justify-self: center
-    padding-top: calc($XL + $XS)
+    align-items: center
+    overflow: auto    
+    margin-bottom: $L    
+    position: relative
+
+.container
+    width: 100%
+    max-width: 1650px    
+    padding: $XS $S
+    

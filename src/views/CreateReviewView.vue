@@ -1,7 +1,11 @@
-<script>
+<script setup>
 import axios from 'axios'
-import {API} from '../util'
+import { API } from '../util'
+import FilterGamesMenu from '../components/FilterGamesMenu.vue'
+import FilterScoreMenu from '../components/FilterScoreMenu.vue'
+</script>
 
+<script>
 /**
  * Componente para crear una reseña.
  * @vue-prop {string} title - Título de la reseña.
@@ -35,19 +39,18 @@ export default {
             errorMessage: '',
             errorScore: '',
             errorVideogame: '',
-            focusTitle: false,
-            focusMessage: false,
-            focusScore: false,
-            focusVideogame: false,
             games: null,
+            menuVideogames: false,
+            menuScore: false,
             API_GAMES: API + "/api/v1/games",
             API_CREATE_REVIEW: API + "/api/v1/auth/reviews",
             scoreValidation: /^(?:[0-5](?:\.[0-9])?|\.[0-9])$/,
         }
     },
     methods: {
-        async callAPIGames() {
-            const response = await fetch(this.API_GAMES)
+        async callAPI() {
+            const endpoint = this.search !== "" ? this.API_SEARCH : this.API
+            const response = await fetch(endpoint, { credentials: 'include' })
             const data = await response.json()
             this.games = data
         },
@@ -96,6 +99,12 @@ export default {
             if (check == 4) {
                 this.createReview()
             }
+        },
+        listenMenuVideogame() {
+            this.menuVideogames = !this.menuVideogames
+        },
+        listenMenuScore() {
+            this.menuScore = !this.menuScore
         }
     },
 }
@@ -103,66 +112,52 @@ export default {
 
 <template>
     <main class="main">
-        <h1 class="main__title">CREAR RESEÑA</h1>
-        <div class="main__background">
-            <img className="main__background__img" src="/src/assets/img/background.jpeg" />
-            <div className="main__background__opacity" />
+        <div class="container">
+            <h1 class="main__title">Crear una reseña</h1>
+            <nav class="main__nav">
+                <a href="#" class="main__nav__link" @click.stop>
+                    <span class="main__nav__link__icon material-symbols-outlined">rate_review</span>
+                    Publicar
+                </a>
+            </nav>
+            <form class="main__form" @submit.prevent="checkFields">
+                <div class="main__form__group">
+                    <div class="main__form__field">
+                        <input class="main__form__field__input" type="text" placeholder="Título" aria-label="title"
+                            :value="title" @input="event => title = event.target.value" maxlength="50" />
+                        <p class="main__form__field__count">{{ title.length }}/50</p>
+                    </div>
+                    <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
+                        Videojuego
+                        <FilterGamesMenu v-if="menuVideogames" v-click-away="listenMenuVideogame" />
+                        <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>
+                    </a>
+                    <a href="#" class="main__filter__score" @click="listenMenuScore">
+                        Puntuación
+                        <FilterScoreMenu v-if="menuScore" v-click-away="listenMenuScore" />
+                        <span class="main__filter__score__icon material-symbols-outlined">expand_more</span>
+                    </a>
+                </div>
+                <div class="main__form__field main__form__field--textarea">
+                    <div class="main__form__field__header">
+                        Markdown
+                        <a class="main__form__field__header__help material-symbols-sharp" href="#">help</a>
+                    </div>
+                    <textarea class="main__form__field__textarea" type="text" placeholder="Texto (Obligatorio)"
+                        aria-label="text" :value="message" @input="event => message = event.target.value"
+                        @focus="focusMessage = true" @blur="focusMessage = false"
+                        :class="{ main__form__field__textarea__warning: errorMessage }" />
+                </div>
+                <div class="main__form__info">
+                    <div class="main__form__info__group">
+                        <p class="main__form__info__group__label">The legend of Zelda <span
+                                class="main__form__info__group__label__icon material-symbols-outlined">close</span></p>
+                        <p class="main__form__info__group__label">4.6 <span
+                                class="main__form__info__group__label__icon material-symbols-outlined">close</span></p>
+                    </div>
+                    <input class="main__form__info__button" type="submit" value="Publicar">
+                </div>
+            </form>
         </div>
-        <form class="main__form" @submit.prevent="checkFields">
-            <div class="main__form__group">
-                <div class="main__form__field">
-                    <input class="main__form__field__input" type="text" placeholder="Título" aria-label="title"
-                        :value="title" @input="event => title = event.target.value" maxlength="50"
-                        :class="{ main__form__field__input__warning: errorTitle }" @focus="focusTitle = true"
-                        @blur="focusTitle = false" />
-                    <span class="main__form__field__square"
-                        :class="{ main__form__field__square__active: errorTitle && focusTitle }" />
-                    <p class="main__form__field__error"
-                        :class="{ main__form__field__error__active: errorTitle && focusTitle }">{{
-                            errorTitle
-                        }}</p>
-                </div>
-
-                <div class="main__form__field">
-                    <input class="main__form__field__input" type="number" placeholder="Nota" aria-label="score" step="any"
-                        :value="score" @input="event => score = event.target.value" @focus="focusScore = true"
-                        :class="{ main__form__field__input__warning: errorScore }" @blur="focusScore = false" />
-                    <span class="main__form__field__square"
-                        :class="{ main__form__field__square__active: errorScore && focusScore }" />
-                    <p class="main__form__field__error main__form__field__error__square"
-                        :class="{ main__form__field__error__active: errorScore && focusScore }">{{
-                            errorScore
-                        }}</p>
-                </div>
-
-                <div class="main__form__field">
-                    <select class="main__form__field__select" name="videogames" @click="callAPIGames"
-                        @focus="focusVideogame = true" @blur="focusVideogame = false"
-                        :class="{ main__form__field__select__warning: errorVideogame }"
-                        @input="event => videogame = event.target.value">
-                        <option value="" selected>VIDEOJUEGOS</option>
-                        <option value="">- - - - -</option>
-                        <option v-for="d in games" :value="d.id">{{ d.name }}</option>
-                    </select><span class="session__field__square"
-                        :class="{ session__field__square__active: errorVideogame && focusVideogame }" />
-                    <p class="session__field__error"
-                        :class="{ session__field__error__active: errorVideogame && focusVideogame }">{{
-                            errorVideogame
-                        }}</p>
-                </div>
-            </div>
-            <div class="main__form__field">
-                <textarea class="main__form__field__textarea" type="text" placeholder="Texto" aria-label="text"
-                    :value="message" @input="event => message = event.target.value" @focus="focusMessage = true"
-                    @blur="focusMessage = false" :class="{ main__form__field__textarea__warning: errorMessage }" />
-                <span class="main__form__field__square__textarea"
-                    :class="{ main__form__field__square__textarea__active: errorMessage && focusMessage }" />
-                <p class="main__form__field__error__textarea"
-                    :class="{ main__form__field__error__textarea__active: errorMessage && focusMessage }">{{
-                        errorMessage
-                    }}</p>
-            </div>
-            <input class="main__form__button" type="submit" value="CREAR RESEÑA">
-        </form>
     </main>
 </template>

@@ -31,8 +31,7 @@ export default {
             </RouterLink>
         </header>
         <nav class="aside__nav">
-            <!-- <h2 v-if="!$route.path.includes('/perfil')" class="aside__nav__title">TEMAS</h2> -->
-            <ul v-if="!$route.path.includes('/perfil')" class="aside__nav__list">
+            <ul class="aside__nav__list">
                 <li class="aside__nav__list__item">
                     <RouterLink class="aside__nav__list__item__link" to="/"
                         active-class="aside__nav__list__item__link__active">
@@ -55,7 +54,7 @@ export default {
                 </RouterLink>
             </li>
             <li class="aside__nav__list__item">
-                <RouterLink class="aside__nav__list__item__link" to="/perfil"
+                <RouterLink class="aside__nav__list__item__link" to="/de"
                     active-class="aside__nav__list__item__link__active">
                     <span class="aside__nav__list__item__link__icon material-symbols-outlined">calendar_month</span>
                     <p class="aside__nav__list__item__link__title">Último mes</p>
@@ -68,23 +67,6 @@ export default {
                     </a>
                 </li>
             </ul>
-            <!-- <h2 v-if="$route.path.includes('/perfil')" class="aside__nav__title">MI CUENTA</h2>
-                <ul v-if="$route.path.includes('/perfil')" class="aside__nav__list">
-                    <li class="aside__nav__list__item">
-                        <RouterLink class="aside__nav__list__item__link" to="/perfil"
-                            active-class="aside__nav__list__item__link__active">
-                            <span class="aside__nav__list__item__icon material-symbols-outlined">person</span>
-                            PERFIL
-                        </RouterLink>
-                    </li>
-                    <li class="aside__nav__list__item">
-                        <RouterLink class="aside__nav__list__item__link" to="/perfil/reviews"
-                            active-class="aside__nav__list__item__link__active">
-                            <span class="aside__nav__list__item__icon material-symbols-outlined">reviews</span>
-                            RESEÑAS
-                        </RouterLink>
-                    </li>
-                </ul> -->
         </nav>
     </aside>
 </template>

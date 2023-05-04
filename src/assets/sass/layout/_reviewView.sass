@@ -1,142 +1,123 @@
 .main
 
-    &--header
-        padding: 0
+    &__breadcrumb
+        display: flex
+        flex-direction: row
+        color: $color_placeholder
+        font-size: $XS
+        font-family: $fuente_secundaria
+        gap: $XXXS
+        position: relative
+        z-index: 1
 
-    &__header
-        
-        &--review
-            position: relative
-            min-height: 300px
-            max-height: 350px
-            flex-grow: 2
-            padding: $XS
-
-        &__menu
-            position: absolute
-            top: $XS
-            right: $XL    
-            color: $color_claro
-            font-size: $S
-            padding: $XXS
-            cursor: pointer
+        &__link
+            color: $color_placeholder
 
             &:hover
                 color: $color_primario
 
-        &__background
-            position: absolute
-            top: 0
-            left: 0                     
-            height: 100%
-            width: 100%
-            -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))
-
-            &__img
-                height: 100%
-                width: 100%
-                position: absolute
-                top: 0
-                left: 0                     
-                z-index: 0    
-                object-fit: cover
-                object-position: top
-                
-                        
-            &__opacity
-                height: 100%
-                width: 100%
-                position: absolute
-                top: 0
-                left: 0
-                background-color: rgba(0, 0, 0, 0.7)
-                z-index: 0
-            
-
-        &__score
-            position: absolute
-            bottom: $XS
-            right: $XL
+        &__title
             color: $color_claro
-            font-size: $S
-            font-family: $fuente_secundaria
-            display: flex
-            align-items: center
-            justify-content: center
-            padding: $XXS
-            border-radius: 50%
 
-            &__red
-                color: red
-
-            &__yellow
-                color: yellow
-
-            &__green
-                color: green
-
-        &__date
-            position: absolute
-            bottom: $XS
-            left: $XL
-            color: $color_claro
-            font-size: $XS
-            font-family: $fuente_secundaria
-
-        &__submenu
-            position: absolute
-            top: $XXL
-            right: $XXL
-            background-color: $color_oscuro_secundario
-            border-radius: 2px
-            box-shadow: rgba(255, 255, 255, 0.08) 0px 0px 0px 1px
-            height: 25%
-            width: 100%
-            margin-right: $XXS
-            max-width: 150px
-            min-height: 80px
-            display: flex
-            flex-direction: row
-            z-index: 99
-
-            &__list
-                height: 100%
-                width: 100%
-                display: flex
-                flex-direction: column
-                justify-content: space-around
-                list-style: none
-                padding: $XXS
-
-                &__item > a
-                    height: 100%
-                    width: 100%
-                    display: flex
-                    align-items: center
-                    justify-content: center
-                    font-family: $fuente_secundaria
-                    font-size: $XS
-                    cursor: pointer
-                    color: $color_claro
-
-                    &:hover
-                        color: $color_primario
-
-    &__review
-        display: flex
-        flex-direction: column
-        gap: $XS  
-        padding: $L      
+    &__section
+        position: relative
+        z-index: 1
+        margin-top: $L
 
         &__title
-            font-family: $fuente_primaria
-            font-size: $L        
+            font-size: $S
             color: $color_claro
+            font-family: $fuente_primaria
+            border-bottom: 1px solid $color_oscuro_terciario
+            padding-bottom: $XXXS
+
+            &__text
+                border-bottom: 3px solid $color_primario
+                padding: 0 $XXS
+                padding-bottom: $XXXS
+
+        &__subtitle
+            color: $color_claro
+            font-size: $M
+            font-family: $fuente_secundaria
+            margin-top: $S
 
         &__description
-            font-family: $fuente_secundaria
-            font-size: $XS
-            padding-right: 400px
-            line-height: 1.5
             color: $color_claro
-    
+            font-size: $XS
+            font-family: $fuente_secundaria
+            margin: $S 0
+            display: flex
+            flex-direction: column
+            gap: $XS
+
+        &__article
+            width: 32%
+            display: grid
+            grid-template-columns: 1fr 1fr
+            grid-template-rows: 1fr 2fr
+            grid-template-areas: "title title" "label info"
+            padding: $S 0
+            max-width: 400px
+
+            &--videogame
+                grid-template-columns: 1fr 2fr
+
+            &__group
+                display: flex
+                flex-direction: row
+                gap: $XS
+                flex-wrap: wrap
+
+            &__title
+                grid-area: title
+                color: $color_claro
+                font-size: $XS
+                font-family: $fuente_secundaria
+
+            &__label
+                grid-area: label
+                display: flex
+                flex-direction: column
+                gap: $XXS
+
+                &__text
+                    color: $color_placeholder
+                    font-size: $XS
+                    font-family: $fuente_secundaria
+
+            &__info
+                grid-area: info
+                display: flex
+                flex-direction: column
+                gap: $XXS
+
+                &__text
+                    color: $color_claro
+                    font-size: $XS
+                    font-family: $fuente_secundaria
+                    display: flex
+                    flex-direction: row
+                    gap: $XXXS
+
+                    &__icon
+                        font-size: $XXS
+
+    &__background
+        position: absolute
+        top: 0
+        left: 0
+        height: 100%
+        width: 100%
+        -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))
+        min-height: 400px
+        max-height: 750px
+        z-index: 0
+
+        &__img
+            height: 100%
+            width: 100%
+            object-fit: cover
+            object-position: top
+            opacity: 5%
+            pointer-events: none

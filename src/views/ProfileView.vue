@@ -1,6 +1,6 @@
 <script setup>
 import UpdateAccount from '../components/UpdateAccount.vue'
-import {API} from '../util'
+import { API } from '../util'
 </script>
 
 <script>
@@ -19,73 +19,90 @@ export default {
   props: ['userId', 'search'],
 
   data() {
-    return {      
-      user:  null ?? {username: "",email: '', date: '1970-01-01'},
-      menu: false,      
-      API_USER: API + "/api/v1/users/id="+localStorage.getItem("userId"),
+    return {
+      user: null ?? { username: "", email: '', date: '1970-01-01' },
+      menu: false,
+      API_USER: API + "/api/v1/users/id=" + localStorage.getItem("userId"),
+      subheader: '',
+      elementWidth: 0,
+      scrollbarWidth: 6.4
     }
   },
   created() {
-    this.checkUser()   
+    //this.checkUser()
+  },
+  mounted() {
+    const main = this.$refs.main
+    main.addEventListener('scroll', this.onScroll)
+    const resizeObserver = new ResizeObserver((entries) => {
+      this.elementWidth = entries[0].contentRect.width;
+    });
+    resizeObserver.observe(main);
   },
   methods: {
     listenMenu() {
       this.menu = !this.menu
     },
-
-    async checkUser() {
-      const response = await fetch(this.API_USER)
-      const data = await response.json()
-      this.user = data
+    // async checkUser() {
+    //   const response = await fetch(this.API_USER)
+    //   const data = await response.json()
+    //   this.user = data
+    // },
+    onScroll() {
+      const subheader = this.$refs.subheader
+      const main = this.$refs.main
+      const scrollTop = main.pageYOffset || main.scrollTop
+      const subheaderTop = subheader.offsetTop
+      
+      if ( scrollTop > subheaderTop ) {
+        this.subheader = 'main__subheader--fixed'
+      } else if ( scrollTop <= subheaderTop ){
+        this.subheader = ''
+      }
     }
   }
 }
 </script>
 
 <template>
-  <main class="main">
-    <header class="main__header">  
-      <section class="main__header__background">
-        <img className="main__header__background__img" src="/src/assets/img/background-2.jpg" />
-      </section>  
-      <section class="main__header__user">
-        <p class="main__header__user__info">11 <span class="main__header__user__info__label">Reseñas</span></p> /
-        <p class="main__header__user__info">233 <span class="main__header__user__info__label">Me gustas</span></p> /
-        <p class="main__header__user__info">4 <span class="main__header__user__info__label">Favoritos</span></p>
+  <main class="main" ref="main">
+    <div class="container" >
+      <header class="main__header">
+        <section class="main__header__background">
+          <img className="main__header__background__img" src="/src/assets/img/background-2.jpg" />
+        </section>
+      </header>
+      <section class="main__subheader" ref="subheader" :class="subheader" :style="{ width: `calc(${elementWidth + scrollbarWidth}px` }">
+        <img class="main__subheader__avatar" src="../assets/img/logo.svg" alt="Avatar de usuario">
+        <p class="main__subheader__username">Pedrito el de los palotes</p>
+        <nav class="main__subheader__nav">
+          <a href="#" class="main__subheader__nav__info">11 <span class="main__subheader__nav__info__label">Reseñas</span></a> /
+          <a href="#" class="main__subheader__nav__info">233 <span class="main__subheader__nav__info__label">Me
+              gustas</span></a> /
+          <a href="#" class="main__subheader__nav__info">4 <span class="main__subheader__nav__info__label">Favoritos</span></a>
+        </nav>        
       </section>
-    </header>
-    <!-- PLACEHOLDER -->
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
 
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section><section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
-    <section class="main__data">
-      Datos para rellenar y haya scroll
-    </section><section class="main__data">
-      Datos para rellenar y haya scroll
-    </section><section class="main__data">
-      Datos para rellenar y haya scroll
-    </section><section class="main__data">
-      Datos para rellenar y haya scroll
-    </section><section class="main__data">
-      Datos para rellenar y haya scroll
-    </section>
+      <!-- PLACEHOLDER -->
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+      <section class="main__data">
+        Datos para rellenar y haya scroll
+      </section>
+    </div>
   </main>
-
-  <UpdateAccount @listenMenu="listenMenu" @checkUser="checkUser" :menu="menu" v-if="menu == 1" />
-  <div class="popup__bg" :class="{ popup__bg__active: menu }" @click="listenMenu"></div>
 </template>

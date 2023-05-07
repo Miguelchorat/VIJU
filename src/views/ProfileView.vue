@@ -49,15 +49,16 @@ export default {
     //   this.user = data
     // },
     onScroll() {
-      const subheader = this.$refs.subheader
+      const header = this.$refs.header
       const main = this.$refs.main
       const scrollTop = main.pageYOffset || main.scrollTop
-      const subheaderTop = subheader.offsetTop
+      const subheaderTop = header.offsetTop + header.offsetHeight
       
       if ( scrollTop > subheaderTop ) {
-        this.subheader = 'main__subheader--fixed'
+        this.subheader = 'main__subheader--fixed'            
       } else if ( scrollTop <= subheaderTop ){
-        this.subheader = ''
+        if(this.subheader != '')
+          this.subheader = 'main__subheader--animation'        
       }
     }
   }
@@ -67,10 +68,11 @@ export default {
 <template>
   <main class="main" ref="main">
     <div class="container" >
-      <header class="main__header">
+      <header class="main__header" ref="header">
         <section class="main__header__background">
           <img className="main__header__background__img" src="/src/assets/img/background-2.jpg" />
         </section>
+        <a href="#" class="main__header__edit">Editar</a>
       </header>
       <section class="main__subheader" ref="subheader" :class="subheader" :style="{ width: `calc(${elementWidth + scrollbarWidth}px` }">
         <img class="main__subheader__avatar" src="../assets/img/logo.svg" alt="Avatar de usuario">

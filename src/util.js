@@ -1,4 +1,4 @@
-export const API = 'http://127.0.0.1:3001';
+export const API = 'http://localhost:8080';
 
 export function formatDate(date) {
     const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -10,4 +10,30 @@ export function formatDate(date) {
     const formattedDate = `${day} ${month}, ${year}`;
 
     return formattedDate;
+}
+
+export function convertDate(date) {
+    const currentDate = new Date();
+    const convertedDate = new Date(date);
+
+    const elapsedTime = currentDate - convertedDate;
+    const secondsElapsed = elapsedTime / 1000;
+
+    const minutesElapsed = secondsElapsed / 60;
+    const hoursElapsed = minutesElapsed / 60;
+    const daysElapsed = hoursElapsed / 24;
+
+    if (daysElapsed > 365) {
+        return `hace ${Math.floor(daysElapsed / 365)} año`;
+    } else if (daysElapsed == 1) {
+        return `hace ${Math.floor(daysElapsed)} dia`;
+    } else if (daysElapsed > 1) {
+        return `hace ${Math.floor(daysElapsed)} dias`;
+    } else if (hoursElapsed == 1) {
+        return `hace ${Math.floor(hoursElapsed)} hora`;
+    } else if (hoursElapsed > 1) {
+        return `hace ${Math.floor(hoursElapsed)} horas`;
+    } else {
+        return `hace ${Math.floor(minutesElapsed)} minutos`;
+    }
 }

@@ -17,6 +17,7 @@
             gap: $XXXS
 
         &__field
+            height: 100%
             position: relative
             display: flex
             flex-direction: row
@@ -27,6 +28,39 @@
             &--textarea
                 flex-direction: column
 
+            &--preview
+                height: 100%
+                overflow: auto
+                overflow-x: hidden
+                display: flex
+                flex-direction: column
+                padding: $XXS
+                color: $color_claro
+                font-family: $fuente_secundaria
+
+                & *
+                    margin-bottom: $XXS
+                
+                & ol, ul
+                    margin-left: $M
+
+                & h1
+                    font-family: $fuente_primaria
+
+                & a
+                    color: $color_claro
+                    border-bottom: 1px solid $color_claro
+
+                    &:hover
+                        opacity: $opacidad
+
+                & img
+                    width: 85%
+                    height: auto
+                    display: table
+                    margin: 0 auto
+                    padding: $XS
+
             &__header
                 display: flex
                 flex-direction: row
@@ -34,16 +68,25 @@
                 background-color: #272729
                 color: $color_claro
                 font-size: $XXS
-                padding: 8px
+                padding: 4px $XS
                 font-family: $fuente_secundaria
                 border-radius: 4px 4px 0 0
-                padding-left: $XS
                 opacity: 70%
+                align-items: center
+                justify-content: space-between
 
-                &__help
-                    color: $color_claro
-                    font-size: $XXS
-                    align-self: center
+                &__nav
+                    display: flex
+                    flex-direction: row
+                    gap: $XXXS
+
+                    &__item
+                        cursor: pointer
+                        padding: $XXXS
+                        border-radius: 4px
+
+                        &:hover
+                            background-color: $color_oscuro_primario
 
             &__count
                 color: $color_placeholder
@@ -88,7 +131,7 @@
             &__textarea
                 height: 100%
                 width: 100%
-                min-height: 450px
+                min-height: 350px
                 font-family: $fuente_secundaria
                 font-size: $XS
                 color: $color_claro                
@@ -98,7 +141,8 @@
                 outline: none
                 background-color: $color_oscuro_terciario
                 resize: none
-                border-radius: 4px                                
+                border-radius: 4px      
+
         &__info
             width: 100%
             display: flex
@@ -175,9 +219,14 @@
             align-items: center
             font-family: $fuente_primaria
             font-size: $XS
-            border-bottom: 2px solid $color_claro
+            border-bottom: 2px solid $color_oscuro_secundario
             border-right: 1px solid $color_oscuro_terciario
             border-radius: none
+            opacity: $opacidad
+
+            &__active                
+                border-bottom: 2px solid $color_claro
+                opacity: 1
 
             &__icon
                 font-size: $S

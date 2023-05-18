@@ -7,25 +7,49 @@ import { API } from '../util'
 
 
 export default {
+    props: ['videogamesSelected'],
     data() {
         return {
             games: [],
-            API_GAMES: API + "/api/v1/games",
-            selectedItemIds: []
+            API_GAMES: API + "/videogames",
+            search: ''
         }
+    },
+    watch: {
+        search: function () {
+            this.callAPIGames()
+        },
     },
     methods: {
         async callAPIGames() {
-            const response = await fetch(this.API_GAMES)
+            let endpoint = this.API_GAMES + '?search=' + this.search
+            console.log(endpoint)
+            const response = await fetch(endpoint)
             const data = await response.json()
-            this.games = data
+            this.games = data.filter(game => !this.videogamesSelected.find(selectedGame => selectedGame.id === game.id))
         },
-        toggleSelection(id) {
-            if (this.selectedItemIds.includes(id)) {
-                this.selectedItemIds = this.selectedItemIds.filter(itemId => itemId !== id);
+        toggleSelection(videogame) {
+            if (this.videogamesSelected?.find(v => v.id === videogame.id)) {
+                this.deleteVideogame(this.videogamesSelected?.find(v => v.id === videogame.id))
             } else {
-                this.selectedItemIds.push(id);
+                this.addVideogame(videogame)
             }
+
+        },
+        addVideogame(videogame) {
+            this.$emit('addVideogame', videogame)
+            const index = this.games?.findIndex(v => v.id === videogame.id);
+            if (index !== undefined && index !== -1) {
+                this.games.splice(index, 1);
+            }
+        },
+        deleteVideogame(videogame) {
+            this.$emit('deleteVideogame', videogame)
+            this.games.push(videogame)
+            this.games.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        },
+        listenInput(value) {
+            this.search = value;
         }
     },
     created() {
@@ -37,11 +61,16 @@ export default {
     <div>
         <div class="filter__square"></div>
         <div class="filter" @click.stop>
-            <BrowserMenu />
+            <BrowserMenu @listenInput="listenInput" />
             <ul class="filter__list">
-                <!-- filter__list__item__active -->
+                <li v-for="d in videogamesSelected" :value="d.id" class="filter__list__item filter__list__item__active"
+                    @click="toggleSelection(d, d.id, d.name)">
+                    <img class="filter__list__item__img" :src="d.image" alt="">
+                    <p class="filter__list__item__text">{{ d.name }}</p>
+                </li>
                 <li v-for="d in games" :value="d.id" class="filter__list__item"
-                    :class="{ 'filter__list__item__active': selectedItemIds.includes(d.id) }" @click="toggleSelection(d.id)">
+                    :class="{ 'filter__list__item__active': videogamesSelected?.find(v => v.id === d.id) }"
+                    @click="toggleSelection(d, d.id, d.name)">
                     <img class="filter__list__item__img" :src="d.image" alt="">
                     <p class="filter__list__item__text">{{ d.name }}</p>
                 </li>

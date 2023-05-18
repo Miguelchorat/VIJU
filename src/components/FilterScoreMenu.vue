@@ -6,12 +6,15 @@ import BrowserMenuScore from '../components/BrowserMenuScore.vue'
 
 
 export default {
+    props: ['score'],
     data() {
-        return {
+        return {            
         }
     },
     methods: {
-        
+        listenScore(value){
+            this.$emit('listenScore', value)
+        }
     }
 }
 </script>
@@ -19,7 +22,7 @@ export default {
     <div>
         <div class="filter__square"></div>
         <div class="filter filter--score" @click.stop>
-            <BrowserMenuScore />
+            <BrowserMenuScore @listenScore="listenScore" :score="score"/>
         </div>
     </div>
 </template>

@@ -37,7 +37,6 @@ import {API} from './util'
 export default {
   data() {
     return {
-      search: "",
       menu: 0,
       account: false,
       loading: false,
@@ -51,21 +50,10 @@ export default {
     }
   },
   mounted() {
-    this.callAPI(),
+    // this.callAPI(),
     this.checkSession()
   },
-  watch: {
-    "$route.path": {
-      immediate: true,
-      handler(to, from) {
-        this.listenInput("")
-      }
-    }
-  },
   methods: {
-    listenInput(value) {
-      this.search = value;
-    },
     changeSession(s) {
       this.session = s
       this.session = localStorage.setItem('session', s)
@@ -80,19 +68,19 @@ export default {
     listenAccount() {
       this.account = !this.account
     },
-    async callAPI() {
-      try {
-        this.loading = false
-        const response = await fetch(this.API_CHECK)
-        if (response.status === 200) {
-          this.loading = true
-        } else {
-          throw new Error('La respuesta de la API no fue exitosa')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    // async callAPI() {
+    //   try {
+    //     this.loading = false
+    //     const response = await fetch(this.API_CHECK)
+    //     if (response.status === 200) {
+    //       this.loading = true
+    //     } else {
+    //       throw new Error('La respuesta de la API no fue exitosa')
+    //     }
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // },
     closeSession() {
       axios.delete(this.API_CLOSE + localStorage.getItem("userId"), { withCredentials: true })
         .then(response => {
@@ -126,11 +114,11 @@ export default {
 </script>
 
 <template>
-  <Header v-if="loading" v-show="$route.path !== '/sesion'" @listenInput="listenInput" :search.sync="search" @listenMenu="listenMenu" :menu="menu"
+  <Header  v-show="$route.path !== '/sesion'" @listenMenu="listenMenu" :menu="menu"
     :account="account" @closeSession="closeSession" :user.sync="user"/>
-  <Aside v-if="loading" v-show="$route.path !== '/sesion'"/>
-  <RouterView v-if="loading" :search="search" :userId.sync="userId" />
-  <Loading v-else />
+  <Aside v-show="$route.path !== '/sesion'"/>
+  <RouterView  :userId.sync="userId" />
+  <!-- <Loading /> -->
   <Login @listenMenu="listenMenu" :userId.sync="userId" :menu="menu" :session="session" :account="account"
     @listenAccount="listenAccount" @changeSession="changeSession" @changeUserId="changeUserId" v-if="menu == 1"
     :user.sync="user" @checkUser.sync="checkUser" />  

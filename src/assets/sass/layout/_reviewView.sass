@@ -23,6 +23,8 @@
         position: relative
         z-index: 1
         margin-top: $L
+        display: flex
+        flex-direction: column
 
         &__title
             font-size: $S
@@ -102,6 +104,25 @@
 
                     &__icon
                         font-size: $XXS
+
+        
+        & img            
+            width: 75%
+            height: auto
+            display: table
+            margin: 0 auto
+            padding: $S 0
+
+        & ul, ol
+            margin-left: $M
+
+        & a
+            color: $color_claro
+            border-bottom: 1px solid $color_claro
+            text-decoration: none
+
+            &:hover
+                opacity: $opacidad
 
     &__background
         position: absolute

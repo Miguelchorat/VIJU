@@ -1,6 +1,7 @@
 <script>
 
 import { RouterLink } from 'vue-router';
+import { convertDate } from '../util'
 /**
 
 Componente que representa una tarjeta para mostrar información de una reseña.
@@ -14,15 +15,16 @@ Componente que representa una tarjeta para mostrar información de una reseña.
 @vue-prop {string} path - La ruta a la que se redirigirá al hacer clic en la tarjeta.
 */
 export default {
-    props: ["id", "title", "videogame", "image", "description", "user", "score", "path"],
+    props: ["id", "title", "videogame", "image", "description", "user", "score", "path", "created_at"],
     data() {
         return {
-            likes: 85,
-            favorites: 303,
+            likes: 1,
+            favorites: 1,
             animationLikes: 'initial',
             animationFavorites: 'initial',
             isSelectedLikes: 'material-symbols-sharp',
-            isSelectedFavorites: 'material-symbols-sharp'
+            isSelectedFavorites: 'material-symbols-sharp',
+            date: 0
         }
     },
     methods: {
@@ -56,6 +58,9 @@ export default {
             setTimeout(() => (this.animationFavorites = 'waitDown'), 75);
             setTimeout(() => (this.animationFavorites = 'initial'), 200);
         }
+    },
+    created() {
+        this.date = convertDate(this.created_at)
     }
 }
 </script>
@@ -65,7 +70,7 @@ export default {
         <div class="main__reviews__review__account">
             <p class="main__reviews__review__account__info">Publicado por <a
                     class="main__reviews__review__account__info__user" @click.stop>{{ user }}</a></p>
-            <p class="main__reviews__review__account__date">Hace 13 horas</p>
+            <p class="main__reviews__review__account__date">{{ date }}</p>
         </div>
         <img class="main__reviews__review__img" :src="image" alt="" />
         <h2 class="main__reviews__review__videogame">{{ videogame }}</h2>

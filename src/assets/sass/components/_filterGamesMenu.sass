@@ -31,10 +31,14 @@
         max-height: $M
         width: 100%
         display: flex
+        flex-direction: row-reverse
         align-self: left
-        position: relative  
+        position: relative
         margin-bottom: $XXXS
         padding: 0 $XXS
+        align-items: center
+        justify-content: space-around
+        gap: $XXS
 
         &__icon
             position: absolute
@@ -64,8 +68,36 @@
             &::placeholder
                 color: $color_placeholder
 
+        &__star
+            display: none
+
+        &__label
+            width: $M
+            height: $M
+            font-family: $fuente_primaria
+            font-size: $M
+            transition: 0.2s ease
+            color: $color_claro
+            display: flex
+            flex-direction: column
+            align-content: center
+            justify-content: center
+
+            &:hover
+                color: $color_primario
+                transition: 0.2s ease
+
+            &:active::before
+                transform: scale(1.1)
+
+            &::before
+                content: '\2606'
+
+        &__star:checked ~ &__label:before
+            content: '\2605'
+
         &:hover
-            
+
             .main__browser
 
                 &__input
@@ -80,7 +112,7 @@
         list-style-type: none
         display: flex
         flex-direction: column
-        gap: $XXXS        
+        gap: $XXXS
         overflow: auto
         overflow-x: hidden
         padding: 0 $XXS 0 $XXXS
@@ -93,6 +125,7 @@
             border-radius: $XXXS
             display: flex
             align-items: center
+            opacity: 80%
 
             &__img
                 width: 100%
@@ -112,7 +145,7 @@
                 text-shadow: 2px 2px $color_oscuro_primario
 
             &__active
-
+                animation: fade100 1s forwards
                 .filter__list__item
 
                     &__img

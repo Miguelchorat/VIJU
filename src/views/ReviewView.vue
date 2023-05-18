@@ -28,8 +28,8 @@ export default {
       submenu: false,
       showSubmenu: false,
       pathUpdate: "/perfil/actualizar-review/",
-      API_REVIEW: API + "/api/v1/reviews/" + this.$route.params.id,
-      API_DELETE: API + "/api/v1/auth/reviews/" + this.$route.params.id,
+      API_REVIEW: API + "/review/" + this.$route.params.id,
+      API_DELETE: API + "/review/" + this.$route.params.id,
       content: ''
     }
   },
@@ -43,8 +43,8 @@ export default {
       const data = await response.json()
       this.result = data      
       this.content =  marked(this.result.message)
-      this.result.created_at = formatDate(new Date(this.result.created_at)) 
-      this.result.updated_at = formatDate(new Date(this.result.created_at)) 
+      this.result.createdAt = formatDate(new Date(this.result.createdAt)) 
+      this.result.updatedAt = formatDate(new Date(this.result.createdAt)) 
       this.checkUser()
     },
     listenSubmenu() {
@@ -100,10 +100,10 @@ export default {
               <p class="main__section__article__label__text">Fecha modificación</p>
             </div>
             <div class="main__section__article__info">
-              <p class="main__section__article__info__text">{{ result.username }}</p>
-              <p class="main__section__article__info__text">{{ result.created_at }}</p>
+              <p class="main__section__article__info__text">{{ result.user.username }}</p>
+              <p class="main__section__article__info__text">{{ result.createdAt }}</p>
               <!-- result.created_at.split('-').reverse().join('-') -->
-              <p class="main__section__article__info__text">{{ result.updated_at.split('-').reverse().join('-') }}</p>
+              <p class="main__section__article__info__text">{{ result.updatedAt.split('-').reverse().join('-') }}</p>
             </div>
           </article>
           <article class="main__section__article">
@@ -128,7 +128,7 @@ export default {
               <p class="main__section__article__label__text">Nombre</p>
             </div>
             <div class="main__section__article__info">
-              <p class="main__section__article__info__text">{{ result.name }}</p>
+              <p class="main__section__article__info__text">{{ result.videogame.name }}</p>
             </div>
           </article>
         </div>
@@ -141,7 +141,7 @@ export default {
       </section>
 
       <div class="main__background">
-        <img className="main__background__img" :src="result.image"/>
+        <img className="main__background__img" :src="result.videogame.image"/>
       </div>
     </div>
   </main>

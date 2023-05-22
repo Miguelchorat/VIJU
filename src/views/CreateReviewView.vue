@@ -145,25 +145,65 @@ export default {
     <main class="main">
         <div class="container">
             <h1 class="main__title">Crear una reseña</h1>
-            <nav class="main__nav">
-                <a href="#" class="main__nav__link" :class="!preview ? 'main__nav__link__active' : ''" @click.stop
-                    @click="listenPreview(false)">
-                    <span class="main__nav__link__icon material-symbols-outlined">rate_review</span>
-                    Publicar
-                </a>
-                <a href="#" class="main__nav__link" :class="preview ? 'main__nav__link__active' : ''" @click.stop
-                    @click="listenPreview(true)">
-                    <span class="main__nav__link__icon material-symbols-outlined">Auto_Stories</span>
-                    Visualizar
-                </a>
-            </nav>
             <form class="main__form" @submit.prevent="checkFields">
                 <div class="main__form__group">
-                    <div class="main__form__field">
-                        <input class="main__form__field__input" type="text" placeholder="Título" aria-label="title"
-                            :value="title" @input="event => title = event.target.value" maxlength="50" />
-                        <p class="main__form__field__count">{{ title.length }}/50</p>
+                    <nav class="main__form__nav">
+                        <a href="#" class="main__form__nav__link" :class="!preview ? 'main__form__nav__link__active' : ''"
+                            @click.stop @click="listenPreview(false)">
+                            <span class="main__form__nav__link__icon material-symbols-outlined">rate_review</span>
+                            Escribir
+                        </a>
+                        <a href="#" class="main__form__nav__link" :class="preview ? 'main__form__nav__link__active' : ''"
+                            @click.stop @click="listenPreview(true)">
+                            <span class="main__form__nav__link__icon material-symbols-outlined">Auto_Stories</span>
+                            Visualizar
+                        </a>
+                    </nav>
+                    <div class="main__form__group__subgroup">
+                        <div class="main__form__field">
+                            <input class="main__form__field__input" type="text" placeholder="Título" aria-label="title"
+                                :value="title" @input="event => title = event.target.value" maxlength="50" />
+                            <p class="main__form__field__count">{{ title.length }}/50</p>
+                        </div>
+                        <div v-if="!preview" class="main__form__field main__form__field--textarea" ref="textarea">
+                            <div class="main__form__field__header">
+                                <div class="main__form__field__header__nav">
+                                    <span class="main__form__field__header__nav__item material-symbols-outlined"
+                                        @click="write('# ')">format_h1</span>
+                                    <span class="main__form__field__header__nav__item material-symbols-outlined"
+                                        @click="write('****')">format_bold</span>
+                                    <span class="main__form__field__header__nav__item material-symbols-outlined"
+                                        @click="write('__')">format_italic</span>
+                                    <span class="main__form__field__header__nav__item material-symbols-outlined"
+                                        @click="write('- ')">list</span>
+                                    <span class="main__form__field__header__nav__item material-symbols-outlined"
+                                        @click="write('[](url)')">link</span>
+                                </div>
+                                Markdown
+                            </div>
+                            <textarea class="main__form__field__textarea" type="text" placeholder="Texto (Obligatorio)"
+                                ref="textArea" aria-label="text" :value="message"
+                                @input="event => message = event.target.value" @focus="focusMessage = true"
+                                @blur="focusMessage = false"
+                                :class="{ main__form__field__textarea__warning: errorMessage }" />
+                        </div>
+                        <div v-else class="main__form__field main__form__field--preview" ref="preview"
+                            :style="{ height: fieldSize + 'px' }">
+                            <div class="main__form__field__header main__form__field__header">
+                                <div class="main__form__field__header__nav">
+                                    <span
+                                        class="main__form__field__header__nav__item main__form__field__header__nav__item--preview material-symbols-outlined">format_h1</span>
+                                </div>
+                                Visualizador
+                            </div>
+                            <div class="main__form__field__content" v-html="contentPreview"></div>
+                        </div>
+                        <div class="main__form__info">
+                            <input class="main__form__info__button" type="submit" value="Publicar">
+                        </div>
                     </div>
+                </div>
+                <div class="main__form__option">
                     <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
                         Videojuego
                         <FilterGamesMenu v-if="menuVideogames" v-click-away="listenMenuVideogame" />
@@ -174,40 +214,6 @@ export default {
                         <FilterScoreMenu v-if="menuScore" v-click-away="listenMenuScore" />
                         <span class="main__filter__score__icon material-symbols-outlined">expand_more</span>
                     </a>
-                </div>
-                <div v-if="!preview" class="main__form__field main__form__field--textarea" ref="textarea">
-                    <div class="main__form__field__header">
-                        <div class="main__form__field__header__nav">
-                            <span class="main__form__field__header__nav__item material-symbols-outlined"
-                                @click="write('# ')">format_h1</span>
-                            <span class="main__form__field__header__nav__item material-symbols-outlined"
-                                @click="write('****')">format_bold</span>
-                            <span class="main__form__field__header__nav__item material-symbols-outlined"
-                                @click="write('__')">format_italic</span>
-                            <span class="main__form__field__header__nav__item material-symbols-outlined"
-                                @click="write('- ')">list</span>
-                            <span class="main__form__field__header__nav__item material-symbols-outlined"
-                                @click="write('[](url)')">link</span>
-                        </div>
-                        Markdown
-                    </div>
-                    <textarea class="main__form__field__textarea" type="text" placeholder="Texto (Obligatorio)"
-                        ref="textArea" aria-label="text" :value="message" @input="event => message = event.target.value"
-                        @focus="focusMessage = true" @blur="focusMessage = false"
-                        :class="{ main__form__field__textarea__warning: errorMessage }" />
-                </div>
-                <div v-else class="main__form__field main__form__field--preview" ref="preview"
-                    :style="{ height: fieldSize + 'px' }">
-                    <div class="main__form__field__content" v-html="contentPreview"></div>
-                </div>
-                <div class="main__form__info">
-                    <div class="main__form__info__group">
-                        <p class="main__form__info__group__label">The legend of Zelda <span
-                                class="main__form__info__group__label__icon material-symbols-outlined">close</span></p>
-                        <p class="main__form__info__group__label">4.6 <span
-                                class="main__form__info__group__label__icon material-symbols-outlined">close</span></p>
-                    </div>
-                    <input class="main__form__info__button" type="submit" value="Publicar">
                 </div>
             </form>
         </div>

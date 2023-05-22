@@ -2,10 +2,6 @@
 import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
 import Aside from './components/Aside.vue'
-import Login from './components/Login.vue'
-import Loading from './components/Loading.vue'
-import axios from 'axios'
-import {API} from './util'
 
 </script>
 
@@ -37,90 +33,22 @@ import {API} from './util'
 export default {
   data() {
     return {
-      menu: 0,
-      account: false,
-      loading: false,
-      user: "",
-      userId: localStorage.getItem('userId') ?? 0,
-      session: localStorage.getItem('session') ?? false,
-      API_CHECK: API + "/api/v1/",
-      API_LOGIN: API + "/api/v1/auth/",
-      API_CLOSE: API + "/api/v1/auth/users/session=",
-      API_USER: API +  "/api/v1/users/id=",
+      trigger: 0
     }
   },
   mounted() {
-    // this.callAPI(),
-    this.checkSession()
   },
   methods: {
-    changeSession(s) {
-      this.session = s
-      this.session = localStorage.setItem('session', s)
-    },
-    changeUserId(id) {
-      this.userId = id
-      this.userId = localStorage.setItem('userId', id)
-    },
-    listenMenu(n) {
-      this.menu = n
-    },
-    listenAccount() {
-      this.account = !this.account
-    },
-    // async callAPI() {
-    //   try {
-    //     this.loading = false
-    //     const response = await fetch(this.API_CHECK)
-    //     if (response.status === 200) {
-    //       this.loading = true
-    //     } else {
-    //       throw new Error('La respuesta de la API no fue exitosa')
-    //     }
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // },
-    closeSession() {
-      axios.delete(this.API_CLOSE + localStorage.getItem("userId"), { withCredentials: true })
-        .then(response => {
-          this.listenAccount()
-          this.changeSession(false)
-          this.changeUserId(false)
-          localStorage.removeItem('userId')
-          localStorage.removeItem('session')
-          this.$router.push('/')
-        })
-        .catch(error => {
-        });
-    },
-    async checkSession() {
-
-      if (!!this.session === true) {
-        const response = await fetch(this.API_LOGIN, { credentials: 'include' })
-        if (response.status === 200) {
-          this.listenAccount()
-          this.checkUser()
-        }
-      }
-    },
-    async checkUser() {
-      const response = await fetch(this.API_USER+localStorage.getItem('userId'))
-      const data = await response.json()
-      this.user = data.username
+    listenTrigger(){
+      this.trigger++
     }
   }
 }
 </script>
 
 <template>
-  <Header  v-show="$route.path !== '/sesion'" @listenMenu="listenMenu" :menu="menu"
-    :account="account" @closeSession="closeSession" :user.sync="user"/>
-  <Aside v-show="$route.path !== '/sesion'"/>
-  <RouterView  :userId.sync="userId" />
-  <!-- <Loading /> -->
-  <Login @listenMenu="listenMenu" :userId.sync="userId" :menu="menu" :session="session" :account="account"
-    @listenAccount="listenAccount" @changeSession="changeSession" @changeUserId="changeUserId" v-if="menu == 1"
-    :user.sync="user" @checkUser.sync="checkUser" />  
+  <Header  v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger" :trigger="trigger"/>
+  <Aside v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger"/>
+  <RouterView @listenTrigger="listenTrigger"/>
 </template>
 

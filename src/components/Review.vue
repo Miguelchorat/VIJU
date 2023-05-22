@@ -81,7 +81,7 @@ export default {
                 <span class="main__reviews__review__info__like__text" :class="animationLikes">{{ likes }}</span>
             </a>
             <a class="main__reviews__review__info__favorite" :class="isSelectedFavorites" href="#" @click.stop @click="handleFavorites">
-                <span class="main__reviews__review__info__favorite__icon" :class="isSelectedFavorites">favorite</span>
+                <span class="main__reviews__review__info__favorite__icon" :class="isSelectedFavorites">bookmark</span>
                 <span class="main__reviews__review__info__favorite__text" :class="animationFavorites">{{ favorites }}</span>
             </a>
             <p class="main__reviews__review__info__score">{{ score }}

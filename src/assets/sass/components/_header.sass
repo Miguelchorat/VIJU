@@ -2,10 +2,10 @@
     width: 100%
     min-height: $XL
     display: flex
-    flex-direction: row    
+    flex-direction: row
     align-items: center
     justify-content: right
-    padding-right: $L
+    padding-right: $M
     border-bottom: 2px solid $color_oscuro_secundario
     position: sticky
     background-color: $color_oscuro_primario
@@ -13,6 +13,7 @@
     left: 0
     z-index: 9
     grid-area: header
+    gap: $XXS
 
     &__session
         color: $color_claro
@@ -27,82 +28,79 @@
             background-color: $color_primario-hover
 
     &__account
-        height: $XXL
-        width: 100%
+        width: auto
+        height: auto
         max-width: 200px
         display: flex
         flex-direction: row
-        color: $color_claro
-        font-family: $fuente_primaria
-        font-size: $S
         align-items: center
-        justify-content: center
-        gap: $XXS
+        justify-content: end
+        padding: 4px $XXS
+        gap: $XXXS
+        cursor: pointer
 
         &:hover
             box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(255, 255, 255, 0.08) 0px 0px 0px 1px
 
+        &__img
+            font-size: $XXXS
+            height: $M
+
+        &__username
+            color: $color_claro
+            font-size: $XS
+            font-family: $fuente_secundaria
+
+            &::first-letter
+                text-transform: capitalize
+
+    &__add
+        color: $color_placeholder
+        font-size: $S
+        padding: $XXXS
+        border-radius: 50%
+
+        &:hover
+            background-color: $color_oscuro_secundario
+
     &__menu
         position: absolute
-        top: $XXXL
-        right: $L
+        top: calc( $XXL * 1.1 )
+        right: $M
+        width: 150px
         background-color: $color_oscuro_secundario
-        border-radius: 2px
-        box-shadow: rgba(255, 255, 255, 0.08) 0px 0px 0px 1px
-        height: 25%
-        width: 100%
-        max-width: 200px
-        min-height: 120px
-        display: flex
-        flex-direction: row
+        border: 1px solid $color_oscuro_terciario
         z-index: 99
-
-        &__list
-            height: 100%
-            width: 100%
-            display: flex
-            flex-direction: column
-            justify-content: space-around
-            list-style: none
-            padding: $XXS
-
-            &__item > a
-                height: 100%
-                width: 100%
-                display: flex
-                align-items: center
-                justify-content: center
-                font-family: $fuente_secundaria
-                font-size: $XS
-                cursor: pointer
-                color: $color_claro
-
-                &:hover
-                    color: $color_primario
-        
-        &__square
-            position: absolute
-            top: 0          
-            left: 0
-            right: 0
-            margin: auto
-            transform: rotate(45deg)
-            width: $XXL
-            height: $XXL
-            background-color: $color_oscuro_secundario
-            z-index: -1
-
-.popup__bg
-    position: fixed
-    top: 0
-    left: 0
-    height: 100vh
-    width: 100vw
-    background-color: $color_oscuro_terciario
-    opacity: $opacidad
-    display: none
-    z-index: 99
-    animation: fade none .8s
-
-    &__active
+        list-style: none
         display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        border-radius: 4px
+
+        &__item
+            width: 100%
+            color: $color_claro
+            font-size: $XS
+            font-family: $fuente_secundaria
+            padding: $XXS 0
+            cursor: pointer
+            text-align: center
+            border-right: 3px solid $color_oscuro_secundario            
+
+            &:hover
+                border-right: 3px solid $color_primario
+                background-color: rgba(255, 255, 255, 0.1)
+                z-index: 101
+
+        &__square
+            display: flex
+            width: $XXS
+            height: $XXS
+            background-color: $color_oscuro_secundario
+            border: 2px solid $color_oscuro_terciario
+            position: absolute
+            top: $XXL 
+            right: $XL
+            transform: rotate(45deg)
+            z-index: 100

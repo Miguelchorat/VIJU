@@ -37,6 +37,10 @@ export default {
   },
   mounted() {
     this.callAPI()
+    this.$refs.container.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    this.$refs.container.removeEventListener('scroll', this.handleScroll);
   },
   watch: {
     search: function () {
@@ -75,7 +79,6 @@ export default {
     },
     loadMore() {
       this.currentPage++
-      console.log(this.currentPage)
       let endpoint = this.API_REVIEWS + '?search=' + this.search + '&page=' + this.currentPage
       if (this.videogamesSelected.length != 0) {
         endpoint += '&videogames=' + this.videogamesSelected[0]?.name
@@ -144,15 +147,16 @@ export default {
           <span class="main__filter__score__icon material-symbols-outlined">expand_more</span>
         </a>
       </div>
-      <section class="main__reviews" v-if="results !== null && results.length !== 0">
+      <section ref="reviews" class="main__reviews" v-show="results !== null && results.length !== 0">
         <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.videogame.image'
           :videogame="res.videogame.name" :user='res.user.username' :score='res.score'
           @click="() => $emit('selectReview', res.id)" :path="path" :created_at="res.createdAt" />
       </section>
-      <section v-else class="main__empty">
+      <section v-if="results == null || results.length == 0" class="main__empty">
         <img src="/src/assets/img/broken.png" alt="CD ROTO" class="main__empty__image">
         <h2 className="main__empty__title">No se ha encontrado ningun resultado.</h2>
-      </section>
+      </section>      
+      <div v-if="results !== null && results.length !== 0 && results.length % 16 == 0" class="main__load"><a class="main__load__button" href="#" @click="loadMore">Cargar más</a></div>
     </div>
   </main>
 </template>

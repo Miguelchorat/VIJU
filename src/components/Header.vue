@@ -3,67 +3,58 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <script>
-/**
-
-Componente de encabezado de la página
-@vue-prop {string} menu - Controla el menú desplegable de inicio de sesión y registro
-@vue-prop {boolean} account - Indica si el usuario ha iniciado sesión o no
-@vue-prop {string} search - Valor del campo de búsqueda
-@vue-prop {string} user - Nombre de usuario
-@vue-event {void} listenSubmenu - Cambia el estado de submenu a su estado opuesto
-*/
 export default {
-    props: {
-        menu: {
-            type: String
-        },
-        account: {
-            type: Boolean
-        },
-        search: {
-            type: String
-        },
-        user: {
-            type: String
-        },
-    },
+    props: ['trigger'],
     data() {
         return {
-            submenu: false,
+            imagePathPrefix: "/VIJU/src/assets/img/avatar/",
+            session: localStorage.getItem('tokenjwt') ?? null,
+            username: localStorage.getItem('username') ?? null,
+            avatar: localStorage.getItem('avatar') ?? null,
+            menu: false
+        }
+    },
+    watch: {
+        trigger: function () {
+            this.session = localStorage.getItem('tokenjwt')
+            this.username = localStorage.getItem('username')
+            this.avatar = localStorage.getItem('avatar')
         }
     },
     methods: {
-        listenSubmenu() {
-            this.submenu = !this.submenu
+        getAvatar() {
+            return this.imagePathPrefix + this.avatar;
         },
+        listenMenu() {
+            this.menu = !this.menu
+        },
+        listenLogout() {
+            localStorage.removeItem('tokenjwt')
+            localStorage.removeItem('username')
+            localStorage.removeItem('avatar')
+            this.$emit('listenTrigger')
+            this.listenMenu()
+        },
+        listenProfile() {
+            this.$router.push("/perfil")
+            this.listenMenu()
+        }
     }
 }
 </script>
 
 <template>
-    <header class="header">        
-        <!-- <div class="header__browser">
-                <span class="header__browser__icon material-symbols-outlined">search</span>
-                <input class="header__browser__input" placeholder="Buscar..."
-                    @input="(e) => $emit('listenInput', e.target.value)" :value="search" />
-            </div> -->
-
-        <RouterLink type="button" class="header__session" to="/sesion">SIGN IN</RouterLink>
-
-        <!-- <a href="#" class="header__account" v-else @click="listenSubmenu">
-                <p class="header__account__name">@{{ user }}</p>
-                <nav class="header__menu" v-if="submenu" v-click-away="listenSubmenu">
-                    <ul class="header__menu__list">
-                        <li class="header__menu__list__item">
-                            <RouterLink to="/perfil">PERFIL</RouterLink>
-                        </li>
-                        <li class="header__menu__list__item">
-                            <RouterLink to="/crear-review">CREAR REVIEW</RouterLink>
-                        </li>
-                        <li class="header__menu__list__item" @click="() => $emit('closeSession')"><a>CERRAR SESIÓN</a></li>
-                    </ul>
-                    <span class="header__menu__square" />
-                </nav>
-            </a> -->
+    <header class="header">
+        <RouterLink v-if="session" class="header__add material-symbols-outlined" to="/crear-review">add</RouterLink>
+        <div v-if="session" class="header__account" @click="listenMenu">
+            <img :src="getAvatar()" alt="user avatar" class="header__account__img">
+            <p class="header__account__username">{{ username }}</p>
+        </div>
+        <RouterLink v-else type="button" class="header__session" to="/sesion">SIGN IN</RouterLink>
+        <ul v-if="menu" class="header__menu" v-click-away="listenMenu">
+            <li class="header__menu__item" @click="listenProfile">Ver perfil</li>
+            <li class="header__menu__item" @click="listenLogout">Cerrar sesión</li>
+        </ul>
+        <div v-if="menu" class="header__menu__square"></div>
     </header>
 </template>

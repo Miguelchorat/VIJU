@@ -14,10 +14,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      key: 'home'
     },
     {
-      path: '/perfil',
+      path: '/ultimo-dia',
+      name: 'last-day',
+      component: HomeView,
+      key: 'last-day'
+    },
+    {
+      path: '/ultima-semana',
+      name: 'last-week',
+      component: HomeView,
+      key: 'last-week'
+    },
+    {
+      path: '/ultimo-mes',
+      name: 'last-month',
+      component: HomeView,
+      key: 'last-month'
+    },
+    {
+      path: '/perfil/:username',
       name: 'profile',
       component: ProfileView
     },

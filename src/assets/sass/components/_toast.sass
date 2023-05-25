@@ -1,0 +1,90 @@
+.toast
+    position: fixed
+    top: $XXL
+    right: $L    
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    positon: relative
+    width: $XL
+    height: $XL
+    background: #380848
+    transform: scale(0)
+    border-radius: $XXL
+    color: white
+    opacity: 0
+    overflow: hidden
+    padding: $M $XS
+    z-index: 999
+    animation: scale-in .3s ease-out forwards, expand .35s .25s ease-out forwards
+
+    &--success
+        background-color: #27AE60
+
+    &--warning
+        background-color: #C0392B
+
+    &--info
+        background-color: #2980B9
+
+    &--alert
+        background-color: #F39C12
+
+    &__content
+        display: flex
+        align-items: center
+        gap: $XXXS
+
+        &__img
+            display: flex
+            align-items: center
+            justify-content: center
+            border-radius: 50%
+            background: rgba(255, 255, 255, 0.253)
+            height: $XL
+            min-width: $XL
+            font-size: $S
+            color: $color_claro
+            animation: fade-in .7s ease-in forwards
+
+        &__text
+            color: $color_claro
+            font-size: $XS
+            font-family: $fuente_secundaria
+            font-weight: bold
+            padding-right: $XL
+            animation: fade-in .7s ease-in forwards
+
+    &__close
+        position: absolute
+        top: 0
+        bottom: 0
+        right: $XS
+        padding: 4px
+        cursor: pointer
+        color: $color_claro
+        opacity: 0.8
+        height: auto
+        animation: fade-in .7s ease-in forwards
+
+@keyframes scale-in
+    100%
+        transform: scale(1)
+        opacity: 1
+
+@keyframes expand
+    50%
+        width: 470px
+        border-radius: 6px
+
+    100%
+        width: 450px
+        border-radius: 4px
+        box-shadow: 0px 1px 3px 0px rgba(0,0,0,.2), 0px 1px 1px 0px rgba(0,0,0,.14), 0px 3px 3px -1px rgba(0,0,0,.12)
+
+@keyframes fade-in
+    0%
+        opacity: 0
+
+    100%
+        opacity: .8

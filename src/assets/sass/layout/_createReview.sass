@@ -33,15 +33,15 @@
 
             &--preview
                 height: 100%
-                overflow: auto
-                overflow-x: hidden
                 display: flex
                 flex-direction: column
                 color: $color_claro
                 font-family: $fuente_secundaria
 
             &__content
-                padding: $XS
+                padding: $XS                
+                overflow: auto
+                overflow-x: hidden
 
                 & *
                     margin-bottom: $XXS
@@ -156,37 +156,13 @@
             display: flex
             flex-direction: row
             align-items: center
-            justify-content: end
+            justify-content: space-between
 
-            &__group
-                height: 100%
-                display: flex
-                flex-direction: row
-                gap: $XXS
-
-                &__label
-                    height: 100%
-                    display: flex
-                    flex-direction: row
-                    align-items: center
-                    justify-content: space-between
-                    gap: $XXS
-                    color: $color_claro
-                    font-family: $fuente_secundaria
-                    font-size: $XXS
-                    background-color: $color_primario-hover
-                    padding: $XXXS
-                    padding-left: $XXS
-                    border-radius: 50px
-                    cursor: pointer
-
-                    &:hover
-                        transition: 0.6s
-                        opacity: 80%
-
-                    &__icon
-                        opacity: 90%
-
+            &__text
+                font-family: $fuente_secundaria
+                color: $color_warning
+                font-size: $XS
+                
             &__button
                 width: 10%
                 height: $M
@@ -204,6 +180,10 @@
 
                 &:hover
                     background-color: $color_primario-hover
+                
+                &__disabled
+                    opacity: $opacidad
+                    cursor: not-allowed
 
         &__nav
             height: $XL
@@ -240,5 +220,49 @@
                     font-size: $S
 
         &__option
+            width: auto
             display: flex
-            flex-direction: column
+            flex-direction: column    
+            min-width: 350px    
+            gap: $S    
+
+            &__section
+                width: 100%
+                display: flex
+                flex-direction: column
+                gap: $XXXS
+                padding-bottom: $XS
+                border-bottom: 1px solid $color_oscuro_terciario
+                position: relative
+
+                &__title
+                    color: $color_placeholder
+                    font-size: $XS
+                    font-family: $fuente_secundaria                    
+                    padding: $XXXS 0
+
+                &__result
+                    height: $XL
+                    color: $color_claro
+                    font-size: $XS
+                    font-family: $fuente_secundaria
+                    display: flex
+                    align-items: center
+
+                &__icon
+                    color: $color_claro
+                    font-size: $XS
+                    position: absolute
+                    top: 0
+                    right: 0
+                    cursor: pointer
+                    padding: $XXXS
+                    border-radius: 50%
+                    margin-right: $XXXS
+
+                    &:hover                        
+                        background-color: $color_oscuro_secundario
+                
+                &__score
+                    height: $XL
+                    width: 55%

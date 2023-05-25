@@ -2,26 +2,12 @@
 import axios from 'axios'
 import { API, formatDate } from '../util'
 import { marked } from 'marked'
-
-
-/**
- * Componente para mostrar una reseña individual.
- *
- * @vue-data {Object} result - Los datos de la reseña obtenidos de la API.
- * @vue-data {Boolean} submenu - Indica si el submenú está abierto o cerrado.
- * @vue-data {Boolean} showSubmenu - Indica si el submenú debe mostrarse o no.
- * @vue-data {String} pathUpdate - La ruta para actualizar la reseña.
- * @vue-data {String} API_REVIEW - La URL para obtener los datos de la reseña.
- * @vue-data {String} API_DELETE - La URL para eliminar la reseña.
- * @vue-event callAPI - Llama a la API del servidor para encontrar la reseña del videojuego que incluyan la busqueda
- * @vue-event {void} listenSubmenu - Cambia el estado de submenu a su estado opuesto
- * @vue-event {void} checkUser - Busca la existencia del usuario que concuerde con la id de usuario en el servidor
- * @vue-event {void} checkPath - Comprueba el path en el que esta el usuario para enviarlo a un path diferente
- * @vue-event {void} deleteReview - Manda a eliminar la review del usuario por el id
- */
+import ConfirmDialog from '../components/ConfirmDialog.vue'
 
 export default {
-
+  components: {
+    ConfirmDialog
+  },
   data() {
     return {
       result: null,
@@ -30,56 +16,65 @@ export default {
       pathUpdate: "/perfil/actualizar-review/",
       API_REVIEW: API + "/review/" + this.$route.params.id,
       API_DELETE: API + "/review/" + this.$route.params.id,
-      content: ''
+      content: '',
+      resultDialog: false,
+      confirmDialog: false
     }
   },
   mounted() {
     this.callAPI()
-    this.checkRoute()
   },
   methods: {
     async callAPI() {
       const response = await fetch(this.API_REVIEW)
       const data = await response.json()
-      this.result = data      
-      this.content =  marked(this.result.message)
-      this.result.createdAt = formatDate(new Date(this.result.createdAt)) 
-      this.result.updatedAt = formatDate(new Date(this.result.createdAt)) 
-      this.checkUser()
-    },
-    listenSubmenu() {
-      this.submenu = !this.submenu
-    },
-    checkUser() {
-      localStorage.getItem("userId") === this.result.user ? this.showSubmenu = true : this.showSubmenu = false
-      this.pathUpdate += this.result.id
-    },
-    checkRoute() {
-      const currentPath = this.$route.path
-      if (currentPath.includes('/perfil')) {
-        this.pathUpdate = "/perfil/actualizar-review/"
-      } else {
-        this.pathUpdate = "/actualizar-review/"
+      if (response.status == 404 || response.status == 400) {
+        this.$router.push('/404');
+        return null
       }
+      this.result = data
+      this.content = marked(this.result.message)
+      this.result.createdAt = formatDate(new Date(this.result.createdAt))
+      this.result.updatedAt = formatDate(new Date(this.result.createdAt))
     },
     deleteReview() {
-      axios.delete(this.API_DELETE, { withCredentials: true })
+      axios.delete(this.API_DELETE, {
+        headers:
+        {
+          'Authorization': `Bearer ${localStorage.getItem('tokenjwt')}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      })
         .then(() => {
-          const currentPath = this.$route.path
-
-          if (currentPath.includes('/perfil')) {
-            this.$router.push('/perfil/reviews')
-          } else {
-            this.$router.push('/')
-          }
+          this.listenToast('Eliminaste la reseña satisfactoriamente', 'success')
+          this.$router.push('/')
         })
         .catch(error => {
-          alert("Hubo un error inesperado")
+          this.listenToast('Hubo un error inesperado eliminando la reseña', 'warning')
         });
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.push('/');
     },
+    checkUser() {
+      return this.result.user.username == localStorage.getItem('username')
+    },
+    listenDialog(value) {
+      if (value == 'close-ok') {
+        this.confirmDialog = false
+        this.deleteReview()
+      }
+      else {
+        this.confirmDialog = !this.confirmDialog
+      }
+    },
+    listenToast(message, title) {
+      this.$emit('listenToast', message, title)
+    },
+    goEdit(){
+      this.$router.push('/actualizar-review/'+this.$route.params.id)
+    }
   }
 }
 </script>
@@ -87,8 +82,13 @@ export default {
 <template>
   <main v-if="result" class="main">
     <div class="container">
-      <div class="main__breadcrumb"><a href="#" class="main__breadcrumb__link" @click="goBack">Reseñas</a>/<span
-          class="main__breadcrumb__title">{{ result.title }}</span></div>
+      <div class="main__breadcrumb">
+        <a href="#" class="main__breadcrumb__link" @click="goBack">
+          Reseñas
+        </a>/
+        <span class="main__breadcrumb__title">{{ result.title }}
+        </span>
+      </div>
       <section class="main__section">
         <h2 class="main__section__title"><span class="main__section__title__text">Información</span></h2>
         <div class="main__section__article__group">
@@ -102,7 +102,6 @@ export default {
             <div class="main__section__article__info">
               <p class="main__section__article__info__text">{{ result.user.username }}</p>
               <p class="main__section__article__info__text">{{ result.createdAt }}</p>
-              <!-- result.created_at.split('-').reverse().join('-') -->
               <p class="main__section__article__info__text">{{ result.updatedAt.split('-').reverse().join('-') }}</p>
             </div>
           </article>
@@ -135,14 +134,25 @@ export default {
       </section>
 
       <section class="main__section">
-        <h2 class="main__section__title"><span class="main__section__title__text">Reseña</span></h2>
+        <h2 class="main__section__title">
+          <span class="main__section__title__text">Reseña</span>
+          <div class="main__section__group">
+            <span v-if="checkUser()" class="main__section__title__edit material-symbols-outlined"
+              @click="goEdit">edit_square</span>
+            <span v-if="checkUser()" class="main__section__title__edit material-symbols-outlined"
+              @click="listenDialog('open')">delete</span>
+          </div>
+        </h2>
+
         <h3 class="main__section__subtitle">{{ result.title }}</h3>
         <div class="main__section__description" v-html="content"></div>
       </section>
 
       <div class="main__background">
-        <img className="main__background__img" :src="result.videogame.image"/>
+        <img className="main__background__img" :src="result.videogame.image" />
       </div>
     </div>
+    <ConfirmDialog :message="'¿Estas seguro?'" :title="'Eliminar reseña'" :active="confirmDialog"
+      @listenDialog="listenDialog" />
   </main>
 </template>

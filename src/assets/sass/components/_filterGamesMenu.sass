@@ -26,6 +26,14 @@
         transform: rotate(45deg)
         z-index: 3
 
+        &__review
+            right: $XXS
+            left: auto
+
+    &__review
+        left: auto
+        right: 0
+
     &__browser
         height: $M
         max-height: $M
@@ -116,7 +124,7 @@
         overflow: auto
         overflow-x: hidden
         padding: 0 $XXS 0 $XXXS
-        scroll-behavior: smooth
+        scroll-behavior: smooth        
 
         &__item
             min-height: $XXL
@@ -127,6 +135,7 @@
             display: flex
             align-items: center
             opacity: 80%
+            cursor: pointer
 
             &__img
                 width: 100%

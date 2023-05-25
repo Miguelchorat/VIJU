@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import Toast from '../components/Toast.vue'
 import axios from 'axios'
 import { API } from '../util'
 
@@ -7,7 +8,10 @@ import { API } from '../util'
 
 <script>
 export default {
-
+    components: {
+        Toast
+    },
+    emits: ['listenTrigger','listenToast'],
     data() {
         return {
             session: true,
@@ -30,7 +34,7 @@ export default {
             errorPassword2: '',
             errorUsername: '',
             API_REGISTER: API + "/user",
-            API_LOGIN: API + "/auth/login"
+            API_LOGIN: API + "/auth/login",
         }
     },
     created() {
@@ -69,30 +73,34 @@ export default {
             })
                 .then(response => {
                     this.listenSession()
+                    this.$emit('listenToast','Te has registrado satisfactoriamente','success')
                 })
                 .catch(error => {
                     let e = error.response.data.message
                     if (e == 'Las contraseñas no coinciden') {
                         this.errorPassword2 = e
                     }
-                    if (e == 'El nombre de usuario y el correo electrónico ya existen') {
+                    else if (e == 'El nombre de usuario y el correo electrónico ya existen') {
                         this.errorUsername = 'El nombre de usuario ya existe'
                         this.errorEmail = 'El correo electronico ya existe'
                     }
-                    if (e == 'El nombre de usuario ya existe') {
+                    else if (e == 'El nombre de usuario ya existe') {
                         this.errorUsername = e
                     }
-                    if (e == 'El correo electrónico ya existe') {
+                    else if (e == 'El correo electrónico ya existe') {
                         this.errorEmail = e
                     }
-                    if (e == 'Correo electrónico no válido') {
+                    else if (e == 'Correo electrónico no válido') {
                         this.errorEmail = e
                     }
-                    if (e == 'Nombre de usuario no válido') {
+                    else if (e == 'Nombre de usuario no válido') {
                         this.errorUsername = e
                     }
-                    if (e == 'Contraseña no válida') {
+                    else if (e == 'Contraseña no válida') {
                         this.errorPassword = e
+                    }
+                    else {
+                        this.$emit('listenToast','Hubo un error inesperado','warning')
                     }
                 });
         },
@@ -104,18 +112,21 @@ export default {
                 .then(response => {
                     localStorage.setItem('tokenjwt', response.data.token);
                     localStorage.setItem('username', response.data.username);
-                    localStorage.setItem('avatar', response.data.avatar);         
-                    this.$emit('listenTrigger')         
+                    localStorage.setItem('avatar', response.data.avatar);
+                    this.$emit('listenTrigger')
                     this.$router.push('/')
                 })
                 .catch(error => {
                     if (error.response.data.message == "Bad credentials")
                         this.errorUsername = 'Usuario o contraseña incorrecta'
-                    if (error.response.data.message == 'Nombre de usuario no válido') {
+                    else if (error.response.data.message == 'Nombre de usuario no válido') {
                         this.errorUsername = 'Nombre de usuario no válido'
                     }
-                    if (error.response.data.message == 'Contraseña no válida') {
+                    else if (error.response.data.message == 'Contraseña no válida') {
                         this.errorPassword = 'Contraseña no válida'
+                    }
+                    else {
+                        this.$emit('listenToast','Hubo un error inesperado','warning')
                     }
                 })
         }

@@ -7,7 +7,8 @@ import { API } from '../util'
 
 
 export default {
-    props: ['videogamesSelected'],
+    props: ['videogamesSelected', 'videogame'],
+    emits: ['listenToast','addVideogame','deleteVideogame','selectVideogame','listenMenuVideogame'],    
     data() {
         return {
             games: [],
@@ -23,18 +24,31 @@ export default {
     methods: {
         async callAPIGames() {
             let endpoint = this.API_GAMES + '?search=' + this.search
-            console.log(endpoint)
             const response = await fetch(endpoint)
             const data = await response.json()
-            this.games = data.filter(game => !this.videogamesSelected.find(selectedGame => selectedGame.id === game.id))
+            if (this.videogamesSelected != null) {
+                this.games = data.filter(game => !this.videogamesSelected.find(selectedGame => selectedGame.id === game.id))
+            }
+            else {
+                this.games = data
+            }
         },
         toggleSelection(videogame) {
-            if (this.videogamesSelected?.find(v => v.id === videogame.id)) {
-                this.deleteVideogame(this.videogamesSelected?.find(v => v.id === videogame.id))
+            if (this.videogamesSelected != null) {
+                if (this.videogamesSelected?.find(v => v.id === videogame.id)) {
+                    this.deleteVideogame(this.videogamesSelected?.find(v => v.id === videogame.id))
+                } else {
+                    if (Reflect.get(this.videogamesSelected, 'length') >= 5) {
+                        this.$emit('listenToast', 'Has seleccionado el máximo de videojuegos permitido', 'alert')
+                    }
+                    else{
+                        this.addVideogame(videogame)
+                    }                    
+                }
             } else {
-                this.addVideogame(videogame)
+                this.selectVideogame(videogame)
+                this.$emit('listenMenuVideogame')
             }
-
         },
         addVideogame(videogame) {
             this.$emit('addVideogame', videogame)
@@ -50,6 +64,9 @@ export default {
         },
         listenInput(value) {
             this.search = value;
+        },
+        selectVideogame(videogame) {
+            this.$emit('selectVideogame', videogame)
         }
     },
     created() {
@@ -59,8 +76,8 @@ export default {
 </script>
 <template>
     <div>
-        <div class="filter__square"></div>
-        <div class="filter" @click.stop>
+        <div class="filter__square" :class="{ 'filter__square__review': videogamesSelected == null }"></div>
+        <div class="filter" :class="{ 'filter__review': videogamesSelected == null }" @click.stop>
             <BrowserMenu @listenInput="listenInput" />
             <ul class="filter__list">
                 <li v-for="d in videogamesSelected" :value="d.id" class="filter__list__item filter__list__item__active"
@@ -69,7 +86,7 @@ export default {
                     <p class="filter__list__item__text">{{ d.name }}</p>
                 </li>
                 <li v-for="d in games" :value="d.id" class="filter__list__item"
-                    :class="{ 'filter__list__item__active': videogamesSelected?.find(v => v.id === d.id) }"
+                    :class="{ 'filter__list__item__active': videogamesSelected?.find(v => v.id === d.id), }"
                     @click="toggleSelection(d, d.id, d.name)">
                     <img class="filter__list__item__img" :src="d.image" alt="">
                     <p class="filter__list__item__text">{{ d.name }}</p>

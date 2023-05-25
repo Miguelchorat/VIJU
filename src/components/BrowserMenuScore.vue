@@ -21,6 +21,9 @@ export default {
         scoreMenu: function () {            
             this.$emit('listenScore', this.scoreMenu)
         },
+        score: function () {            
+            this.scoreMenu = this.score
+        },
     }
 }
 </script>

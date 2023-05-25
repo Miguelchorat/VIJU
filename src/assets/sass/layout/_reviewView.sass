@@ -26,17 +26,30 @@
         display: flex
         flex-direction: column
 
+        &__group
+            display: flex
+            flex-direction: row
+            gap: $XXS
+
         &__title
             font-size: $S
             color: $color_claro
             font-family: $fuente_primaria
             border-bottom: 1px solid $color_oscuro_terciario
-            padding-bottom: $XXXS
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: space-between
 
             &__text
                 border-bottom: 3px solid $color_primario
                 padding: 0 $XXS
-                padding-bottom: $XXXS
+
+            &__edit
+                border-bottom: 3px solid transparent
+                color: $color_placeholder                              
+                cursor: pointer
+                font-size: $XS
 
         &__subtitle
             color: $color_claro
@@ -105,8 +118,7 @@
                     &__icon
                         font-size: $XXS
 
-        
-        & img            
+        & img
             width: 75%
             height: auto
             display: table

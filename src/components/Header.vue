@@ -36,7 +36,7 @@ export default {
             this.listenMenu()
         },
         listenProfile() {
-            this.$router.push("/perfil")
+            this.$router.push("/perfil/"+localStorage.getItem('username'))
             this.listenMenu()
         }
     }

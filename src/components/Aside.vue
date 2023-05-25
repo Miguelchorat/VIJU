@@ -40,21 +40,21 @@ export default {
                     </RouterLink>
                 </li>
                 <li class="aside__nav__list__item">
-                    <RouterLink class="aside__nav__list__item__link" to="/d"
+                    <RouterLink class="aside__nav__list__item__link" to="/ultimo-dia"
                         active-class="aside__nav__list__item__link__active">
                         <span class="aside__nav__list__item__link__icon material-symbols-outlined">today</span>
                         <p class="aside__nav__list__item__link__title">Último día</p>
                     </RouterLink>
             </li>
             <li class="aside__nav__list__item">
-                <RouterLink class="aside__nav__list__item__link" to="/d"
+                <RouterLink class="aside__nav__list__item__link" to="/ultima-semana"
                     active-class="aside__nav__list__item__link__active">
                     <span class="aside__nav__list__item__link__icon material-symbols-outlined">date_range</span>
                     <p class="aside__nav__list__item__link__title">Última semana</p>
                 </RouterLink>
             </li>
             <li class="aside__nav__list__item">
-                <RouterLink class="aside__nav__list__item__link" to="/d"
+                <RouterLink class="aside__nav__list__item__link" to="/ultimo-mes"
                     active-class="aside__nav__list__item__link__active">
                     <span class="aside__nav__list__item__link__icon material-symbols-outlined">calendar_month</span>
                     <p class="aside__nav__list__item__link__title">Último mes</p>

@@ -26,6 +26,26 @@
 
         &:hover
             background-color: $color_primario-hover
+        
+        @media (max-width: 650px)
+            display: none
+
+    &__logo
+        display: none
+        
+        @media (max-width: 650px)
+            width: $M
+            display: flex
+            cursor: pointer
+
+    &__hamburger
+        display: none
+        color: $color_claro
+        font-size: $S
+        cursor: pointer
+
+        @media (max-width: 650px)
+            display: flex
 
     &__account
         width: auto
@@ -54,6 +74,9 @@
             &::first-letter
                 text-transform: capitalize
 
+        @media (max-width: 650px)
+            display: none
+
     &__add
         color: $color_placeholder
         font-size: $S
@@ -63,6 +86,9 @@
         &:hover
             background-color: $color_oscuro_secundario
 
+        @media (max-width: 650px)
+            display: none
+
     &__menu
         position: absolute
         top: calc( $XXL * 1.1 )
@@ -70,7 +96,7 @@
         width: 150px
         background-color: $color_oscuro_secundario
         border: 1px solid $color_oscuro_terciario
-        z-index: 99
+        z-index: 999
         list-style: none
         display: flex
         flex-direction: column
@@ -104,3 +130,13 @@
             right: $XL
             transform: rotate(45deg)
             z-index: 100
+
+    &__empty
+        display: none
+
+        @media (max-width: 650px)
+            display: flex
+
+    @media (max-width: 650px)
+        justify-content: space-between
+        padding: 0 $M

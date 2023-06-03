@@ -14,6 +14,10 @@
         height: $XL
         width: calc( $XXXL * 2 )
 
+    &--container
+        display: contents
+   
+
     &__square
         display: flex
         width: $XXS
@@ -25,14 +29,6 @@
         left: $S
         transform: rotate(45deg)
         z-index: 3
-
-        &__review
-            right: $XXS
-            left: auto
-
-    &__review
-        left: auto
-        right: 0
 
     &__browser
         height: $M
@@ -124,7 +120,7 @@
         overflow: auto
         overflow-x: hidden
         padding: 0 $XXS 0 $XXXS
-        scroll-behavior: smooth        
+        scroll-behavior: smooth
 
         &__item
             min-height: $XXL
@@ -156,6 +152,7 @@
 
             &__active
                 animation: fade100 1s forwards
+
                 .filter__list__item
 
                     &__img
@@ -167,18 +164,60 @@
             &:hover
                 background-color: rgba(15, 15, 15, 0.2)
 
-        &::-webkit-scrollbar
-            -webkit-appearance: none
+        &__loading
+            cursor: auto
 
-        &::-webkit-scrollbar:vertical
-            width: $XXXS
+            .filter__list__item
 
-        &::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button
-            display: none
+                &__img
+                    filter: contrast(0)
 
-        &::-webkit-scrollbar-thumb
-            background-color: $color_primario
-            border-radius: $XXL
+            &::after
+                position: absolute
+                top: 0
+                right: 0
+                bottom: 0
+                left: 0
+                width: 100%
+                transform: translateX(-100%)
+                background-image: linear-gradient(90deg, rgba(#3b3b3b, 0) 0,rgba(#3b3b3b, 0.2) 20%,rgba(#3b3b3b, 0.5) 60%,rgba(#3b3b3b, 0))
+                animation: shimmer 2s infinite
+                content: ''
+    
+    @media (max-width: 850px)
+        left: auto
+        right: 0
 
-        &::-webkit-scrollbar-track
-            border-radius: 10px
+        &__square
+            right: $S
+            left: auto
+
+    @media (max-width: 550px)
+        left: 0
+        right: auto
+
+        &__square
+            right: auto
+            left: $S
+
+            &--score
+                right: $S
+                left: auto
+
+        &--score
+            left: auto
+            right: 0 
+
+    &__square
+
+        &__review
+            right: $XXS
+            left: auto
+
+    &__review
+        left: auto
+        right: 0
+        
+        @media (max-width: 550px)
+            left: auto 
+            right: 0 

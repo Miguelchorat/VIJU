@@ -36,6 +36,8 @@ export default {
     },
     mounted() {
         this.callAPI()
+        localStorage.setItem('path','actualizar-review')
+        localStorage.removeItem('method')
     },
     watch: {
         message(newValue, oldValue) {
@@ -87,7 +89,6 @@ export default {
                     this.$router.push('/review/' + response.data.id)
                 })
                 .catch(error => {
-                    console.log(error)
                     if (error.response.data.message == 'Mensaje no válido')
                         this.error = 'Descripción de la reseña demasiado corto o largo'
                     else if (error.response.data.message == 'Título no válido')

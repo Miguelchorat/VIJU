@@ -1,5 +1,11 @@
 .main
 
+    &__profile
+        margin-top: 350px
+
+        @media (max-width: 700px)
+            margin-top: 390px
+
     &__header
         height: 55%
         width: 100%
@@ -13,18 +19,20 @@
         margin-bottom: $S
         color: $color_oscuro_primario
         overflow: hidden
+        z-index: 2
 
         &__background
             height: 100%
             width: 100%
             -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.01)))
+            pointer-events: none
 
             &__img
                 height: 100%
                 width: 100%
                 object-fit: cover
-                object-position: center
-                
+                object-position: bottom
+
         &__edit
             position: absolute
             bottom: $S
@@ -48,6 +56,7 @@
         max-height: $XL
         background-color: $color_oscuro_secundario
         border-bottom: 1px solid $color_oscuro_terciario
+        z-index: 2
 
         &__avatar
             height: 200%
@@ -57,6 +66,40 @@
             position: absolute
             top: - calc( $XXXL / 1.8)
             left: $XXL
+            z-index: 1
+
+            &__img
+                height: 100%
+                width: 100%
+
+            &__icon
+                display: none
+
+            &__user
+
+                &:hover
+                    cursor: pointer
+
+                    .main__subheader__avatar
+
+                        &__img
+                            opacity: 40%
+
+                        &__icon
+                            display: flex
+                            position: absolute
+                            bottom: 0
+                            right: 0
+                            color: $color_claro
+                            font-size: $XS
+                            background-color: $color_primario
+                            border-radius: 50%
+                            padding: $XXXS
+
+            @media (max-width: 700px)
+                top: - calc( $XXXL / 2)
+                left: $S
+                height: calc( $XXXL / 1.3 )
 
         &__username
             max-height: $XXXL
@@ -68,6 +111,10 @@
             font-size: $S
             font-family: $fuente_secundaria
 
+            @media (max-width: 700px)
+                top: - calc( $XXXL / 2.2)
+                left: calc( $XXXL * 1.2 )
+
         &__nav
             height: 100%
             width: 100%
@@ -75,25 +122,37 @@
             flex-direction: row
             align-items: center
             padding-left: calc( $XXXL * 2 )
-            gap: $XS
+            gap: $XXS
             color: $color_oscuro_terciario
             font-family: $fuente_secundaria
             font-size: $S
 
             &__info
+                height: 100%
                 color: $color_claro
                 font-size: $S
                 display: flex
                 flex-direction: row
                 align-items: center
                 gap: $XXXS
+                border-bottom: 4px solid transparent
+                padding: 0 $XXXS          
 
+                &__active
+                    border-bottom: 4px solid $color_primario
+                    transition: all ease .3s
+                    
                 &__label
                     color: $color_placeholder
-                    font-size: $XS
+                    font-size: $XS                
 
                 &:hover
-                    color: $color_primario
+                    color: $color_primario        
+
+            @media (max-width: 700px)
+                gap: $XXS
+                padding-left: 0
+                align-items: end
 
         &--fixed
             position: fixed
@@ -124,6 +183,17 @@
                     transform: translate(50%, -80%) scale(1.3)
                     animation: fadeDiagonal .3s forwards
 
+                    &:hover
+                        cursor: auto
+
+                        .main__subheader__avatar
+
+                            &__img
+                                opacity: 1
+
+                            &__icon
+                                display: none
+
                 &__username
                     width: 100%
                     max-width: max-content
@@ -133,6 +203,31 @@
                     justify-self: start
                     transform: translate(25%, -200%) scale(1.3)
                     animation: fadeDiagonal2 .3s forwards
+
+            @media (max-width: 700px)
+                width: 100%
+                display: grid
+                grid-template-rows: auto 1fr
+                grid-template-columns: auto auto
+                gap: $XXS
+                padding: 0
+
+                .main__subheader                    
+
+                    &__nav
+                        width: 100%
+                        grid-row: 2 
+                        grid-column: 1  / span 2
+
+                    &__avatar
+                        grid-row: 1
+                        grid-column: 1
+                        display: none
+
+                    &__username
+                        grid-row: 1
+                        grid-column: 2
+                        display: none
 
         &--animation
 
@@ -149,6 +244,11 @@
                     transform: translate(-30%, 50%) scale(0.7)
                     animation: fadeDiagonalInverted .3s forwards
 
+                    @media (max-width: 700px)
+                        top: - calc( $XXXL / 2)
+                        left: $S
+                        height: calc( $XXXL / 1.3 )
+
                 &__username
                     max-height: $XXXL
                     max-width: max-content
@@ -161,6 +261,10 @@
                     transform: translate(-25%, 200%) scale(0.7)
                     animation: fadeDiagonal2Inverted .5s forwards
 
+                    @media (max-width: 700px)
+                        top: - calc( $XXXL / 2.2)
+                        left: calc( $XXXL * 1.2 )
+
                 &__nav
                     height: 100%
                     width: 100%
@@ -172,9 +276,28 @@
                     color: $color_oscuro_terciario
                     font-family: $fuente_secundaria
                     font-size: $S
-                    transform: translateY(20px)   
-                    animation: fadeUpInverted .5s forwards                 
+                    transform: translateY(20px)
+                    animation: fadeUpInverted .5s forwards
+                    
+                    @media (max-width: 700px)
+                        gap: $XXS
+                        padding-left: 0
+                        align-items: end
 
+        
+        @media (max-width: 700px)
+            min-height: calc( $XXXL / 1.3 )
+            
+            &--fixed
+                min-height: $XXL
+            &__nav
+                padding-left: 0
+                
+                &__info
+                    width: 100%
+                    height: max-content
+                    padding-bottom: $XXXS
+                    justify-content: center
     &__data
         margin-top: 350px
         height: 100px
@@ -183,6 +306,7 @@
         flex-direction: row
         position: static
         color: $color_claro
+        
 
 @keyframes fadeUp
     from
@@ -207,10 +331,10 @@
 
 @keyframes fadeUpInverted
     from
-        transform: translateY(20px) 
+        transform: translateY(20px)
 
     to
-        transform: translateY(0) 
+        transform: translateY(0)
 
 @keyframes fadeDiagonalInverted
     from

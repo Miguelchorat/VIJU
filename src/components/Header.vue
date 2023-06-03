@@ -34,10 +34,15 @@ export default {
             localStorage.removeItem('avatar')
             this.$emit('listenTrigger')
             this.listenMenu()
+            this.$router.push('/')
         },
         listenProfile() {
             this.$router.push("/perfil/"+localStorage.getItem('username'))
+            localStorage.removeItem('method')
             this.listenMenu()
+        },
+        listenSubmenu(){
+            this.$emit('listenSubmenu')
         }
     }
 }
@@ -56,5 +61,8 @@ export default {
             <li class="header__menu__item" @click="listenLogout">Cerrar sesión</li>
         </ul>
         <div v-if="menu" class="header__menu__square"></div>
+        <div class="header__empty"></div>
+        <RouterLink to="/"><img class="header__logo" src="/src/assets/img/logo.svg" alt="logo"></RouterLink>
+        <span class="header__hamburger material-symbols-outlined" @click="listenSubmenu">menu</span>
     </header>
 </template>

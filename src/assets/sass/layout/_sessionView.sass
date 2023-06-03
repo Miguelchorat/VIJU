@@ -10,6 +10,13 @@
         height: auto
         width: 25%
         object-fit: cover
+
+        @media (max-width: 1150px)
+             width: 35%
+
+        @media (max-width: 850px)
+            display: none
+
     
     &__session
         height: 100%
@@ -51,6 +58,9 @@
                     &__active
                         color: $color_primario
                         border-bottom: 4px solid $color_primario
+                    
+                    @media (max-width: 300px)
+                        font-size: $XXS
 
             &__signin
                 display: flex
@@ -105,6 +115,9 @@
 
                     &:hover
                         background-color: $color_primario-hover
+
+            @media (max-width: 850px)
+                width: 85%
 
         &__phrase
             position: absolute

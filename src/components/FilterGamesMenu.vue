@@ -13,7 +13,8 @@ export default {
         return {
             games: [],
             API_GAMES: API + "/videogames",
-            search: ''
+            search: '',
+            loading: true
         }
     },
     watch: {
@@ -23,6 +24,7 @@ export default {
     },
     methods: {
         async callAPIGames() {
+            this.loading = true
             let endpoint = this.API_GAMES + '?search=' + this.search
             const response = await fetch(endpoint)
             const data = await response.json()
@@ -32,6 +34,7 @@ export default {
             else {
                 this.games = data
             }
+            this.loading = false
         },
         toggleSelection(videogame) {
             if (this.videogamesSelected != null) {
@@ -75,21 +78,25 @@ export default {
 }
 </script>
 <template>
-    <div>
+    <div class="filter--container">
         <div class="filter__square" :class="{ 'filter__square__review': videogamesSelected == null }"></div>
         <div class="filter" :class="{ 'filter__review': videogamesSelected == null }" @click.stop>
             <BrowserMenu @listenInput="listenInput" />
             <ul class="filter__list">
-                <li v-for="d in videogamesSelected" :value="d.id" class="filter__list__item filter__list__item__active"
+                <li v-if="!loading" v-for="d in videogamesSelected" :value="d.id" class="filter__list__item filter__list__item__active"
                     @click="toggleSelection(d, d.id, d.name)">
                     <img class="filter__list__item__img" :src="d.image" alt="">
                     <p class="filter__list__item__text">{{ d.name }}</p>
                 </li>
-                <li v-for="d in games" :value="d.id" class="filter__list__item"
+                <li v-if="!loading" v-for="d in games" :value="d.id" class="filter__list__item"
                     :class="{ 'filter__list__item__active': videogamesSelected?.find(v => v.id === d.id), }"
                     @click="toggleSelection(d, d.id, d.name)">
                     <img class="filter__list__item__img" :src="d.image" alt="">
                     <p class="filter__list__item__text">{{ d.name }}</p>
+                </li>
+                <li v-if="loading" v-for="d in 7" :value="''" class="filter__list__item filter__list__loading">
+                    <img class="filter__list__item__img" src="/src/assets/img/placeholder.png" alt="">
+                    <p class="filter__list__item__text"></p>
                 </li>
             </ul>
         </div>

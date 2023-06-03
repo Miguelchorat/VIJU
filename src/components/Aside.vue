@@ -45,23 +45,24 @@ export default {
                         <span class="aside__nav__list__item__link__icon material-symbols-outlined">today</span>
                         <p class="aside__nav__list__item__link__title">Último día</p>
                     </RouterLink>
-            </li>
-            <li class="aside__nav__list__item">
-                <RouterLink class="aside__nav__list__item__link" to="/ultima-semana"
-                    active-class="aside__nav__list__item__link__active">
-                    <span class="aside__nav__list__item__link__icon material-symbols-outlined">date_range</span>
-                    <p class="aside__nav__list__item__link__title">Última semana</p>
-                </RouterLink>
-            </li>
-            <li class="aside__nav__list__item">
-                <RouterLink class="aside__nav__list__item__link" to="/ultimo-mes"
-                    active-class="aside__nav__list__item__link__active">
-                    <span class="aside__nav__list__item__link__icon material-symbols-outlined">calendar_month</span>
-                    <p class="aside__nav__list__item__link__title">Último mes</p>
-                </RouterLink>
-            </li>
-            <li class="aside__nav__list__item">
-                    <a class="aside__nav__list__item__link aside__nav__list__item__link--hide" href="#"  @click="toggleHidden">
+                </li>
+                <li class="aside__nav__list__item">
+                    <RouterLink class="aside__nav__list__item__link" to="/ultima-semana"
+                        active-class="aside__nav__list__item__link__active">
+                        <span class="aside__nav__list__item__link__icon material-symbols-outlined">date_range</span>
+                        <p class="aside__nav__list__item__link__title">Última semana</p>
+                    </RouterLink>
+                </li>
+                <li class="aside__nav__list__item">
+                    <RouterLink class="aside__nav__list__item__link" to="/ultimo-mes"
+                        active-class="aside__nav__list__item__link__active">
+                        <span class="aside__nav__list__item__link__icon material-symbols-outlined">calendar_month</span>
+                        <p class="aside__nav__list__item__link__title">Último mes</p>
+                    </RouterLink>
+                </li>
+                <li class="aside__nav__list__item">
+                    <a class="aside__nav__list__item__link aside__nav__list__item__link--hide" href="#"
+                        @click="toggleHidden">
                         <span class="aside__nav__list__item__link__icon material-symbols-outlined">start</span>
                         <p class="aside__nav__list__item__link__title">Ocultar</p>
                     </a>

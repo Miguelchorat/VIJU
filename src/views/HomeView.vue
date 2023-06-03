@@ -19,16 +19,31 @@ export default {
       score: 1,
       videogamesSelected: [],
       API_REVIEWS: API + "/reviews",
-      API_REVIEWS_DATE: API + "/reviewsDate",
       currentPage: 0,
       totalPages: 0,
-      title: ''
+      title: '',
+      scrollTimeout: null,
+      loading: true,
+      loadingButton: true
     }
   },
   mounted() {
     this.callAPI()
     this.$refs.container.addEventListener('scroll', this.handleScroll);
-
+    if (this.$router.currentRoute.value.path == '/ultimo-dia') {
+      this.title = 'Último dia'
+      localStorage.setItem('path', 'ultimo-dia')
+    } else if (this.$router.currentRoute.value.path == '/ultima-semana') {
+      this.title = 'Última semana'
+      localStorage.setItem('path', 'ultima-semana')
+    } else if (this.$router.currentRoute.value.path == '/ultimo-mes') {
+      this.title = 'Último mes'
+      localStorage.setItem('path', 'ultimo-mes')
+    } else {
+      this.title = 'Últimos añadidos'
+      localStorage.setItem('path', '')
+    }
+    localStorage.removeItem('method')
   },
   beforeUnmount() {
     this.$refs.container.removeEventListener('scroll', this.handleScroll);
@@ -46,31 +61,20 @@ export default {
       },
       deep: true
     },
-    $route(to, from) {
-      this.callAPI()
-      if(this.$router.currentRoute.value.path == '/ultimo-dia'){
-        this.title = 'Último dia'
-      } else if (this.$router.currentRoute.value.path == '/ultima-semana'){
-        this.title = 'Última semana'
-      } else if (this.$router.currentRoute.value.path == '/ultimo-mes'){
-        this.title = 'Último mes'
-      } else {
-        this.title = 'Últimos añadidos'
-      }
-    }
   },
   methods: {
     async callAPI() {
-      let endpoint = ''
-      if(this.$router.currentRoute.value.path == '/ultimo-dia'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' + this.search + '&minScore=' + this.score + "&timeframe=day"
-      } else if (this.$router.currentRoute.value.path == '/ultima-semana'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' + this.search + '&minScore=' + this.score + "&timeframe=week"
-      } else if (this.$router.currentRoute.value.path == '/ultimo-mes'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' + this.search + '&minScore=' + this.score + "&timeframe=month"
-      } else {
-        endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score
+      this.loading = true
+      let endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score
+      this.results = null
+      if (this.$router.currentRoute.value.path == '/ultimo-dia') {
+        endpoint += "&timeframe=day"
+      } else if (this.$router.currentRoute.value.path == '/ultima-semana') {
+        endpoint += "&timeframe=week"
+      } else if (this.$router.currentRoute.value.path == '/ultimo-mes') {
+        endpoint += "&timeframe=month"
       }
+
       if (this.videogamesSelected.length != 0) {
         endpoint += '&videogames=' + this.videogamesSelected[0]?.name
           + '&videogames=' + this.videogamesSelected[1]?.name
@@ -79,29 +83,38 @@ export default {
           + '&videogames=' + this.videogamesSelected[4]?.name
       }
 
-      axios.get(endpoint, {
+      const response = await axios.get(endpoint, {
         withCredentials: true
       })
-        .then((response) => {
-          const data = response.data
-          this.results = data.content          
-          this.totalPages = data.totalPages
-          this.currentPage = 0
-        })
+      const data = response.data
+      this.totalPages = data.totalPages
+      this.currentPage = 0
+
+      if (localStorage.getItem('tokenjwt')) {
+        for (const review of data.content) {
+          const isLiked = await this.fetchUserLiked(review);
+          const isFavorite = await this.fetchUserFavorite(review);
+          review.isLiked = isLiked;
+          review.isFavorite = isFavorite;
+        }
+      }
+
+      this.results = data.content
+      this.loading = false
     },
-    loadMore() {
-      console.log(this.currentPage)
+    async loadMore() {
+      this.loadingButton = false
       this.currentPage++
-      let endpoint = ''
-      if(this.$router.currentRoute.value.path == '/ultimo-dia'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' + this.search + '&minScore=' + this.score + '&page=' + this.currentPage + "&timeframe=day"
-      } else if (this.$router.currentRoute.value.path == '/ultima-semana'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' +  '&minScore=' + this.score + '&page=' + this.currentPage + "&timeframe=week"
-      } else if (this.$router.currentRoute.value.path == '/ultimo-mes'){
-        endpoint = this.API_REVIEWS_DATE + '?search=' + this.search + '&minScore=' + this.score + '&page=' + this.currentPage + "&timeframe=month"
-      } else {
-        endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score + '&page=' + this.currentPage
+      let endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score + '&page=' + this.currentPage
+
+      if (this.$router.currentRoute.value.path == '/ultimo-dia') {
+        endpoint += "&timeframe=day"
+      } else if (this.$router.currentRoute.value.path == '/ultima-semana') {
+        endpoint += "&timeframe=week"
+      } else if (this.$router.currentRoute.value.path == '/ultimo-mes') {
+        endpoint += "&timeframe=month"
       }
+
       if (this.videogamesSelected.length != 0) {
         endpoint += '&videogames=' + this.videogamesSelected[0]?.name
           + '&videogames=' + this.videogamesSelected[1]?.name
@@ -110,13 +123,62 @@ export default {
           + '&videogames=' + this.videogamesSelected[4]?.name
       }
 
-      axios.get(endpoint, {
+      const response = await axios.get(endpoint, {
         withCredentials: true
       })
-        .then((response) => {
-          const data = response.data
-          this.results.push(...data.content)
-        })
+      const data = response.data
+      if (localStorage.getItem('tokenjwt')) {
+        for (const review of data.content) {
+          const isLiked = await this.fetchUserLiked(review);
+          const isFavorite = await this.fetchUserFavorite(review);
+          review.isLiked = isLiked;
+          review.isFavorite = isFavorite
+        }
+      }
+      this.results.push(...data.content)
+      this.loadingButton = true;
+    },
+    async fetchUserLiked(review) {
+      try {
+        const response = await axios.get(API + `/review/${review.id}/liked`, {
+          headers:
+          {
+            'Authorization': `Bearer ${localStorage.getItem('tokenjwt')}`,
+            'Content-Type': 'application/json'
+          },
+        });
+        const isLiked = response.data;
+        return isLiked
+      } catch (error) {
+        this.listenToast('Hubo un error inesperado', 'warning')
+      }
+    },
+    async fetchUserFavorite(review) {
+      try {
+        const response = await axios.get(API + `/review/${review.id}/favorite`, {
+          headers:
+          {
+            'Authorization': `Bearer ${localStorage.getItem('tokenjwt')}`,
+            'Content-Type': 'application/json'
+          },
+        });
+        const isfavorite = response.data;
+        return isfavorite
+      } catch (error) {
+        this.listenToast('Hubo un error inesperado', 'warning')
+      }
+    },
+    resetFields() {
+      this.results = null
+      this.menuVideogames = false
+      this.menuScore = false
+      this.search = ''
+      this.score = 1
+      this.videogamesSelected = []
+      this.currentPage = 0
+      this.totalPages = 0
+      this.title = ''
+      this.scrollTimeout = null
     },
     listenMenuVideogame() {
       this.menuVideogames = !this.menuVideogames
@@ -141,13 +203,18 @@ export default {
       }
     },
     handleScroll() {
-      const container = this.$refs.container
-      if (container.scrollTop + container.clientHeight >= container.scrollHeight && this.currentPage < this.totalPages) {
-        this.loadMore()
+      const container = this.$refs.container;
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 1 && this.currentPage < this.totalPages && !this.loading && this.loadingButton) {
+        if (!this.scrollTimeout) {
+          this.scrollTimeout = setTimeout(() => {
+            this.loadMore();
+            this.scrollTimeout = null;
+          }, 250);
+        }
       }
     },
-    listenToast(message,title){
-      this.$emit('listenToast',message,title)
+    listenToast(message, title) {
+      this.$emit('listenToast', message, title)
     }
   }
 }
@@ -156,32 +223,44 @@ export default {
 <template>
   <main class="main" ref="container" @scroll="handleScroll">
     <div class="container">
-      <h1 class="main__title">{{title}}</h1>
+      <h1 class="main__title">{{ title }}</h1>
       <div class="main__filter">
         <Browser @listenInput="listenInput" />
         <a href="#" class="main__filter__videogame" @click="listenMenuVideogame">
           Videojuego
           <FilterGamesMenu v-if="menuVideogames" v-click-away="listenMenuVideogame"
-            :videogamesSelected.sync="videogamesSelected" @addVideogame="addVideogame"
-            @deleteVideogame="deleteVideogame" @listenToast="listenToast"/>
+            :videogamesSelected.sync="videogamesSelected" @addVideogame="addVideogame" @deleteVideogame="deleteVideogame"
+            @listenToast="listenToast" />
           <span class="main__filter__videogame__icon material-symbols-outlined">expand_more</span>
         </a>
         <a href="#" class="main__filter__score" @click="listenMenuScore">
           Puntuación
-          <FilterScoreMenu v-if="menuScore" v-click-away="listenMenuScore" @listenScore="listenScore" :score="score"/>
+          <FilterScoreMenu v-if="menuScore" v-click-away="listenMenuScore" @listenScore="listenScore" :score="score" />
           <span class="main__filter__score__icon material-symbols-outlined">expand_more</span>
         </a>
       </div>
-      <section ref="reviews" class="main__reviews" v-show="results !== null && results.length !== 0">
+      <section ref="reviews" class="main__reviews" v-show="results !== null && results.length !== 0 && !loading">
         <Review v-for="res in results" :id='res.id' :title='res.title' :image='res.videogame.image'
           :videogame="res.videogame.name" :user='res.user.username' :score='res.score'
-          @click="() => $emit('selectReview', res.id)" :path="path" :created_at="res.createdAt" :likesCount="res.likesCount" :favoritesCount="res.favoritesCount" @listenToast="listenToast"/>
+          @click="() => $emit('selectReview', res.id)" :path="path" :created_at="res.createdAt"
+          :likesCount="res.likesCount" :favoritesCount="res.favoritesCount" :isLiked="res.isLiked"
+          :isFavorite="res.isFavorite" @listenToast="listenToast" />
       </section>
-      <section v-if="results == null || results.length == 0" class="main__empty">
+      <section ref="reviews" class="main__reviews main__loading" v-show="loading">
+        <Review v-for="res in 16" :id='""' :title='""' :image='"/src/assets/img/placeholder.png"' :videogame="''"
+          :user='""' :score='""' :path="''" :created_at="''" :likesCount="''" :favoritesCount="''" :isLiked="''"
+          :isFavorite="''" />
+      </section>
+      <section v-if="(results == null || results.length == 0) && !loading" class="main__empty">
         <img src="/src/assets/img/broken.png" alt="CD ROTO" class="main__empty__image">
         <h2 className="main__empty__title">No se ha encontrado ningun resultado.</h2>
-      </section>      
-      <div v-if="results !== null && results.length !== 0 && results.length % 16 == 0" class="main__load"><a class="main__load__button" href="#" @click="loadMore">Cargar más</a></div>
+      </section>
+      <div v-if="results !== null && results.length !== 0 && results.length % 16 == 0" class="main__load">
+        <a class="main__load__button" href="#" @click="loadMore">
+          <p v-if="loadingButton">Ver más</p>
+          <p v-else class="loader"></p>
+        </a>
+      </div>
     </div>
   </main>
 </template>

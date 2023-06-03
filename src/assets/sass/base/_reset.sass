@@ -55,6 +55,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
         justify-content: center
 
         &__button
+            height: auto
+            width: $XXXL
+            text-align: center
             background-color: $color_oscuro_secundario
             font-family: $fuente_secundaria
             $font-size: $XS
@@ -66,7 +69,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
             border: 1px solid $color_oscuro_terciario
             animation: fade100 none 1.4s 
 
+    @media (max-width: 650px)
+        height: 100%
+        
 .container
     width: 100%
     max-width: 1650px
     padding: $XS $S
+
+    @media (max-width: 650px)
+        height: 100%

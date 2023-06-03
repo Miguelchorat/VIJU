@@ -28,17 +28,18 @@ export default {
             password: '',
             password2: '',
             username: '',
-            errorUsername: 'error 303',
+            errorUsername: '',
             errorEmail: '',
             errorPassword: '',
             errorPassword2: '',
-            errorUsername: '',
             API_REGISTER: API + "/user",
             API_LOGIN: API + "/auth/login",
         }
     },
     created() {
         this.number = Math.floor(Math.random() * this.phrases.length)
+        localStorage.setItem('path','session')
+        localStorage.removeItem('method')
     },
     methods: {
         listenSession() {

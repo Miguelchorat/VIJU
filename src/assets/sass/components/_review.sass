@@ -9,6 +9,9 @@
         font-family: $fuente_primaria
         margin-bottom: $XXS
 
+        @media (max-width: 650px)
+            font-size: $S
+
     &__empty
         display: flex
         flex-direction: column
@@ -16,16 +19,46 @@
         padding: $XXL
         justify-content: center
         align-items: center
-        gap: $XL
+        gap: $XS
 
         &__image
             height: auto
-            width: $XXXL
+            width: $XXL
 
         &__title
-            font-family: $fuente_primaria
-            font-size: $M
+            font-family: $fuente_secundaria
+            font-size: $S
+            font-weight: 400
             color: $color_claro
+            text-align: center
+
+    &__loading
+        .main__reviews__review
+            cursor: auto
+
+            &::after
+                position: absolute
+                top: 0
+                right: 0
+                bottom: 0
+                left: 0
+                width: 100%
+                transform: translateX(-100%)
+                background-image: linear-gradient(90deg, rgba(#3b3b3b, 0) 0,rgba(#3b3b3b, 0.2) 20%,rgba(#3b3b3b, 0.5) 60%,rgba(#3b3b3b, 0))
+                animation: shimmer 2s infinite
+                content: ''
+
+            &__account
+                visibility: hidden
+
+            &__img
+                visibility: hidden
+
+            &__info
+                visibility: hidden
+
+            &:hover
+                transform: scale(1)
 
     &__reviews
         display: grid
@@ -58,7 +91,7 @@
                 padding: $XXXS
 
                 &__img
-                    height: $XS                    
+                    height: $XS
                     pointer-events: none
 
                 &__info
@@ -136,7 +169,7 @@
 
                     &__icon
                         font-size: $XS
-                    
+
                     &__selected
                         color: $color_primario
 
@@ -218,3 +251,4 @@
     opacity: 1
     transform: translate3d(0, 0px, 0)
     transition: 0.1s ease-in-out
+

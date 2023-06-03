@@ -31,6 +31,10 @@ export default {
             API_CREATE_REVIEW: API + "/review",
         }
     },
+    created(){
+        localStorage.setItem('path','crear-review')
+        localStorage.removeItem('method')
+    },
     watch: {
         message(newValue, oldValue) {
             this.contentPreview = marked(newValue);
@@ -47,33 +51,37 @@ export default {
         async createdReview() {
             if(!this.submit)
                 return null;
-
-            await axios.post(this.API_CREATE_REVIEW, {
-                title: this.title,
-                message: this.message,
-                videogame: this.videogame,
-                score: this.score
-            }, { 
-                headers: 
-                {
-                    'Authorization': `Bearer ${localStorage.getItem('tokenjwt')}`,
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true 
-            })
-                .then((response) => {
-                    this.listenToast('Creaste la reseña satisfactoriamente','success')
-                    this.$router.push('/review/' + response.data.id)
+            try {
+                await axios.post(this.API_CREATE_REVIEW, {
+                    title: this.title,
+                    message: this.message,
+                    videogame: this.videogame,
+                    score: this.score
+                }, { 
+                    headers: 
+                    {
+                        'Authorization': `Bearer ${localStorage.getItem('tokenjwt')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true 
                 })
-                .catch(error => {
-                    if(error.response.data.message == 'Mensaje no válido')
-                        this.error = 'Descripción de la reseña demasiado corto o largo'
-                    else if(error.response.data.message == 'Título no válido')
-                        this.error = 'Título demasiado corto'
-                    else{                    
-                        this.error = 'Hubo un error en la creación de la review'
-                    }
-                })
+                    .then((response) => {
+                        this.listenToast('Creaste la reseña satisfactoriamente','success')
+                        this.$router.push('/review/' + response.data.id)
+                    })
+                    .catch(error => {
+                        if(error.response.data.message == 'Mensaje no válido')
+                            this.error = 'Descripción de la reseña demasiado corto o largo'
+                        else if(error.response.data.message == 'Título no válido')
+                            this.error = 'Título demasiado corto'
+                        else{                    
+                            this.error = 'Hubo un error en la creación de la review'
+                        }
+                    })
+            } catch (error) {
+                this.listenToast('Hubo un error en la creación de la review','warning')
+            }
+            
         },
         listenMenuVideogame() {
             this.menuVideogames = !this.menuVideogames

@@ -11,7 +11,7 @@
     background: #380848
     transform: scale(0)
     border-radius: $XXL
-    color: white
+    color: $color_claro
     opacity: 0
     overflow: hidden
     padding: $M $XS
@@ -67,6 +67,18 @@
         height: auto
         animation: fade-in .7s ease-in forwards
 
+    @media (max-width: 650px)
+        top: auto
+        right: 0
+        left: 0
+        bottom: $M  
+        margin: auto
+        animation: scale-in .3s ease-out forwards, expandResponsive .35s .25s ease-out forwards
+
+        .toast__content__text
+            padding-right: $S
+            overflow-wrap: break-word
+
 @keyframes scale-in
     100%
         transform: scale(1)
@@ -79,6 +91,16 @@
 
     100%
         width: 450px
+        border-radius: 4px
+        box-shadow: 0px 1px 3px 0px rgba(0,0,0,.2), 0px 1px 1px 0px rgba(0,0,0,.14), 0px 3px 3px -1px rgba(0,0,0,.12)
+
+@keyframes expandResponsive
+    50%
+        width: 95%
+        border-radius: 6px
+
+    100%
+        width: 85%
         border-radius: 4px
         box-shadow: 0px 1px 3px 0px rgba(0,0,0,.2), 0px 1px 1px 0px rgba(0,0,0,.14), 0px 3px 3px -1px rgba(0,0,0,.12)
 

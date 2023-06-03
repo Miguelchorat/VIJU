@@ -8,6 +8,10 @@ export default {
       MAX_LENGHT: 85
     }
   },
+  created() {
+    localStorage.setItem('path','actualizar-review')
+    localStorage.removeItem('method')
+  },
   methods: {
     
   }

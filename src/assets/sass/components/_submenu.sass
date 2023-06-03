@@ -1,0 +1,90 @@
+.submenu
+    height: 100vh
+    width: 100%
+    position: absolute
+    top: 0
+    left: 0
+    z-index: 999
+    transform: translateX(0%)
+    background-color: $color_oscuro_primario
+    transition: 0.5s
+    display: flex
+    flex-direction: column
+
+    &__open
+        transform: translateX(0)
+        transition: .3s
+
+    &__close
+        transform: translateX(-100%)
+        transition: .3s
+
+    &__header
+        min-height: $XL
+        display: flex
+        flex-direction: row
+        justify-content: end
+        padding-right: $M
+
+        &__icon
+            color: $color_claro
+            font-size: $S
+
+    &__separator
+        height: 1px        
+        margin: $XXXS $XS
+        background-color: $color_oscuro_terciario
+
+    &__nav
+        height: 100%
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-content: center
+        position: relative
+
+        &__list
+            height: 100%
+            width: 100%
+            display: flex
+            flex-direction: column
+            color: $color_claro
+            list-style: none
+
+            &__item
+                cursor: pointer
+
+                &__link
+                    display: flex
+                    flex-direction: row
+                    min-height: 58px
+                    gap: $XXS
+                    padding: $XXS 0
+                    padding-left: $XXS
+                    color: $color_claro
+
+                    &__icon
+                        font-size: $M
+                        height: $M
+
+                    &__title
+                        font-size: 1.2rem
+                        font-family: $fuente_primaria
+                        align-self: center
+                        white-space: nowrap
+
+                    &:hover
+                        border-right: 3px solid $color_claro
+                        background-color: rgba(255, 255, 255, 0.1)
+
+                    &__active
+                        color: $color_primario
+                        border-right: 3px solid $color_primario
+                        background-color: rgba(255, 255, 255, 0.1)
+
+                        &:hover
+                            border-right: 3px solid $color_primario
+                            background-color: rgba(255, 255, 255, 0.1)
+
+
+

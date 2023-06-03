@@ -47,7 +47,7 @@
 
             &__edit
                 border-bottom: 3px solid transparent
-                color: $color_placeholder                              
+                color: $color_placeholder
                 cursor: pointer
                 font-size: $XS
 
@@ -66,6 +66,24 @@
             flex-direction: column
             gap: $XS
 
+            & img
+                width: 75%
+                height: auto
+                display: table
+                margin: 0 auto
+                padding: $S 0
+
+            & ul, ol
+                margin-left: $M
+
+            & a
+                color: $color_claro
+                border-bottom: 1px solid $color_claro
+                text-decoration: none
+
+                &:hover
+                    opacity: $opacidad
+
         &__article
             width: 32%
             display: grid
@@ -73,16 +91,23 @@
             grid-template-rows: 1fr 2fr
             grid-template-areas: "title title" "label info"
             padding: $S 0
+            min-width: 385px
             max-width: 400px
 
             &--videogame
                 grid-template-columns: 1fr 2fr
 
             &__group
-                display: flex
-                flex-direction: row
+                width: 100%
+                display: grid
+                grid-template-columns: 1fr 1fr 1fr
                 gap: $XS
-                flex-wrap: wrap
+
+                @media (max-width: 1350px)
+                    grid-template-columns: 1fr 1fr
+
+                @media (max-width: 700px)
+                    grid-template-columns: 1fr
 
             &__title
                 grid-area: title
@@ -108,33 +133,31 @@
                 gap: $XXS
 
                 &__text
+                    width: max-content
                     color: $color_claro
                     font-size: $XS
                     font-family: $fuente_secundaria
                     display: flex
                     flex-direction: row
                     gap: $XXXS
+                    border-bottom: none
+
+                    &__click
+                        cursor: pointer
+
+                        &:hover
+                            opacity: $opacidad
 
                     &__icon
-                        font-size: $XXS
+                        font-size: $XS
+                        align-self: center
+                    
+                    &__selected
+                        color: $color_primario
+                    
+                & a:hover
+                    opacity: $opacidad
 
-        & img
-            width: 75%
-            height: auto
-            display: table
-            margin: 0 auto
-            padding: $S 0
-
-        & ul, ol
-            margin-left: $M
-
-        & a
-            color: $color_claro
-            border-bottom: 1px solid $color_claro
-            text-decoration: none
-
-            &:hover
-                opacity: $opacidad
 
     &__background
         position: absolute

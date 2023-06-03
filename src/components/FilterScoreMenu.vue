@@ -20,7 +20,7 @@ export default {
 </script>
 <template>
     <div>
-        <div class="filter__square"></div>
+        <div class="filter__square filter__square--score"></div>
         <div class="filter filter--score" @click.stop>
             <BrowserMenuScore @listenScore="listenScore" :score="score"/>
         </div>

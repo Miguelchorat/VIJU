@@ -3,6 +3,7 @@ import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
 import Aside from './components/Aside.vue'
 import Toast from './components/Toast.vue'
+import Submenu from './components/Submenu.vue'
 
 </script>
 
@@ -16,10 +17,12 @@ export default {
       trigger: 0,
       toast: false,
       messageToast: '',
-      statusToast: ''
+      statusToast: '',
+      submenu: false
     }
   },
-  mounted() {
+  created() {   
+    localStorage.setItem('path','/')
   },
   methods: {
     listenTrigger() {
@@ -29,15 +32,19 @@ export default {
       this.messageToast = message
       this.statusToast = status
       this.toast = !this.toast
+    },
+    listenSubmenu(){      
+      this.submenu = !this.submenu
     }
   }
 }
 </script>
 
 <template>
-  <Header v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger" :trigger="trigger" />
-  <Aside v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger" />
-  <RouterView @listenTrigger="listenTrigger" @listenToast="listenToast"/>
+  <Header v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger" :trigger="trigger" @listenSubmenu="listenSubmenu"/>
+  <Aside v-show="$route.path !== '/sesion'" />
+  <Submenu v-show="$route.path !== '/sesion'" @listenTrigger="listenTrigger" :trigger="trigger" @listenSubmenu="listenSubmenu" :submenu="submenu"/>
+  <RouterView @listenToast="listenToast" :key="$route.path"  @listenTrigger="listenTrigger"/>
   <Toast :message="messageToast" :status="statusToast" :active="toast" @listenToast="listenToast" v-click-away="listenToast" />
 </template>
 

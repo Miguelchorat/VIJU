@@ -13,6 +13,7 @@
         align-self: center
         filter: drop-shadow(0 1px 3px)
         animation: paths 9s step-end infinite
+        margin-bottom: $XS
 
         &:before
             content: "404"
@@ -34,6 +35,11 @@
             color: #1bc7fb
             animation: paths 9s step-end infinite, opacity 9s step-end infinite, font 11s step-end infinite, movement 12s step-end infinite
 
+        @media (max-width: 1050px)
+            font-size: calc( $XXXL * 2 )
+
+        @media (max-width: 650px)
+            font-size: $XXL
     &__message
         color: $color_claro
         font-family: $fuente_primaria

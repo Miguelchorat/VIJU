@@ -64,43 +64,44 @@ export default {
   },
   methods: {
     async callAPI() {
-      this.loading = true
-      let endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score
-      this.results = null
+      this.loading = true;
+      let endpoint = this.API_REVIEWS + '?search=' + this.search + '&minScore=' + this.score;
+      this.results = null;
+
       if (this.$router.currentRoute.value.path == '/ultimo-dia') {
-        endpoint += "&timeframe=day"
+        endpoint += "&timeframe=day";
       } else if (this.$router.currentRoute.value.path == '/ultima-semana') {
-        endpoint += "&timeframe=week"
+        endpoint += "&timeframe=week";
       } else if (this.$router.currentRoute.value.path == '/ultimo-mes') {
-        endpoint += "&timeframe=month"
+        endpoint += "&timeframe=month";
       }
 
       if (this.videogamesSelected.length != 0) {
-        endpoint += '&videogames=' + this.videogamesSelected[0]?.name
-          + '&videogames=' + this.videogamesSelected[1]?.name
-          + '&videogames=' + this.videogamesSelected[2]?.name
-          + '&videogames=' + this.videogamesSelected[3]?.name
-          + '&videogames=' + this.videogamesSelected[4]?.name
+        endpoint += '&videogames=' + this.videogamesSelected.map(v => v.name).join('&videogames=');
       }
 
-      const response = await axios.get(endpoint, {
-        withCredentials: true
-      })
-      const data = response.data
-      this.totalPages = data.totalPages
-      this.currentPage = 0
+      const response = await axios.get(endpoint, { withCredentials: true });
+      const data = response.data;
+      this.totalPages = data.totalPages;
+      this.currentPage = 0;
 
       if (localStorage.getItem('tokenjwt')) {
-        for (const review of data.content) {
-          const isLiked = await this.fetchUserLiked(review);
-          const isFavorite = await this.fetchUserFavorite(review);
-          review.isLiked = isLiked;
-          review.isFavorite = isFavorite;
-        }
+        const fetchLikedPromises = data.content.map(review => this.fetchUserLiked(review));
+        const fetchFavoritePromises = data.content.map(review => this.fetchUserFavorite(review));
+
+        const [likedResults, favoriteResults] = await Promise.all([
+          Promise.all(fetchLikedPromises),
+          Promise.all(fetchFavoritePromises)
+        ]);
+
+        data.content.forEach((review, index) => {
+          review.isLiked = likedResults[index];
+          review.isFavorite = favoriteResults[index];
+        });
       }
 
-      this.results = data.content
-      this.loading = false
+      this.results = data.content;
+      this.loading = false;
     },
     async loadMore() {
       this.loadingButton = false
@@ -128,12 +129,18 @@ export default {
       })
       const data = response.data
       if (localStorage.getItem('tokenjwt')) {
-        for (const review of data.content) {
-          const isLiked = await this.fetchUserLiked(review);
-          const isFavorite = await this.fetchUserFavorite(review);
-          review.isLiked = isLiked;
-          review.isFavorite = isFavorite
-        }
+        const fetchLikedPromises = data.content.map(review => this.fetchUserLiked(review));
+        const fetchFavoritePromises = data.content.map(review => this.fetchUserFavorite(review));
+
+        const [likedResults, favoriteResults] = await Promise.all([
+          Promise.all(fetchLikedPromises),
+          Promise.all(fetchFavoritePromises)
+        ]);
+
+        data.content.forEach((review, index) => {
+          review.isLiked = likedResults[index];
+          review.isFavorite = favoriteResults[index];
+        });
       }
       this.results.push(...data.content)
       this.loadingButton = true;

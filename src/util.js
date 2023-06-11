@@ -1,4 +1,5 @@
-export const API = 'http://localhost:8080';
+//export const API = 'http://localhost:8080';
+export const API = 'https://viju-server-production.up.railway.app';
 
 export function formatDate(date) {
     const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];

@@ -152,12 +152,18 @@ export default {
       this.currentPage = 0
 
       if (localStorage.getItem('tokenjwt')) {
-        for (const review of data.content) {
-          const isLiked = await this.fetchUserLiked(review);
-          const isFavorite = await this.fetchUserFavorite(review);
-          review.isLiked = isLiked;
-          review.isFavorite = isFavorite;
-        }
+        const fetchLikedPromises = data.content.map(review => this.fetchUserLiked(review));
+        const fetchFavoritePromises = data.content.map(review => this.fetchUserFavorite(review));
+
+        const [likedResults, favoriteResults] = await Promise.all([
+          Promise.all(fetchLikedPromises),
+          Promise.all(fetchFavoritePromises)
+        ]);
+
+        data.content.forEach((review, index) => {
+          review.isLiked = likedResults[index];
+          review.isFavorite = favoriteResults[index];
+        });
       }
 
       this.results = data.content
@@ -185,12 +191,18 @@ export default {
       })
       const data = response.data
       if (localStorage.getItem('tokenjwt')) {
-        for (const review of data.content) {
-          const isLiked = await this.fetchUserLiked(review);
-          const isFavorite = await this.fetchUserFavorite(review);
-          review.isLiked = isLiked;
-          review.isFavorite = isFavorite
-        }
+        const fetchLikedPromises = data.content.map(review => this.fetchUserLiked(review));
+        const fetchFavoritePromises = data.content.map(review => this.fetchUserFavorite(review));
+
+        const [likedResults, favoriteResults] = await Promise.all([
+          Promise.all(fetchLikedPromises),
+          Promise.all(fetchFavoritePromises)
+        ]);
+
+        data.content.forEach((review, index) => {
+          review.isLiked = likedResults[index];
+          review.isFavorite = favoriteResults[index];
+        });
       }
       this.results.push(...data.content)
       this.loadingButton = true;

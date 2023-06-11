@@ -7,7 +7,7 @@ export default {
     props: ['trigger'],
     data() {
         return {
-            imagePathPrefix: "/VIJU/src/assets/img/avatar/",
+            imagePathPrefix: "../assets/img/avatar/",
             session: localStorage.getItem('tokenjwt') ?? null,
             username: localStorage.getItem('username') ?? null,
             avatar: localStorage.getItem('avatar') ?? null,

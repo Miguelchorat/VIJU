@@ -19,7 +19,7 @@ export default {
     return {
       user: null ?? { username: "", email: '', date: '1970-01-01' },
       stats: null ?? { likeCount: '', reviewCount: '', favoriteCount: '' },
-      imagePathPrefix: "/VIJU/src/assets/img/avatar/",
+      imagePathPrefix: "../assets/img/avatar/",
       API_USER: API + "/user/username=" + this.$route.params.username,
       API_USER_STATS: API + "/user/stats/username=" + this.$route.params.username,
       API_USER_AVATAR: API + "/user/avatar",

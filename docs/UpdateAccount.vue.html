@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: UpdateAccount.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: UpdateAccount.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;script>
+import axios from 'axios'
+
+export default {
+    props: ['menu'],
+
+    data() {
+        return {
+            password: '',
+            repeatPassword: '',
+            date: '',
+            errorPassword: false,
+            errorRepeatPassword: false,
+            errorDate: false,
+            focusPassword: false,
+            focusRepeatPassword: false,
+            focusDate: false,
+            visibility: false,
+            visibilityRepeat: false,
+            API_UPDATE_USER: "https://viju-server.onrender.com/api/v1/auth/users/id=",
+            emailValidation: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            passwordValidation: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,32}$/,
+            usernameValidation: /^[a-zA-Z]{3,18}$/,
+            MIN_AGE_LIMIT: new Date(Date.now()).getFullYear() - 13,
+            MAX_AGE_LIMIT: new Date(Date.now()).getFullYear() - 120
+        }
+    },
+    methods: {
+        listenRemember() {
+            this.remember = !this.remember
+        },
+        listenVisibility() {
+            this.visibility = !this.visibility
+        },
+        /**
+
+            Actualiza la información de la cuenta del usuario enviando una solicitud PUT al endpoint de la API.
+
+            Utiliza el algoritmo SHA-1 para cifrar la contraseña del usuario antes de enviarla.
+
+            Emite un evento 'listenMenu' al recibir una respuesta exitosa del servidor.
+
+            @async
+
+            @function updateAccount
+
+            @returns {Promise&lt;void>}
+
+            @throws {Error} Cuando la solicitud a la API falla.
+        */
+        async updateAccount() {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(this.password);
+            const digest = await crypto.subtle.digest('SHA-1', data);
+            const hash = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+
+            await axios.put(this.API_UPDATE_USER + localStorage.getItem("userId"), {
+                id: localStorage.getItem("userId"),
+                date: this.date,
+                password: hash
+            }, { withCredentials: true })
+                .then(response => {
+                    this.$emit('listenMenu')
+                    this.$emit('checkUser')
+                })
+                .catch(error => {
+                    console.error("Fallo al enviar el form" + error)
+                });
+        },
+        checkFields() {
+            let check = 0
+            this.errorPassword = ''
+            this.errorRepeatPassword = ''
+            this.errorDate = ''
+
+            if (this.passwordValidation.test(this.password)) {
+                check++
+            } else {
+                this.errorPassword = 'La contraseña no es válida. Debe contener al menos 8 caracteres y un número.'
+            }
+
+            if (this.repeatPassword !== "" &amp;&amp; this.repeatPassword === this.password) {
+                check++
+            } else {
+                this.errorRepeatPassword = 'Las contraseñas no son iguales'
+            }
+            if (this.date !== '' &amp;&amp; (new Date(this.date).getFullYear() &lt; this.MIN_AGE_LIMIT &amp;&amp; new Date(this.date).getFullYear() > this.MAX_AGE_LIMIT)) {
+                check++
+            } else {
+                this.errorDate = 'La fecha no es válida'
+            }
+
+            if (check == 3) {
+                this.updateAccount()
+            }
+        }
+    }
+}
+&lt;/script>
+
+&lt;template>
+    &lt;form class="session" @submit.prevent="checkFields">
+        &lt;a class="session__close material-symbols-outlined" href="#" @click="() => $emit('listenMenu')">close&lt;/a>
+        &lt;h2 class="session__title">MODIFICAR&lt;/h2>
+        &lt;div class="session__field">
+            &lt;input class="session__field__input" :class="{ session__field__input__warning: errorPassword }"
+                :value="password" @input="event => password = event.target.value" placeholder="Nueva contraseña"
+                :type="visibility ? 'text' : 'password'" aria-label="password" maxlength="32" @focus="focusPassword = true"
+                @blur="focusPassword = false" />
+            &lt;span class="session__field__icon material-symbols-outlined" @click="listenVisibility">{{
+                visibility ?
+                'visibility_off' : 'visibility'
+            }}&lt;/span>
+            &lt;span class="session__field__square"
+                :class="{ session__field__square__active: errorPassword &amp;&amp; focusPassword }" />
+            &lt;p class="session__field__error" :class="{ session__field__error__active: errorPassword &amp;&amp; focusPassword }">
+                {{ errorPassword }}&lt;/p>
+        &lt;/div>
+        &lt;div class="session__field">
+            &lt;input class="session__field__input" :class="{ session__field__input__warning: errorRepeatPassword }"
+                :value="repeatPassword" @input="event => repeatPassword = event.target.value"
+                placeholder="Repetir contraseña" :type="visibilityRepeat ? 'text' : 'password'" aria-label="repeat-password"
+                maxlength="32" @focus="focusRepeatPassword = true" @blur="focusRepeatPassword = false" />
+            &lt;span class="session__field__icon material-symbols-outlined" @click="listenVisibilityRepeat">{{
+                visibilityRepeat ? 'visibility_off' : 'visibility'
+            }}&lt;/span>
+            &lt;span class="session__field__square"
+                :class="{ session__field__square__active: errorRepeatPassword &amp;&amp; focusRepeatPassword }" />
+            &lt;p class="session__field__error"
+                :class="{ session__field__error__active: errorRepeatPassword &amp;&amp; focusRepeatPassword }">{{
+                    errorRepeatPassword
+                }}&lt;/p>
+        &lt;/div>
+        &lt;div class="session__field">
+            &lt;input class="session__field__input" type="date" :class="{ session__field__input__warning: errorDate }"
+                aria-label="date" :value="date" @input="event => date = event.target.value"
+                @focus="focusDate = true" @blur="focusDate = false" />
+            &lt;span class="session__field__square" :class="{ session__field__square__active: errorDate &amp;&amp; focusDate }" />
+            &lt;p class="session__field__error" :class="{ session__field__error__active: errorDate &amp;&amp; focusDate }">{{
+                errorDate
+            }}&lt;/p>
+        &lt;/div>
+        &lt;input class="session__button" type="submit" value="MODIFICAR">
+    &lt;/form>
+&lt;/template></code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Header.html">Header</a></li><li><a href="module-Loading.html">Loading</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Review.html">Review</a></li><li><a href="module-Signin.html">Signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#updateAccount">updateAccount</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 20 2023 16:15:07 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

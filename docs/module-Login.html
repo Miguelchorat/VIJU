@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: Login</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: Login</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Componente que representa el formulario de inicio de sesión de un usuario.</p></div></div> 
+
+
+<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3>
+<table data-jsdoc-vuejs="table-props">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default value</th>
+        <th>Required?</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody><tr>
+        <td><code>menu</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td><b>Yes</b></td>
+        <td>Indica si el menú de la aplicación está activo o no.</td>
+    </tr><tr>
+        <td><code>account</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td><b>Yes</b></td>
+        <td>Indica si la cuenta del usuario está activa o no.</td>
+    </tr><tr>
+        <td><code>session</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td><b>Yes</b></td>
+        <td>Indica si la sesión del usuario está activa o no.</td>
+    </tr><tr>
+        <td><code>userId</code></td>
+        <td>Number</td>
+        <td>-</td>
+        <td><b>Yes</b></td>
+        <td>ID del usuario que está iniciando sesión.</td>
+    </tr></tbody>
+</table>
+
+
+
+<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3>
+<table data-jsdoc-vuejs="table-data">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default value</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody><tr>
+        <td><code>email</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>Correo electrónico del usuario para iniciar sesión.</td>
+    </tr><tr>
+        <td><code>password</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>Contraseña del usuario para iniciar sesión.</td>
+    </tr><tr>
+        <td><code>errorEmail</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>Mensaje de error para el correo electrónico.</td>
+    </tr><tr>
+        <td><code>errorPassword</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>Mensaje de error para la contraseña.</td>
+    </tr><tr>
+        <td><code>errorSession</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>Mensaje de error para la sesión del usuario.</td>
+    </tr><tr>
+        <td><code>visibility</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td>Indica si la contraseña es visible o no.</td>
+    </tr><tr>
+        <td><code>focusEmail</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td>Indica si el campo de correo electrónico está enfocado o no.</td>
+    </tr><tr>
+        <td><code>focusPassword</code></td>
+        <td>Boolean</td>
+        <td>-</td>
+        <td>Indica si el campo de contraseña está enfocado o no.</td>
+    </tr><tr>
+        <td><code>API_LOGIN</code></td>
+        <td>String</td>
+        <td>-</td>
+        <td>URL de la API para iniciar sesión.</td>
+    </tr><tr>
+        <td><code>emailValidation</code></td>
+        <td>RegExp</td>
+        <td>-</td>
+        <td>Expresión regular para validar correos electrónicos.</td>
+    </tr><tr>
+        <td><code>passwordValidation</code></td>
+        <td>RegExp</td>
+        <td>-</td>
+        <td>Expresión regular para validar contraseñas.</td>
+    </tr></tbody>
+</table>
+
+
+
+
+
+
+<h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-event">Events</h3>
+<table data-jsdoc-vuejs="table-event">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Payload Type</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody><tr>
+        <td><code>changeSession</code></td>
+        <td>function</td>
+        <td>Evento que se emite cuando la sesión del usuario cambia.</td>
+    </tr><tr>
+        <td><code>changeUserId</code></td>
+        <td>function</td>
+        <td>Evento que se emite cuando el ID del usuario cambia.</td>
+    </tr><tr>
+        <td><code>checkUser</code></td>
+        <td>function</td>
+        <td>Evento que se emite para verificar al usuario.</td>
+    </tr><tr>
+        <td><code>listenAccount</code></td>
+        <td>function</td>
+        <td>Evento que se emite para escuchar la cuenta del usuario.</td>
+    </tr><tr>
+        <td><code>listenMenu</code></td>
+        <td>function</td>
+        <td>Evento que se emite para escuchar el menú de la aplicación.</td>
+    </tr></tbody>
+</table>
+
+
+<div class="container-overview"><div><p> 
+</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CreateReviewView.html">CreateReviewView</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-HomeView.html">HomeView</a></li><li><a href="module-Loading.html">Loading</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-ProfileReviewView.html">ProfileReviewView</a></li><li><a href="module-ProfileView.html">ProfileView</a></li><li><a href="module-Review.html">Review</a></li><li><a href="module-ReviewView.html">ReviewView</a></li><li><a href="module-Signin.html">Signin</a></li><li><a href="module-UpdateAccount.html">UpdateAccount</a></li><li><a href="module-UpdateReviewView.html">UpdateReviewView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Feb 20 2023 16:54:01 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

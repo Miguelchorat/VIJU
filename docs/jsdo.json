@@ -1,0 +1,21 @@
+{
+    "plugins": [
+        "node_modules/jsdoc-vuejs"
+    ],
+    "recurseDepth": 30,
+    "source": {
+        "include": "src/",
+        "includePattern": "\\.(vue|js)$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "opts": {
+        "enconding": "utf8",
+        "destination": "./docs/",
+        "recurse": true
+    }
+}

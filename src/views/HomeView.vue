@@ -8,6 +8,18 @@ import axios from 'axios'
 </script>
 
 <script>
+/**
+ * Componente que realiza llamadas a una API de reseñas de videojuegos.
+ *
+ * @vue-prop {String} review - La reseña a buscar.
+ * @vue-prop {String} search - La cadena de búsqueda para filtrar las reseñas.
+ * @vue-data {Number} MAX_LENGHT - La longitud máxima permitida para la reseña.
+ * @vue-data {Object} results - Los resultados obtenidos de la API.
+ * @vue-data {String} path - El path base para las reseñas.
+ * @vue-data {String} API - La URL base para la API de reseñas.
+ * @vue-data {String} API_SEARCH - La URL para buscar reseñas con la cadena de búsqueda..
+ * @vue-event callAPI - Llama a la API del servidor para encontrar las reseñas de videojuegos que incluyan la busqueda
+ */
 export default {
   data() {
     return {

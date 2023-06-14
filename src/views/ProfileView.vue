@@ -10,6 +10,17 @@ import Dialog from '../components/Dialog.vue'
 </script>
 
 <script>
+/**
+ * Componente que verifica si el usuario está autenticado y obtiene sus datos de la API.
+ *
+ * @vue-prop {String} userId - El ID del usuario.
+ * @vue-prop {String} search - La cadena de búsqueda para filtrar las reseñas del usuario.
+ * @vue-data {Object} user - Los datos del usuario obtenidos de la API.
+ * @vue-data {Boolean} menu - Indica si el menú está abierto o cerrado.
+ * @vue-data {String} API_USER - La URL para obtener los datos del usuario.
+ * @vue-event {void} listenMenu - Cambia el estado de menu a su estado opuesto
+ * @vue-event {void} checkUser - Busca la existencia del usuario que concuerde con la id de usuario en el servidor
+ */
 export default {
   components: {
     Dialog

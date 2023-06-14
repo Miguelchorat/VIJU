@@ -4,6 +4,21 @@ import { API, formatDate } from '../util'
 import { marked } from 'marked'
 import Dialog from '../components/Dialog.vue'
 
+/**
+ * Componente para mostrar una reseña individual.
+ *
+ * @vue-data {Object} result - Los datos de la reseña obtenidos de la API.
+ * @vue-data {Boolean} submenu - Indica si el submenú está abierto o cerrado.
+ * @vue-data {Boolean} showSubmenu - Indica si el submenú debe mostrarse o no.
+ * @vue-data {String} pathUpdate - La ruta para actualizar la reseña.
+ * @vue-data {String} API_REVIEW - La URL para obtener los datos de la reseña.
+ * @vue-data {String} API_DELETE - La URL para eliminar la reseña.
+ * @vue-event callAPI - Llama a la API del servidor para encontrar la reseña del videojuego que incluyan la busqueda
+ * @vue-event {void} listenSubmenu - Cambia el estado de submenu a su estado opuesto
+ * @vue-event {void} checkUser - Busca la existencia del usuario que concuerde con la id de usuario en el servidor
+ * @vue-event {void} checkPath - Comprueba el path en el que esta el usuario para enviarlo a un path diferente
+ * @vue-event {void} deleteReview - Manda a eliminar la review del usuario por el id
+ */
 export default {
   components: {
     Dialog

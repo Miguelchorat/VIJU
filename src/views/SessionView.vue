@@ -7,6 +7,29 @@ import { API } from '../util'
 </script>
 
 <script>
+/**
+ * Componente que representa el formulario de inicio de sesión de un usuario.
+ * @vue-prop {Boolean} menu - Indica si el menú de la aplicación está activo o no.
+ * @vue-prop {Boolean} account - Indica si la cuenta del usuario está activa o no.
+ * @vue-prop {Boolean} session - Indica si la sesión del usuario está activa o no.
+ * @vue-prop {Number} userId - ID del usuario que está iniciando sesión.
+ * @vue-data {String} email - Correo electrónico del usuario para iniciar sesión.
+ * @vue-data {String} password - Contraseña del usuario para iniciar sesión.
+ * @vue-data {String} errorEmail - Mensaje de error para el correo electrónico.
+ * @vue-data {String} errorPassword - Mensaje de error para la contraseña.
+ * @vue-data {String} errorSession - Mensaje de error para la sesión del usuario.
+ * @vue-data {Boolean} visibility - Indica si la contraseña es visible o no.
+ * @vue-data {Boolean} focusEmail - Indica si el campo de correo electrónico está enfocado o no.
+ * @vue-data {Boolean} focusPassword - Indica si el campo de contraseña está enfocado o no.
+ * @vue-data {String} API_LOGIN - URL de la API para iniciar sesión.
+ * @vue-data {RegExp} emailValidation - Expresión regular para validar correos electrónicos.
+ * @vue-data {RegExp} passwordValidation - Expresión regular para validar contraseñas.
+ * @vue-event {Function} changeSession - Evento que se emite cuando la sesión del usuario cambia.
+ * @vue-event {Function} changeUserId - Evento que se emite cuando el ID del usuario cambia.
+ * @vue-event {Function} checkUser - Evento que se emite para verificar al usuario.
+ * @vue-event {Function} listenAccount - Evento que se emite para escuchar la cuenta del usuario.
+ * @vue-event {Function} listenMenu - Evento que se emite para escuchar el menú de la aplicación.
+ */
 export default {
     components: {
         Toast

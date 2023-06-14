@@ -3,6 +3,15 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <script>
+/**
+
+Componente de encabezado de la página
+@vue-prop {string} menu - Controla el menú desplegable de inicio de sesión y registro
+@vue-prop {boolean} account - Indica si el usuario ha iniciado sesión o no
+@vue-prop {string} search - Valor del campo de búsqueda
+@vue-prop {string} user - Nombre de usuario
+@vue-event {void} listenSubmenu - Cambia el estado de submenu a su estado opuesto
+*/
 export default {
     props: ['trigger'],
     data() {

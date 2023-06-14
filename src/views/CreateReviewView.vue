@@ -11,7 +11,28 @@ import { marked } from 'marked'
 marked.setOptions({
     silent: true,
 });
-
+/**
+ * Componente para crear una reseña.
+ * @vue-prop {string} title - Título de la reseña.
+ * @vue-prop {string} message - Mensaje de la reseña.
+ * @vue-prop {string} score - Puntuación de la reseña.
+ * @vue-prop {string} videogame - Nombre del videojuego relacionado con la reseña.
+ * @vue-prop {Array<Game>} games - Lista de juegos para seleccionar.
+ * @vue-prop {string} API_GAMES - URL de la API para obtener la lista de juegos.
+ * @vue-prop {string} API_CREATE_REVIEW - URL de la API para crear una reseña.
+ * @vue-data {string} errorTitle - Mensaje de error para el título de la reseña.
+ * @vue-data {string} errorMessage - Mensaje de error para el cuerpo de la reseña.
+ * @vue-data {string} errorScore - Mensaje de error para la puntuación de la reseña.
+ * @vue-data {string} errorVideogame - Mensaje de error para el videojuego de la reseña.
+ * @vue-data {boolean} focusTitle - Indica si el input del título tiene el foco.
+ * @vue-data {boolean} focusMessage - Indica si el input del cuerpo de la reseña tiene el foco.
+ * @vue-data {boolean} focusScore - Indica si el input de la puntuación de la reseña tiene el foco.
+ * @vue-data {boolean} focusVideogame - Indica si el input del videojuego tiene el foco.
+ * @vue-data {RegExp} scoreValidation - Expresión regular para validar la puntuación.
+ * @vue-event callApiGames - Pide al servidor que le devuelva todos los videojuegos por su nombre
+ * @vue-event createReview - Crea una review con los datos proporcionados y lo envia al servidor
+ * @vue-event checkFields - Valida los campos del formulario y registra la reseña si son correctos
+ */
 export default {
     data() {
         return {

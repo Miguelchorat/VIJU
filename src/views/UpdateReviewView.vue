@@ -11,7 +11,30 @@ import { marked } from 'marked'
 marked.setOptions({
     silent: true,
 });
-
+/**
+ * Componente para editar una reseña de videojuego.
+ * @vue-data {string} title - El título de la reseña.
+ * @vue-data {string} message - El cuerpo de la reseña.
+ * @vue-data {string} score - La puntuación asignada al videojuego.
+ * @vue-data {string} videogame - El videojuego de la reseña.
+ * @vue-data {string} errorTitle - Mensaje de error para el título de la reseña.
+ * @vue-data {string} errorMessage - Mensaje de error para el cuerpo de la reseña.
+ * @vue-data {string} errorScore - Mensaje de error para la puntuación de la reseña.
+ * @vue-data {string} errorVideogame - Mensaje de error para el videojuego de la reseña.
+ * @vue-data {boolean} focusTitle - Indica si el campo de título tiene el foco.
+ * @vue-data {boolean} focusMessage - Indica si el campo de cuerpo tiene el foco.
+ * @vue-data {boolean} focusScore - Indica si el campo de puntuación tiene el foco.
+ * @vue-data {boolean} focusVideogame - Indica si el campo de videojuego tiene el foco.
+ * @vue-data {Array} games - La lista de videojuegos disponibles.
+ * @vue-data {string} API_GAMES - La URL de la API para obtener la lista de videojuegos.
+ * @vue-data {string} API_REVIEW - La URL de la API para obtener la reseña actual.
+ * @vue-data {string} API_UPDATE_REVIEW - La URL de la API para actualizar la reseña.
+ * @vue-data {RegExp} scoreValidation - Expresión regular para validar la puntuación de la reseña.
+ * @vue-event callAPI - Llama a la API del servidor para encontrar la reseña del videojuego que incluyan la busqueda para modificar
+ * @vue-event callApiGames - Pide al servidor que le devuelva todos los videojuegos por su nombre
+ * @vue-event updateReview - Modifica una review con los datos proporcionados y lo envia al servidor
+ * @vue-event checkFields - Valida los campos del formulario y actualiza la reseña si son correctos
+ */
 export default {
     data() {
         return {

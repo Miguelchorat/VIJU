@@ -3,7 +3,18 @@
 import { RouterLink } from 'vue-router';
 import { API, convertDate } from '../util'
 import axios from 'axios'
+/**
 
+Componente que representa una tarjeta para mostrar información de una reseña.
+@vue-prop {number} id - El id del videojuego.
+@vue-prop {string} title - El título del videojuego.
+@vue-prop {string} videogame - El nombre del videojuego.
+@vue-prop {string} image - La ruta de la imagen que se mostrará en la tarjeta.
+@vue-prop {string} description - La descripción del videojuego.
+@vue-prop {string} user - El nombre del usuario que ha subido el videojuego.
+@vue-prop {number} score - La puntuación del videojuego.
+@vue-prop {string} path - La ruta a la que se redirigirá al hacer clic en la tarjeta.
+*/
 export default {
     emits: ['click', 'listenToast','addLikes','addFavorites'],
     props: ["id", "title", "videogame", "image", "description", "user", "score", "path", "created_at", 'likesCount', 'favoritesCount', 'isLiked', 'isFavorite','method'],

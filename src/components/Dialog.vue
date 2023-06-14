@@ -4,6 +4,7 @@ import { API } from '../util'
 </script>
 
 <script>
+
 export default {
     props: ['message', 'title', 'active', 'type', 'email', 'username'],
     emits: ['listenDialog','listenToast','listenTrigger'],

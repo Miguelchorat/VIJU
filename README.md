@@ -6,6 +6,14 @@ Inspirado por sitios populares como Reddit, donde los usuarios pueden discutir u
 
 En el lado del cliente, Vue3 se utiliza para crear una interfaz de usuario interactiva y receptiva. Con su enfoque en la reactividad y la modularidad, Vue3 facilita el desarrollo de componentes reutilizables y la actualización eficiente de la interfaz en respuesta a las interacciones del usuario. Esto permitirá a los usuarios navegar por las reseñas de manera fluida, realizar búsquedas y participar en conversaciones.
 
+## Vista Previa
+
+### Menu Inicio
+
+### Iniciar/Registrar
+
+### Perfil
+
 ## Despliegue
 
 ~~[VIJU](https://miguelchorat.github.io/VIJU/)~~ Servidor no alojado.

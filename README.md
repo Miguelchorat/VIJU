@@ -8,7 +8,7 @@ En el lado del cliente, Vue3 se utiliza para crear una interfaz de usuario inter
 
 ## Despliegue
 
-~~[VIJU](https://miguelchorat.github.io/VIJU/)~~
+~~[VIJU](https://miguelchorat.github.io/VIJU/)~~ Servidor no alojado.
 
 ## Lado Servidor
 

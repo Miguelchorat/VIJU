@@ -10,9 +10,27 @@ En el lado del cliente, Vue3 se utiliza para crear una interfaz de usuario inter
 
 ### Menu Inicio
 
+<p align="center">
+  <img src="https://github.com/Miguelchorat/VIJU/assets/43972532/0894c72a-5520-4d3c-9945-5bc9a0852955" alt="inicio">
+</p>
+
+### Información reseña
+
+<p align="center">
+  <img src="https://github.com/Miguelchorat/VIJU/assets/43972532/c38a09d1-ae60-45f1-be04-04bea66ef0c1" alt="inicio">
+</p>
+
 ### Iniciar/Registrar
 
+<p align="center">
+  <img src="https://github.com/Miguelchorat/VIJU/assets/43972532/1e2d4372-73e3-4af6-91cd-35ec9b7c18ec" alt="inicio">
+</p>
+
 ### Perfil
+
+<p align="center">
+  <img src="https://github.com/Miguelchorat/VIJU/assets/43972532/b28c7475-c31a-4c10-b2af-1763b29570e9" alt="inicio">
+</p>
 
 ## Despliegue
 
